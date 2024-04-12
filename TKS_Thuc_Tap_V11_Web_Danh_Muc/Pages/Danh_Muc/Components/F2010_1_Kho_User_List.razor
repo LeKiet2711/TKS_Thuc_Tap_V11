@@ -3,6 +3,47 @@
 @Layout_Default_Filter(grdData, "Kho_User_Template.xlsx")
 <div style="padding-top: 10px;"></div>
 
+<EditForm Model="@r_objFilter">
+	<div class="row">
+		<div class="col-lg-5">
+			<div class="row g-3">
+				<div style="width: 150px; padding-top: 8px;">
+					<label class="form-label">@Get_Language_Data_Field("Kho"):</label>
+				</div>
+				<div style="width: 300px;">
+					<TelerikMultiColumnComboBox Data="@m_arrKho"
+												@bind-Value="@m_iKho_ID"
+												OnChange="@OnChangeHandler"
+												ValueField="@nameof(CDM_Kho.Auto_ID)"
+												TextField="@nameof(CDM_Kho.Ten_Kho)"
+												ScrollMode="@DropDownScrollMode.Virtual"
+												Width="100%"
+												PageSize="10"
+												ItemHeight="35"
+												Filterable="true"
+												FilterOperator="@StringFilterOperator.Contains"
+												ListHeight="260px">
+						<MultiColumnComboBoxColumns>
+							<MultiColumnComboBoxColumn Field="@nameof(CDM_Kho.Ma_Kho)" Title="@Get_Language_Data_Field("Mã kho")" Width="150px" Class="k-tks-combobox-item" HeaderClass="k-tks-combobox-header" />
+							<MultiColumnComboBoxColumn Field="@nameof(CDM_Kho.Ten_Kho)" Title="@Get_Language_Data_Field("Tên kho")" Width="250px" Class="k-tks-combobox-item" HeaderClass="k-tks-combobox-header" />
+						</MultiColumnComboBoxColumns>
+					</TelerikMultiColumnComboBox>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-lg-7">
+			<div class="hstack flex-wrap gap-2 mb-3 mb-lg-0" style="float: right;">
+				@Layout_Tool_Button()
+			</div>
+		</div>
+	</div>
+</EditForm>
+<div style="padding-top: 10px;"></div>
+
+
+
+
 <div class="row">
 	<div class="col-lg-12">
 		@((MarkupString)r_strError)
@@ -82,9 +123,12 @@
 	public List<CDM_Kho_User> v_arrData = new();
 	TelerikGrid<CDM_Kho_User> grdData = new();
 
+	private long m_iKho_ID { get; set; } = 0;
+	private List<CDM_Kho> m_arrKho = new();
+
 	protected override void Init_Data()
 	{
-
+		m_arrKho = CCache_Kho.Arr_Data.OrderBy(it=>it.Ten_Kho).ToList();
 	}
 
 	protected override void Load_Data()
@@ -192,4 +236,11 @@
 			Open_Message_Info(Get_Language_Data_Field("Thông báo Import Excel"), ex.Message);
 		}
 	}
+	private void OnChangeHandler(object value)
+	{
+
+		m_iKho_ID = CUtility.Convert_To_Int64(value);
+		Load_Data();
+	}
+
 }

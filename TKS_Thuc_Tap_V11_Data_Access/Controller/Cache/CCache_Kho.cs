@@ -11,7 +11,7 @@ namespace TKS_Thuc_Tap_V11_Data_Access.Controller.Cache
 {
 	public class CCache_Kho
 	{
-		private static List<CDM_Kho> Arr_Data = new List<CDM_Kho>();
+		public static List<CDM_Kho> Arr_Data = new List<CDM_Kho>();
 		private static Dictionary<long, CDM_Kho> Dic_Data_ID = new Dictionary<long, CDM_Kho>();
 		private static Dictionary<string, CDM_Kho> Dic_Data_Code = new Dictionary<string, CDM_Kho>();
 
