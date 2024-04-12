@@ -18,16 +18,16 @@
 </TelerikMultiColumnComboBox>
 
 @code {
-    List<CDM_Don_Vi_Tinh> m_arrData = new();
+    List<CDM_Kho> m_arrData = new();
 
     protected override void Load_Data()
     {
-        m_arrData = CCache_Don_Vi_Tinh.List_Data();
-        CDM_Don_Vi_Tinh v_objLSP = new();
-        v_objLSP.Auto_ID = -5;
+        m_arrData = CCache_Kho.List_Data();
+        CDM_Kho v_objKho = new();
+        v_objKho.Auto_ID = -5;
         //v_objLSP.Ten_Don_Vi_Tinh = "Tất Cả";
         //v_objLSP.Ma_Don_Vi_Tinh = "Tất Cả";
-        m_arrData.Insert(-1, v_objLSP);
+        m_arrData.Insert(-1, v_objKho);
     }
 
 }
