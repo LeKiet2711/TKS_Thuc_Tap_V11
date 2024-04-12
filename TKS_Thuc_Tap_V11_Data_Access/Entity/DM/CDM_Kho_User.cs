@@ -20,6 +20,8 @@ namespace TKS_Thuc_Tap_V11_Data_Access.Entity.DM
 		private string m_strLast_Updated_By;
 		private string m_strLast_Updated_By_Function;
 		private string m_strTen_Kho;
+		private string m_strExpr1;
+
 
 		public CDM_Kho_User()
 		{
@@ -73,6 +75,18 @@ namespace TKS_Thuc_Tap_V11_Data_Access.Entity.DM
 			set
 			{
 				m_strTen_Kho = value;
+			}
+		}
+
+		public string Expr1
+		{
+			get
+			{
+				return m_strExpr1;
+			}
+			set
+			{
+				m_strExpr1 = value;
 			}
 		}
 
