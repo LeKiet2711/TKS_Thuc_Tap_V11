@@ -13,17 +13,15 @@ namespace TKS_Thuc_Tap_V11_Data_Access.Controller.DM
 {
 	public class CDM_Kho_User_Controller
 	{
-		public List<CDM_Kho_User> FQ_117_KU_sp_sel_List_By_Created(DateTime? p_dtmFrom, DateTime? p_dtmTo)
+		public List<CDM_Kho_User> FQ_117_KU_sp_sel_List_By_Created(long p_iKho_ID)
 		{
 			List<CDM_Kho_User> v_arrRes = new List<CDM_Kho_User>();
 			DataTable v_dt = new DataTable();
 
 			try
 			{
-				p_dtmFrom = CUtility_Date.Convert_To_Dau_Ngay(p_dtmFrom);
-				p_dtmTo = CUtility_Date.Convert_To_Cuoi_Ngay(p_dtmTo);
 
-				CSqlHelper.FillDataTable(CConfig.TKS_Thuc_Tap_V11_Conn_String, v_dt, "FQ_117_KU_sp_sel_List_By_Created",p_dtmFrom, p_dtmTo);
+				CSqlHelper.FillDataTable(CConfig.TKS_Thuc_Tap_V11_Conn_String, v_dt, "FQ_117_KU_sp_sel_List_By_Created",p_iKho_ID);
 
 				foreach (DataRow v_row in v_dt.Rows)
 				{
