@@ -107,7 +107,7 @@ namespace TKS_Thuc_Tap_V11_Data_Access.Controller.DM
 			try
 			{
 				v_iRes = Convert.ToInt64(CSqlHelper.ExecuteScalar(CConfig.TKS_Thuc_Tap_V11_Conn_String, "FQ_117_KU_sp_ins_Insert",
-					p_objData.Ma_Dang_Nhap, p_objData.Kho_ID, p_objData.Last_Updated_By, p_objData.Last_Updated_By_Function));
+					p_objData.Kho_ID, p_objData.Ma_Dang_Nhap, p_objData.Last_Updated_By, p_objData.Last_Updated_By_Function));
 			}
 
 			catch (Exception)

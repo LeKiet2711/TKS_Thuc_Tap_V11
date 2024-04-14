@@ -27,8 +27,7 @@
 									<label class="form-label">@Get_Language_Data_Field("Mã đăng nhập"):</label>
 								</div>
 								<div class="col-lg-12">
-									<FControl_Thanh_Vien_2_Combo m_arrData="@m_arrThanh_Vien" @bind-BindingValue="m_objData.Ma_Dang_Nhap"></FControl_Thanh_Vien_2_Combo>
-
+									<FControl_Thanh_Vien_Combo m_arrData="@m_arrThanh_Vien" @bind-BindingStringValue="@m_objData.Ma_Dang_Nhap"></FControl_Thanh_Vien_Combo>
 								</div>
 							</div>
 
@@ -80,7 +79,7 @@
 		m_objData.Auto_ID = r_iAuto_ID = v_objCtrData.FQ_117_KU_sp_ins_Insert(m_objData);
 
 		// Đoạn code lưu key cho việc tracking log CRUD, vui lòng đừng xóa
-		r_strAdd_Key = m_objData.Ma_Dang_Nhap.ToString();
+		r_strAdd_Key = m_objData.Ma_Dang_Nhap;
 		// End tracking
 
 		CCache_Kho_User.Add_Data(m_objData);

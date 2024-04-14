@@ -1,9 +1,9 @@
 ﻿@inherits FBase_Combo;
 
-<TelerikMultiColumnComboBox @bind-Value="@BindingValue"
+<TelerikMultiColumnComboBox @bind-Value="@BindingStringValue"
 							ScrollMode="@DropDownScrollMode.Virtual"
 							Data="@m_arrData"
-							ValueField="@(nameof(CSys_Thanh_Vien.Auto_ID))"
+							ValueField="@(nameof(CSys_Thanh_Vien.Ma_Dang_Nhap))"
 							TextField="@(nameof(CSys_Thanh_Vien.Ma_Dang_Nhap_Combo))"
 							Width="100%"
 							PageSize="10"

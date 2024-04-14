@@ -97,7 +97,7 @@
 				}
 				else
 				{
-					<GridColumn Field="Expr1" Title="Mã Đăng Nhập" Width="100px"></GridColumn>
+					<GridColumn Field="Ma_Dang_Nhap" Title="Mã Đăng Nhập" Width="100px"></GridColumn>
 					<GridColumn Field="Ten_Kho" Title="Tên Kho"><FooterTemplate Context="Footer"></FooterTemplate></GridColumn>
 				}
 			</GridColumns>
@@ -156,7 +156,7 @@
 		// Đoạn code lưu key cho việc tracking log CRUD, vui lòng đừng xóa
 		CDM_Kho_User v_objData = v_objCtrData.FQ_117_KU_sp_sel_Get_By_ID(p_iAuto_ID);
 		if (v_objData != null)
-			r_strDelete_Key = v_objData.Ma_Dang_Nhap.ToString();
+			r_strDelete_Key = v_objData.Ma_Dang_Nhap;
 		// End tracking
 
 		v_objCtrData.FQ_117_KU_sp_del_Delete_By_ID(p_iAuto_ID, r_strActive_User_Name, r_strActive_Function_Code);

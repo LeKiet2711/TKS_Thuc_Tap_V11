@@ -10,7 +10,7 @@ namespace TKS_Thuc_Tap_V11_Data_Access.Entity.DM
 	public class CDM_Kho_User
 	{
 		private long m_lngAuto_ID;
-		private long m_lngMa_Dang_Nhap;
+		private string m_strMa_Dang_Nhap;
 		private long m_lngKho_ID;
 		private int m_intdeleted;
 		private DateTime? m_dtmCreated;
@@ -31,7 +31,7 @@ namespace TKS_Thuc_Tap_V11_Data_Access.Entity.DM
 		public void ResetData()
 		{
 			m_lngAuto_ID = CConst.INT_VALUE_NULL;
-			m_lngMa_Dang_Nhap = CConst.INT_VALUE_NULL;
+			m_strMa_Dang_Nhap = CConst.STR_VALUE_NULL;
 			m_lngKho_ID = CConst.INT_VALUE_NULL;
 			m_intdeleted = CConst.INT_VALUE_NULL;
 			m_dtmCreated = CConst.DTM_VALUE_NULL;
@@ -54,15 +54,15 @@ namespace TKS_Thuc_Tap_V11_Data_Access.Entity.DM
 			}
 		}
 
-		public long Ma_Dang_Nhap
+		public string Ma_Dang_Nhap
 		{
 			get
 			{
-				return m_lngMa_Dang_Nhap;
+				return m_strMa_Dang_Nhap;
 			}
 			set
 			{
-				m_lngMa_Dang_Nhap = value;
+				m_strMa_Dang_Nhap = value;
 			}
 		}
 
