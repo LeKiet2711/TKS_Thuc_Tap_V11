@@ -89,7 +89,7 @@
 				</button>
 			</div>
 
-			<F2012_1_Phieu_Nhap_Raw_Data_List r_iAuto_ID="@r_iAuto_ID"></F2012_1_Phieu_Nhap_Raw_Data_List>
+			<F2012_1_Phieu_Nhap_Raw_Data_List r_iAuto_ID="@r_iAuto_ID" @ref="v_objloadListNKRD" p_arrData="v_arrData"></F2012_1_Phieu_Nhap_Raw_Data_List>
 			
 			<div class="modal-footer">
 				<button type="button" class="btn btn-primary" @onclick="@Save_Data">@Get_Language_Data_Field("Lưu Thay Đổi")</button>
@@ -111,9 +111,11 @@
 
 	public List<CXNK_Nhap_Kho_Raw_Data> v_arrData = new();
 	TelerikGrid<CXNK_Nhap_Kho_Raw_Data> grdData = new();
+	public F2012_1_Phieu_Nhap_Raw_Data_List v_objloadListNKRD;
 
 	[Parameter]
 	public EventCallback<List<CXNK_Nhap_Kho_Raw_Data>> OnSaveCTPN { get; set; }
+
 
 	public bool check;
 
@@ -174,8 +176,8 @@
 	public async Task Save_CTPN(CXNK_Nhap_Kho_Raw_Data chiTietPhieuNhap)
 	{
 		v_arrData.Add(chiTietPhieuNhap);
-		Load_Data_Init();
-		Load_Data();
+		v_objloadListNKRD.Load_Data_Init();
+		//StateHasChanged();
 	}
 
 	public void addLstObject()

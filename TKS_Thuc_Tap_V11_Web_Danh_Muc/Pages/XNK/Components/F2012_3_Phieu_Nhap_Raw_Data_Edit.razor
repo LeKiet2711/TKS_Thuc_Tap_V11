@@ -146,7 +146,7 @@
 		// Gọi event callback để truyền thông tin về form chính
 		await OnSaveCTPN.InvokeAsync(v_objectNhapKho);
 		await Modal_Cancel();
-
+		StateHasChanged();
 	}
 
 }
