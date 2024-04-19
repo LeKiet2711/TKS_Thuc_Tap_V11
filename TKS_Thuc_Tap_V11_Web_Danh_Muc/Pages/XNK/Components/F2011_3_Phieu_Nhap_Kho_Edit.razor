@@ -89,14 +89,8 @@
 				</button>
 			</div>
 
-			@* <TelerikGrid Data="@v_arrData" Height="calc(100vh - 170px)" Resizable="true" Reorderable="true" @ref="@grdData">
-				<GridColumns>
-					<GridCheckboxColumn SelectAll="true" CheckBoxOnlySelection="true" Width="30px"></GridCheckboxColumn>
-					<F2012_1_Phieu_Nhap_Raw_Data_List r_iAuto_ID="@r_iAuto_ID"></F2012_1_Phieu_Nhap_Raw_Data_List>
-				</GridColumns>
-			</TelerikGrid> *@
 			<F2012_1_Phieu_Nhap_Raw_Data_List r_iAuto_ID="@r_iAuto_ID"></F2012_1_Phieu_Nhap_Raw_Data_List>
-
+			
 			<div class="modal-footer">
 				<button type="button" class="btn btn-primary" @onclick="@Save_Data">@Get_Language_Data_Field("Lưu Thay Đổi")</button>
 			</div>
@@ -106,7 +100,7 @@
 
 @if (r_bIs_Show_Edit == true)
 {
-	<F2012_3_Phieu_Nhap_Raw_Data_Edit r_iAuto_ID="@r_iAuto_ID" OnClose="@Close_Edit" @onclick="@Save_CTPN"></F2012_3_Phieu_Nhap_Raw_Data_Edit>
+	<F2012_3_Phieu_Nhap_Raw_Data_Edit r_iAuto_ID="@r_iAuto_ID" OnClose="@Close_Edit" OnSaveCTPN="Save_CTPN"></F2012_3_Phieu_Nhap_Raw_Data_Edit>
 }
 
 
@@ -176,15 +170,12 @@
 		// End tracking
 	}
 
-	public void Open_CTPN()
-	{
-		check = true;
-	}
 
 	public async Task Save_CTPN(CXNK_Nhap_Kho_Raw_Data chiTietPhieuNhap)
 	{
 		v_arrData.Add(chiTietPhieuNhap);
-
+		Load_Data_Init();
+		Load_Data();
 	}
 
 	public void addLstObject()
