@@ -1,0 +1,153 @@
+﻿@inherits FBase_Edit;
+
+<div class="modal fade show" tabindex="-1" role="dialog" aria-hidden="true" style="display: block; padding-left: 0px; background-color: rgba(10, 10, 10, .8);">
+	<div class="modal-dialog">
+		<div class="modal-content">
+
+			<div class="modal-header bg-light">
+				@if (r_iAuto_ID != 0)
+				{
+					<h5 class="modal-title">@Get_Language_Data_Field("Hiệu chỉnh")</h5>
+				}
+				else
+				{
+					<h5 class="modal-title">@Get_Language_Data_Field("Thêm mới")</h5>
+				}
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" @onclick="@(()=> Modal_Cancel())">
+				</button>
+			</div>
+			@((MarkupString)r_strError)
+
+			<EditForm Model="@m_objData">
+				<div class="modal-body">
+					<div class="row">
+						<div class="col-lg-12">
+							<div class="row mb-1">
+								<div class="col-lg-4 col-form-label">
+									<label class="form-label">@Get_Language_Data_Field("Sản phẩm"):</label>
+								</div>
+								<div class="col-lg-8">
+									<FControl_Loai_San_Pham_Combo @bind-BindingValue="m_objData.San_Pham_ID"></FControl_Loai_San_Pham_Combo>
+
+								</div>
+							</div>
+
+							<div class="row mb-1">
+								<div class="col-lg-4 col-form-label">
+									<label class="form-label">@Get_Language_Data_Field("Số lượng nhập"):</label>
+								</div>
+								<div class="col-lg-8">
+									<input type="number" @bind="@m_objData.SL_Nhap" class="form-control">
+
+								</div>
+							</div>
+
+							<div class="row mb-1">
+								<div class="col-lg-4 col-form-label">
+									<label class="form-label">@Get_Language_Data_Field("Đơn giá nhập"):</label>
+								</div>
+								<div class="col-lg-8">
+									<input type="number" @bind="@m_objData.Don_Gia_Nhap" class="form-control">
+								</div>
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</EditForm>
+
+			<div class="modal-footer">
+				<button type="button" class="btn btn-primary" @onclick="Save_CTPN">@Get_Language_Data_Field("Lưu")</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+@code {
+	private CXNK_Nhap_Kho_Raw_Data m_objData = new();
+	public List<CXNK_Nhap_Kho_Raw_Data> m_LstNhapKho = new List<CXNK_Nhap_Kho_Raw_Data>();
+	private bool isPopupVisible = false;
+
+	[Parameter]
+	public EventCallback<CXNK_Nhap_Kho_Raw_Data> OnSaveCTPN { get; set; }
+
+
+	protected override void Init_Data()
+	{
+
+	}
+
+	protected override void Load_Data()
+	{
+		CXNK_Nhap_Kho_Raw_Data_Controller v_objCtrData = new();
+		m_objData = v_objCtrData.FQ_719_NKRD_sp_sel_Get_By_ID(r_iAuto_ID);
+
+		if (m_objData == null)
+			m_objData = new CXNK_Nhap_Kho_Raw_Data();
+		else
+		{
+			r_bUpdate = true;
+
+			// Đoạn code lưu key cho việc tracking log CRUD, vui lòng đừng xóa
+			CXNK_Nhap_Kho_Raw_Data v_objClone = new();
+			CUtility.Clone_Entity(m_objData, v_objClone);
+			r_objSource = v_objClone;
+			// End tracking
+		}
+	}
+
+	public void Save_List()
+	{
+		CXNK_Nhap_Kho_Raw_Data v_objectNhapKho = new CXNK_Nhap_Kho_Raw_Data();
+		v_objectNhapKho.San_Pham_ID = m_objData.San_Pham_ID;
+		v_objectNhapKho.SL_Nhap = m_objData.SL_Nhap;
+		v_objectNhapKho.Don_Gia_Nhap = m_objData.Don_Gia_Nhap;
+		m_LstNhapKho.Add(v_objectNhapKho);
+
+	}
+
+	protected override void Add_Data()
+	{
+		CXNK_Nhap_Kho_Raw_Data_Controller v_objCtrData = new();
+		m_objData.Last_Updated_By = r_strActive_User_Name;
+		m_objData.Last_Updated_By_Function = r_strActive_Function_Code;
+
+		m_objData.Auto_ID = r_iAuto_ID = v_objCtrData.FQ_719_NKRD_sp_ins_Insert(m_objData);
+
+		// Đoạn code lưu key cho việc tracking log CRUD, vui lòng đừng xóa
+		//r_strAdd_Key = m_objData.SL_Nhap;
+		// End tracking
+	}
+
+	protected override void Update_Data()
+	{
+		CXNK_Nhap_Kho_Raw_Data_Controller v_objCtrData = new();
+		m_objData.Last_Updated_By = r_strActive_User_Name;
+		m_objData.Last_Updated_By_Function = r_strActive_Function_Code;
+
+		v_objCtrData.FQ_719_NKRD_sp_upd_Update(m_objData);
+
+		// Đoạn code lưu key cho việc tracking log CRUD, vui lòng đừng xóa
+		CXNK_Nhap_Kho_Raw_Data v_objClone = new();
+		CUtility.Clone_Entity(m_objData, v_objClone);
+		r_objDes = v_objClone;
+		// End tracking
+	}
+
+	public async Task Save_CTPN()
+	{
+
+		CXNK_Nhap_Kho_Raw_Data v_objectNhapKho = new CXNK_Nhap_Kho_Raw_Data();
+		v_objectNhapKho.San_Pham_ID = m_objData.San_Pham_ID;
+		v_objectNhapKho.SL_Nhap = m_objData.SL_Nhap;
+		v_objectNhapKho.Don_Gia_Nhap = m_objData.Don_Gia_Nhap;
+		//m_LstNhapKho.Add(v_objectNhapKho);
+
+		// Gọi event callback để truyền thông tin về form chính
+		await OnSaveCTPN.InvokeAsync(v_objectNhapKho);
+		await Modal_Cancel();
+
+	}
+
+}
