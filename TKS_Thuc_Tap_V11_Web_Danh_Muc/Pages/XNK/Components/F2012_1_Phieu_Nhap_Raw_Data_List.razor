@@ -21,7 +21,7 @@
 							@if (r_objChuc_Nang.Is_Have_Edit_Permission == true)
 							{
 								<li>
-									<button class="dropdown-item" type="button" @onclick="@(()=> Open_Edit((context as CXNK_Nhap_Kho_Raw_Data).Auto_ID))"><i class="ri-edit-2-line align-bottom me-1"></i> &nbsp; @Get_Language_Data_Field("Hiệu chỉnh")</button>
+									<button class="dropdown-item" type="button" @onclick="@(()=> Open_Edit_ArrayList(context as CXNK_Nhap_Kho_Raw_Data))"><i class="ri-edit-2-line align-bottom me-1"></i> &nbsp; @Get_Language_Data_Field("Hiệu chỉnh")</button>
 								</li>
 							}
 							@if (r_objChuc_Nang.Is_Have_Delete_Permission == true)
@@ -52,13 +52,15 @@
 
 @if (r_bIs_Show_Edit == true)
 {
-	<F2012_3_Phieu_Nhap_Raw_Data_Edit r_iAuto_ID="@r_iAuto_ID" OnClose="@Close_Edit"></F2012_3_Phieu_Nhap_Raw_Data_Edit>
+	<F2012_3_Phieu_Nhap_Raw_Data_Edit r_iAuto_ID="@r_iAuto_ID" m_objData2="@m_objDatabinding" OnClose="@Close_Edit"></F2012_3_Phieu_Nhap_Raw_Data_Edit>
 }
 
 @code {
 	public int i = 0;
 	public List<CXNK_Nhap_Kho_Raw_Data> v_arrData = new();
 	TelerikGrid<CXNK_Nhap_Kho_Raw_Data> grdData = new();
+
+	public CXNK_Nhap_Kho_Raw_Data m_objDatabinding = new();
 
 	[Parameter]
 	public List<CXNK_Nhap_Kho_Raw_Data> p_arrData { get; set; }
@@ -79,23 +81,20 @@
 		v_arrData = p_arrData;
 	}
 
-	protected override void Delete_Data_Entry(long p_iAuto_ID)
-	{
-		CXNK_Nhap_Kho_Raw_Data_Controller v_objCtrData = new();
-
-		// Đoạn code lưu key cho việc tracking log CRUD, vui lòng đừng xóa
-		CXNK_Nhap_Kho_Raw_Data v_objData = v_objCtrData.FQ_719_NKRD_sp_sel_Get_By_ID(p_iAuto_ID);
-		if (v_objData != null)
-			//r_strDelete_Key = v_objData.SL_Nhap;
-			// End tracking
-
-			v_objCtrData.FQ_719_NKRD_sp_del_Delete_By_ID(p_iAuto_ID, r_strActive_User_Name, r_strActive_Function_Code);
-	}
-
 	public void Delete_Item(CXNK_Nhap_Kho_Raw_Data item)
 	{
 		v_arrData.Remove(item);
 		StateHasChanged();
 		Load_Data_Init();
+	}
+
+	public void Open_Edit_ArrayList(CXNK_Nhap_Kho_Raw_Data item)
+	{
+		//m_objDatabinding.Auto_ID = item.Auto_ID;
+		m_objDatabinding.Ten_San_Pham = item.Ten_San_Pham;
+		m_objDatabinding.San_Pham_ID = item.San_Pham_ID;
+		m_objDatabinding.SL_Nhap = item.SL_Nhap;
+		m_objDatabinding.Don_Gia_Nhap = item.Don_Gia_Nhap;
+		Open_Edit(0);
 	}
 }

@@ -85,10 +85,11 @@
 	public bool checkSoLuong = false;
 	public bool checkDonGia = false;
 	public int auto = 1;
+	public F2012_1_Phieu_Nhap_Raw_Data_List v_objloadListNKRD;
 
 	[Parameter]
 	public EventCallback<CXNK_Nhap_Kho_Raw_Data> OnSaveCTPN { get; set; }
-
+	//Tạo một object Data2 để nhận dữ liệu từ List sau đó mới đẩy vào cho objData
 	[Parameter]
 	public CXNK_Nhap_Kho_Raw_Data m_objData2{ get; set; }
 
@@ -101,7 +102,10 @@
 	{
 		CXNK_Nhap_Kho_Raw_Data_Controller v_objCtrData = new();
 		m_objData = v_objCtrData.FQ_719_NKRD_sp_sel_Get_By_ID(r_iAuto_ID);
+		//Gán object của phần tử tương ứng được chọn từ List cho objData để bind lên text
+		m_objData = m_objData2;
 
+		//Dành cho việc tạo mới một Chi tiết phiếu nhập
 		if (m_objData == null)
 			m_objData = new CXNK_Nhap_Kho_Raw_Data();
 		else
@@ -185,8 +189,10 @@
 
 			// Gọi event callback để truyền thông tin về form chính
 			await OnSaveCTPN.InvokeAsync(v_objectNhapKho);
-			await Modal_Cancel();
 			StateHasChanged();
+			Load_Data_Init();
+			await Modal_Cancel();
+			
 		}
 	}
 

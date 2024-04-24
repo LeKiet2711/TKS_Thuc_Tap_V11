@@ -33,15 +33,21 @@
 
 									<div class="row mb-3">
 										<div class="col-lg-11">
+											<label class="form-label-info">@Get_Language_Data_Field("Số phiếu nhập kho")</label><br />
+											<span class="form-label">@CUtility.Get_Label_Text(@m_objData.So_Phieu_Nhap_Kho, false)</span>
+										</div>
+									</div>
+									<div class="row mb-3">
+										<div class="col-lg-11">
 											<label class="form-label-info">@Get_Language_Data_Field("Nhà cung cấp")</label><br />
-											<span class="form-label">@CUtility.Get_Label_Text(@m_objData.NCC_ID, false)</span>
+											<span class="form-label">@CUtility.Get_Label_Text(@m_objData.Ten_NCC, false)</span>
 										</div>
 									</div>
 
 									<div class="row mb-3">
 										<div class="col-lg-11">
-											<label class="form-label-info">@Get_Language_Data_Field("Số phiếu nhập kho")</label><br />
-											<span class="form-label">@CUtility.Get_Label_Text(@m_objData.So_Phieu_Nhap_Kho, false)</span>
+											<label class="form-label-info">@Get_Language_Data_Field("Kho")</label><br />
+											<span class="form-label">@CUtility.Get_Label_Text(@m_objData.Ten_Kho, false)</span>
 										</div>
 									</div>
 

@@ -30,26 +30,24 @@
 									<div class="col-lg-8">
 										<FControl_San_Pham_Combo @bind-BindingValue="m_objData.San_Pham_ID"></FControl_San_Pham_Combo>
 									</div>
-									
 								</div>
 							</div>
 
 							<div class="row mb-1">
 								<div class="col-lg-4 col-form-label">
-									<label class="form-label">@Get_Language_Data_Field("SL_Nhap"):</label>
+									<label class="form-label">@Get_Language_Data_Field("Số Lượng Nhập"):</label>
 								</div>
 								<div class="col-lg-8">
 									<input type="number" @bind="@m_objData.SL_Nhap" class="form-control">
-
 								</div>
 							</div>
 
 							<div class="row mb-1">
 								<div class="col-lg-4 col-form-label">
-									<label class="form-label">@Get_Language_Data_Field("Don_Gia_Nhap"):</label>
+									<label class="form-label">@Get_Language_Data_Field("Đơn Giá Nhập"):</label>
 								</div>
 								<div class="col-lg-8">
-									<input type="number" @bind="@m_objData2.Don_Gia_Nhap" class="form-control">
+									<input type="number" @bind="@m_objData.Don_Gia_Nhap" class="form-control">
 								</div>
 							</div>
 
@@ -68,6 +66,10 @@
 
 @code {
 	private CXNK_Nhap_Kho_Raw_Data m_objData = new();
+
+	[Parameter]
+	public CXNK_Nhap_Kho_Raw_Data m_objData2{ get; set; }
+
 
 	protected override void Init_Data()
 	{
@@ -120,4 +122,6 @@
 		r_objDes = v_objClone;
 		// End tracking
 	}
+
+
 }
