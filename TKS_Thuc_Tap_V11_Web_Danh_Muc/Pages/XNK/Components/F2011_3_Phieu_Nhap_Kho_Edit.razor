@@ -106,7 +106,6 @@
 
 @code {
 	private CXNK_Nhap_Kho m_objData = new();
-	List<string> m_Lst;
 	//Tạo 1 chi tiết phiếu nhập và 1 list chi tiết phiếu nhập để lưu lại sao đó xử lý từng item.Ten_SP,...
 
 	public List<CXNK_Nhap_Kho_Raw_Data> v_arrData = new();
@@ -146,11 +145,20 @@
 	protected override void Add_Data()
 	{
 		CXNK_Nhap_Kho_Controller v_objCtrData = new();
+		CXNK_Nhap_Kho_Raw_Data_Controller v_objCtrDataRD = new();
 		// m_objData.Kho_ID = r_iKho_ID;
 		m_objData.Last_Updated_By = r_strActive_User_Name;
 		m_objData.Last_Updated_By_Function = r_strActive_Function_Code;
 
 		m_objData.Auto_ID = r_iAuto_ID = v_objCtrData.FQ_718_NK_sp_ins_Insert(m_objData);
+
+		//Chạy vòng for thêm từng object chi tiết phiếu nhập vào database với Nhap_Kho_ID là mã Auto_ID của số phiếu nhập kho
+		foreach(CXNK_Nhap_Kho_Raw_Data item in v_arrData)
+		{
+			item.Nhap_Kho_ID = m_objData.Auto_ID;
+			item.Auto_ID = r_iAuto_ID = v_objCtrDataRD.FQ_719_NKRD_sp_ins_Insert(item);
+		}
+
 
 		// Đoạn code lưu key cho việc tracking log CRUD, vui lòng đừng xóa
 		r_strAdd_Key = m_objData.So_Phieu_Nhap_Kho;

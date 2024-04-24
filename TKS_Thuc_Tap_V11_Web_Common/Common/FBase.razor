@@ -28,6 +28,7 @@
     protected bool r_bIs_Show_Info = false;
     protected bool r_bIs_Show_Info_Drill_Down = false;
     public bool r_bIs_Show_Edit = false;
+    public bool r_bIs_Show_Edit_default = false;
     public bool r_bIs_Import_Excel_Edit = false;
     public bool r_bIs_Show_Filter = false;
     public bool r_bIs_Show_Help_Guide = false;
@@ -580,7 +581,7 @@
                     v_iQueue_ID = Process_Queue("Delete Data");
 
                     Delete_Data_Entry(p_iAuto_ID);
-
+                    
                     Load_Data_Init();
 
                     if (r_strDelete_Key == "")
@@ -1605,11 +1606,19 @@
         StateHasChanged();
     }
 
+    protected void Open_Edit_Default(long p_iAuto_ID)
+    {
+        r_strError = "";
+        r_iAuto_ID = p_iAuto_ID;
+        r_bIs_Show_Edit_default = true;
+        StateHasChanged();
+    }
+
     protected async Task Close_Edit(CEvent_Call_Back p_objEvent)
     {
         if (p_objEvent.Message_ID == (int)EModal_Result.Close_And_Reload_Data || p_objEvent.Message_ID == (int)EModal_Result.Close_Cancel)
             r_bIs_Show_Edit = false;
-
+            r_bIs_Show_Edit_default = false;
         if (p_objEvent.Message_ID == (int)EModal_Result.Close_And_Reload_Data)
         {
             await Task.Delay(1);

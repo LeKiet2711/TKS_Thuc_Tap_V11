@@ -42,6 +42,7 @@ namespace TKS_Thuc_Tap_V11_Web.Background_Service
 				CCache_Grid_UI_Global.Load_Cache_Grid_UI_Global();
                 CCache_Chu_Hang.Load_Cache_Chu_Hang();
                 CCache_Loai_San_Pham.Load_Cache_DM_Loai_San_Pham();
+                CCache_San_Pham.Load_Cache_DM_San_Pham();
                 CCache_Don_Vi_Tinh.Load_Cache_DM_Don_Vi_Tinh();
                 CCache_Kho.Load_Cache_DM_Kho();
                 CCache_NCC.Load_Cache_DM_NCC();

@@ -3,7 +3,6 @@
 <div class="modal fade show" tabindex="-1" role="dialog" aria-hidden="true" style="display: block; padding-left: 0px; background-color: rgba(10, 10, 10, .8);">
 	<div class="modal-dialog">
 		<div class="modal-content">
-
 			<div class="modal-header bg-light">
 				@if (r_iAuto_ID != 0)
 				{
@@ -16,19 +15,9 @@
 				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" @onclick="@(()=> Modal_Cancel())">
 				</button>
 			</div>
+
 			@((MarkupString)r_strError)
-			@if (checkSanPham)
-			{
-				<p style="color:red;text-align:center">Vui lòng chọn sản phẩm !</p>
-			}
-			@if (checkSoLuong)
-			{
-				<p style="color:red;text-align:center">Vui lòng nhập số lượng !</p>
-			}
-			@if (checkDonGia)
-			{
-				<p style="color:red;text-align:center">Vui lòng nhập đơn giá !</p>
-			}
+
 			<EditForm Model="@m_objData">
 				<div class="modal-body">
 					<div class="row">
@@ -38,59 +27,48 @@
 									<label class="form-label">@Get_Language_Data_Field("Sản phẩm"):</label>
 								</div>
 								<div class="col-lg-8">
-									<FControl_San_Pham_Combo @bind-BindingValue="m_objData.San_Pham_ID"></FControl_San_Pham_Combo>
-								</div>
-								
-							</div>
-
-							<div class="row mb-1">
-								<div class="col-lg-4 col-form-label">
-									<label class="form-label">@Get_Language_Data_Field("Số lượng nhập"):</label>
-								</div>
-								<div class="col-lg-8">
-									<input type="number" @bind="@m_objData.SL_Nhap" class="form-control">
+									<div class="col-lg-8">
+										<FControl_San_Pham_Combo @bind-BindingValue="m_objData.San_Pham_ID"></FControl_San_Pham_Combo>
+									</div>
 									
 								</div>
 							</div>
 
 							<div class="row mb-1">
 								<div class="col-lg-4 col-form-label">
-									<label class="form-label">@Get_Language_Data_Field("Đơn giá nhập"):</label>
+									<label class="form-label">@Get_Language_Data_Field("SL_Nhap"):</label>
+								</div>
+								<div class="col-lg-8">
+									<input type="number" @bind="@m_objData.SL_Nhap" class="form-control">
+
+								</div>
+							</div>
+
+							<div class="row mb-1">
+								<div class="col-lg-4 col-form-label">
+									<label class="form-label">@Get_Language_Data_Field("Don_Gia_Nhap"):</label>
 								</div>
 								<div class="col-lg-8">
 									<input type="number" @bind="@m_objData.Don_Gia_Nhap" class="form-control">
-								</div>
 
+								</div>
 							</div>
 
 						</div>
 					</div>
+
 				</div>
 			</EditForm>
 
 			<div class="modal-footer">
-				<button type="button" class="btn btn-primary" @onclick="Save_CTPN">@Get_Language_Data_Field("Lưu")</button>
+				<button type="button" class="btn btn-primary" @onclick="@Save_Data">@Get_Language_Data_Field("Lưu Thay Đổi")</button>
 			</div>
 		</div>
 	</div>
 </div>
 
-
 @code {
-
 	private CXNK_Nhap_Kho_Raw_Data m_objData = new();
-	public List<CXNK_Nhap_Kho_Raw_Data> m_LstNhapKho = new List<CXNK_Nhap_Kho_Raw_Data>();
-	private bool isPopupVisible = false;
-	public bool checkSanPham=false;
-	public bool checkSoLuong = false;
-	public bool checkDonGia = false;
-	public int auto = 1;
-
-	[Parameter]
-	public EventCallback<CXNK_Nhap_Kho_Raw_Data> OnSaveCTPN { get; set; }
-
-	[Parameter]
-	public CXNK_Nhap_Kho_Raw_Data m_objData2{ get; set; }
 
 	protected override void Init_Data()
 	{
@@ -99,7 +77,7 @@
 
 	protected override void Load_Data()
 	{
-		CXNK_Nhap_Kho_Raw_Data_Controller v_objCtrData = new();
+		CXNK_Nhap_Kho_Raw_Data_Controller v_objCtrData = new();	
 		m_objData = v_objCtrData.FQ_719_NKRD_sp_sel_Get_By_ID(r_iAuto_ID);
 
 		if (m_objData == null)
@@ -114,18 +92,6 @@
 			r_objSource = v_objClone;
 			// End tracking
 		}
-	}
-
-	public void Save_List()
-	{
-		CXNK_Nhap_Kho_Raw_Data v_objectNhapKho = new CXNK_Nhap_Kho_Raw_Data();
-
-		v_objectNhapKho.Ten_San_Pham = CCache_San_Pham.Get_Data_By_ID(m_objData.San_Pham_ID).Ten_San_Pham;
-		v_objectNhapKho.San_Pham_ID = m_objData.San_Pham_ID;
-		v_objectNhapKho.SL_Nhap = m_objData.SL_Nhap;
-		v_objectNhapKho.Don_Gia_Nhap = m_objData.Don_Gia_Nhap;
-		m_LstNhapKho.Add(v_objectNhapKho);
-
 	}
 
 	protected override void Add_Data()
@@ -155,39 +121,4 @@
 		r_objDes = v_objClone;
 		// End tracking
 	}
-
-	public async Task Save_CTPN()
-	{
-		checkSanPham = false;
-		checkSoLuong = false;
-		checkDonGia = false;
-		if (m_objData.San_Pham_ID == 0)
-		{
-			checkSanPham = true;
-		}
-		else if (m_objData.SL_Nhap == 0)
-		{
-			checkSoLuong = true;
-		}
-		else if (m_objData.Don_Gia_Nhap==0)
-		{
-			checkDonGia = true;
-		}
-		else
-		{
-			CXNK_Nhap_Kho_Raw_Data v_objectNhapKho = new CXNK_Nhap_Kho_Raw_Data();
-			v_objectNhapKho.Auto_ID = auto + 1;
-			v_objectNhapKho.San_Pham_ID = m_objData.San_Pham_ID;
-			v_objectNhapKho.Ten_San_Pham = CCache_San_Pham.Get_Data_By_ID(m_objData.San_Pham_ID).Ten_San_Pham;
-			v_objectNhapKho.SL_Nhap = m_objData.SL_Nhap;
-			v_objectNhapKho.Don_Gia_Nhap = m_objData.Don_Gia_Nhap;
-			//m_LstNhapKho.Add(v_objectNhapKho);
-
-			// Gọi event callback để truyền thông tin về form chính
-			await OnSaveCTPN.InvokeAsync(v_objectNhapKho);
-			await Modal_Cancel();
-			StateHasChanged();
-		}
-	}
-
 }

@@ -1,0 +1,33 @@
+﻿@inherits FBase_Combo;
+
+<TelerikMultiColumnComboBox @bind-Value="@BindingValue"
+                            ScrollMode="@DropDownScrollMode.Virtual"
+                            Data="@m_arrData"
+                            ValueField="@(nameof(CDM_San_Pham.Auto_ID))"
+                            TextField="@(nameof(CDM_San_Pham.Ten_San_Pham))"
+                            Width="100%"
+                            PageSize="10"
+                            ItemHeight="35"
+                            Filterable="true"
+                            FilterOperator="@StringFilterOperator.Contains"
+                            ListHeight="260px">
+    <MultiColumnComboBoxColumns>
+        <MultiColumnComboBoxColumn Field="@nameof(CDM_San_Pham.Ma_San_Pham)" Title="@Get_Language_Data_Field("Mã sản phẩm")" Width="150px" Class="k-tks-combobox-item" HeaderClass="k-tks-combobox-header" />
+        <MultiColumnComboBoxColumn Field="@nameof(CDM_San_Pham.Ten_San_Pham)" Title="@Get_Language_Data_Field("Tên sản phẩm")" Width="250px" Class="k-tks-combobox-item" HeaderClass="k-tks-combobox-header" />
+    </MultiColumnComboBoxColumns>
+</TelerikMultiColumnComboBox>
+
+@code {
+    List<CDM_San_Pham> m_arrData = new();
+
+    protected override void Load_Data()
+    {
+        m_arrData = CCache_San_Pham.List_Data();
+        CDM_San_Pham v_objLSP = new();
+        v_objLSP.Auto_ID = -4;
+        //v_objLSP.Ten_LSP = "Tất Cả";
+        //v_objLSP.Ma_LSP = "Tất Cả";
+        m_arrData.Insert(-1, v_objLSP);
+    }
+
+}

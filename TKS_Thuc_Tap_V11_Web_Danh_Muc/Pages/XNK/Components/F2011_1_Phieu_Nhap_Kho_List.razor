@@ -30,6 +30,12 @@
 									<button class="dropdown-item" type="button" @onclick="@(()=> Open_Edit((context as CXNK_Nhap_Kho).Auto_ID))"><i class="ri-edit-2-line align-bottom me-1"></i> &nbsp; @Get_Language_Data_Field("Hiệu chỉnh")</button>
 								</li>
 							}
+							@if (r_objChuc_Nang.Is_Have_Edit_Permission == true)
+							{
+								<li>
+									<button class="dropdown-item" type="button" @onclick="@(()=> Open_Edit_Default((context as CXNK_Nhap_Kho).Auto_ID))"><i class="ri-edit-2-line align-bottom me-1"></i> &nbsp; @Get_Language_Data_Field("Hiệu chỉnh chi tiết")</button>
+								</li>
+							}
 							@if (r_objChuc_Nang.Is_Have_Delete_Permission == true)
 							{
 								<li>
@@ -71,6 +77,11 @@
 @if (r_bIs_Show_Edit == true)
 {
 	<F2011_3_Phieu_Nhap_Kho_Edit r_iAuto_ID="@r_iAuto_ID" OnClose="@Close_Edit"></F2011_3_Phieu_Nhap_Kho_Edit>
+}
+
+@if (r_bIs_Show_Edit_default == true)
+{
+	<F2012_33_Phieu_Nhap_Raw_Data_Edit r_iAuto_ID="@r_iAuto_ID" OnClose="@Close_Edit"></F2012_33_Phieu_Nhap_Raw_Data_Edit>
 }
 
 @if (r_bIs_Show_Message_Info == true)
