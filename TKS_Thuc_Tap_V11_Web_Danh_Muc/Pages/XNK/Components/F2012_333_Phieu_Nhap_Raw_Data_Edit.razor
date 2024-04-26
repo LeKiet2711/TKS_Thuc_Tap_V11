@@ -96,12 +96,7 @@
 		CXNK_Nhap_Kho_Raw_Data_Controller v_objCtrData = new();
 		m_objData.Last_Updated_By = r_strActive_User_Name;
 		m_objData.Last_Updated_By_Function = r_strActive_Function_Code;
-
 		m_objData.Auto_ID = r_iAuto_ID = v_objCtrData.FQ_719_NKRD_sp_ins_Insert(m_objData);
-
-		// Đoạn code lưu key cho việc tracking log CRUD, vui lòng đừng xóa
-		//r_strAdd_Key = m_objData.SL_Nhap;
-		// End tracking
 	}
 
 	protected override void Update_Data()
@@ -109,9 +104,7 @@
 		CXNK_Nhap_Kho_Raw_Data_Controller v_objCtrData = new();
 		m_objData.Last_Updated_By = r_strActive_User_Name;
 		m_objData.Last_Updated_By_Function = r_strActive_Function_Code;
-
 		v_objCtrData.FQ_719_NKRD_sp_upd_Update(m_objData);
-
 		// Đoạn code lưu key cho việc tracking log CRUD, vui lòng đừng xóa
 		CXNK_Nhap_Kho_Raw_Data v_objClone = new();
 		CUtility.Clone_Entity(m_objData, v_objClone);
