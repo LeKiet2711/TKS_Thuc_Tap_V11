@@ -57,7 +57,6 @@
 					<GridColumn Field="Ten_Kho" Title="Kho" Width="100px"></GridColumn>
 					<GridColumn Field="Ngay_Nhap_Kho" Title="Ngày Nhập Kho" Width="120px"></GridColumn>
 					<GridColumn Field="Ghi_Chu" Title="Ghi Chú" Width="200px"></GridColumn>
-					//<GridColumn Field="" Title=""><FooterTemplate Context="Footer"></FooterTemplate></GridColumn>
 				}
 			</GridColumns>
 		</TelerikGrid>
@@ -104,7 +103,6 @@
 
 		//Format lại grid đúng chuẩn, Đặt trước hàm load dữ liệu vì nó sẽ chạy nhanh hơn
 		Format_Grid(grdData);
-
 		v_arrData = v_objCtrData.FQ_718_NK_sp_sel_List_By_Created(r_objFilter.Date_From, r_objFilter.Date_To);
 	}
 
