@@ -29,7 +29,6 @@
 								</div>
 								<div class="col-lg-8">
 									<input @ref="txtFocus" @bind="@m_objData.So_Phieu_Nhap_Kho" class="form-control">
-
 								</div>
 							</div>
 
@@ -39,7 +38,6 @@
 								</div>
 								<div class="col-lg-8">
 									<FControl_NCC_Combo @bind-BindingValue=m_objData.NCC_ID></FControl_NCC_Combo>
-
 								</div>
 							</div>
 
@@ -49,7 +47,6 @@
 								</div>
 								<div class="col-lg-8">
 									<FControl_Kho_Combo @bind-BindingValue=m_objData.Kho_ID></FControl_Kho_Combo>
-
 								</div>
 							</div>
 
@@ -60,7 +57,6 @@
 								</div>
 								<div class="col-lg-8">
 									<TelerikDatePicker @bind-Value="@m_objData.Ngay_Nhap_Kho" Format="@CConfig.Date_Format_String"></TelerikDatePicker>
-
 								</div>
 							</div>
 
@@ -70,7 +66,6 @@
 								</div>
 								<div class="col-lg-8">
 									<input @bind="@m_objData.Ghi_Chu" class="form-control">
-
 								</div>
 							</div>
 
@@ -111,9 +106,6 @@
 	public List<CXNK_Nhap_Kho_Raw_Data> v_arrData = new();
 	TelerikGrid<CXNK_Nhap_Kho_Raw_Data> grdData = new();
 	public F2012_1_Phieu_Nhap_Raw_Data_List v_objloadListNKRD;
-
-	[Parameter]
-	public EventCallback<List<CXNK_Nhap_Kho_Raw_Data>> OnChangeCTPN { get; set; }
 
 	[Parameter]
 	public EventCallback<List<CXNK_Nhap_Kho_Raw_Data>> OnSaveCTPN { get; set; }

@@ -88,9 +88,6 @@
 	public F2012_1_Phieu_Nhap_Raw_Data_List v_objloadListNKRD;
 
 	[Parameter]
-	public EventCallback<CXNK_Nhap_Kho_Raw_Data> OnChangeCTPN { get; set; }
-
-	[Parameter]
 	public EventCallback<CXNK_Nhap_Kho_Raw_Data> OnSaveCTPN { get; set; }
 	//Tạo một object Data2 để nhận dữ liệu từ List sau đó mới đẩy vào cho objData
 	[Parameter]
@@ -194,15 +191,6 @@
 		}
 		else
 		{
-			// CXNK_Nhap_Kho_Raw_Data v_objectNhapKho = new CXNK_Nhap_Kho_Raw_Data();
-			// v_objectNhapKho.Auto_ID = auto + 1;
-			// v_objectNhapKho.San_Pham_ID = m_objData.San_Pham_ID;
-			// v_objectNhapKho.Ten_San_Pham = CCache_San_Pham.Get_Data_By_ID(m_objData.San_Pham_ID).Ten_San_Pham;
-			// v_objectNhapKho.SL_Nhap = m_objData.SL_Nhap;
-			// v_objectNhapKho.Don_Gia_Nhap = m_objData.Don_Gia_Nhap;
-
-			// Gọi event callback để truyền thông tin về form chính
-
 			CXNK_Nhap_Kho_Raw_Data v_objClone = new();
 			CUtility.Clone_Entity(m_objData, v_objClone);
 			r_objDes = v_objClone;
