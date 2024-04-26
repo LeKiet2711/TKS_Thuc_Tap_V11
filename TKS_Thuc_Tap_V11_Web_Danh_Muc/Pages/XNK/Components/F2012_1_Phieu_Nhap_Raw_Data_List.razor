@@ -91,10 +91,7 @@
 	public void Open_Edit_ArrayList(CXNK_Nhap_Kho_Raw_Data item)
 	{
 		//m_objDatabinding.Auto_ID = item.Auto_ID;
-		m_objDatabinding.Ten_San_Pham = item.Ten_San_Pham;
-		m_objDatabinding.San_Pham_ID = item.San_Pham_ID;
-		m_objDatabinding.SL_Nhap = item.SL_Nhap;
-		m_objDatabinding.Don_Gia_Nhap = item.Don_Gia_Nhap;
-		Open_Edit(0);
+		m_objDatabinding = item;
+		Open_Edit(-1);
 	}
 }

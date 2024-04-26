@@ -1,7 +1,7 @@
 ﻿@inherits FBase_Edit;
 
 <div class="modal fade show" tabindex="-1" role="dialog" aria-hidden="true" style="display: block; padding-left: 0px; background-color: rgba(10, 10, 10, .8);">
-	<div class="modal-dialog">
+	<div class="modal-dialog" >
 		<div class="modal-content">
 
 			<div class="modal-header bg-light">
@@ -113,6 +113,9 @@
 	public F2012_1_Phieu_Nhap_Raw_Data_List v_objloadListNKRD;
 
 	[Parameter]
+	public EventCallback<List<CXNK_Nhap_Kho_Raw_Data>> OnChangeCTPN { get; set; }
+
+	[Parameter]
 	public EventCallback<List<CXNK_Nhap_Kho_Raw_Data>> OnSaveCTPN { get; set; }
 
 
@@ -158,8 +161,6 @@
 			item.Nhap_Kho_ID = m_objData.Auto_ID;
 			item.Auto_ID = r_iAuto_ID = v_objCtrDataRD.FQ_719_NKRD_sp_ins_Insert(item);
 		}
-
-
 		// Đoạn code lưu key cho việc tracking log CRUD, vui lòng đừng xóa
 		r_strAdd_Key = m_objData.So_Phieu_Nhap_Kho;
 		// End tracking
@@ -184,6 +185,13 @@
 	public async Task Save_CTPN(CXNK_Nhap_Kho_Raw_Data chiTietPhieuNhap)
 	{
 		v_arrData.Add(chiTietPhieuNhap);
+		v_objloadListNKRD.Load_Data_Init();
+		//StateHasChanged();
+	}
+
+	public async Task Change_CTPN(CXNK_Nhap_Kho_Raw_Data chiTietPhieuNhapp)
+	{
+		v_arrData.Add(chiTietPhieuNhapp);
 		v_objloadListNKRD.Load_Data_Init();
 		//StateHasChanged();
 	}
