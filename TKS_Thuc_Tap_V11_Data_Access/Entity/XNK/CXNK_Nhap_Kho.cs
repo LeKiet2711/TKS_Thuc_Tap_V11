@@ -9,7 +9,6 @@ namespace TKS_Thuc_Tap_V11_Data_Access.Entity.XNK
 {
     public class CXNK_Nhap_Kho
     {
-
         private long m_lngAuto_ID;
         private long m_lngKho_ID;
         private long m_lngNCC_ID;

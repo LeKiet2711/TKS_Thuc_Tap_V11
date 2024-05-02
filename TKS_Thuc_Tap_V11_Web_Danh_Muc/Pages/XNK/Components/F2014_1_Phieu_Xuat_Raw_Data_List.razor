@@ -20,49 +20,47 @@
 							@if (r_objChuc_Nang.Is_Have_Edit_Permission == true)
 							{
 								<li>
-									<button class="dropdown-item" type="button" @onclick="@(()=> Open_Edit_ArrayList(context as CXNK_Nhap_Kho_Raw_Data))"><i class="ri-edit-2-line align-bottom me-1"></i> &nbsp; @Get_Language_Data_Field("Hiệu chỉnh")</button>
+									<button class="dropdown-item" type="button" @onclick="@(()=> Open_Edit_ArrayList(context as CXNK_Xuat_Kho_Raw_Data))"><i class="ri-edit-2-line align-bottom me-1"></i> &nbsp; @Get_Language_Data_Field("Hiệu chỉnh")</button>
 								</li>
 							}
 							@if (r_objChuc_Nang.Is_Have_Delete_Permission == true)
 							{
-								<button class="dropdown-item" type="button" @onclick="() => Delete_Item(context as CXNK_Nhap_Kho_Raw_Data)"><i class="ri-edit-2-line align-bottom me-1"></i> &nbsp; @Get_Language_Data_Field("Xóa")</button>
+								<button class="dropdown-item" type="button" @onclick="() => Delete_Item(context as CXNK_Xuat_Kho_Raw_Data)"><i class="ri-edit-2-line align-bottom me-1"></i> &nbsp; @Get_Language_Data_Field("Xóa")</button>
+
 							}
 						</ul>
 					</Template>
 				</GridColumn>
-				@if (CCache_Grid_UI_Global.List_Data_By_Code("2012", "grdData").Count > 0)
+				@if (CCache_Grid_UI_Global.List_Data_By_Code("2014", "grdData").Count > 0)
 				{
-					<FCommon_General_Col_Grid m_strFCode="2012" m_strTen_Grid="grdData"></FCommon_General_Col_Grid>
+					<FCommon_General_Col_Grid m_strFCode="2014" m_strTen_Grid="grdData"></FCommon_General_Col_Grid>
 				}
 				else
 				{
 					<GridColumn Field="Ten_San_Pham" Title="Sản Phẩm" Width="100px"></GridColumn>
-					<GridColumn Field="SL_Nhap" Title="Số lượng nhập" Width="100px"></GridColumn>
-					<GridColumn Field="Don_Gia_Nhap" Title="Đơn giá nhập" Width="100px"></GridColumn>
+					<GridColumn Field="SL_Xuat" Title="Số Lượng Xuất" Width="100px"></GridColumn>
+					<GridColumn Field="Don_Gia_Xuat" Title="Đơn Giá Xuất" Width="100px"></GridColumn>
 					<GridColumn Field="" Title=""><FooterTemplate Context="Footer"></FooterTemplate></GridColumn>
 				}
 			</GridColumns>
-
 		</TelerikGrid>
 	</div>
 </div>
 
-
 @if (r_bIs_Show_Edit == true)
 {
-	<F2012_3_Phieu_Nhap_Raw_Data_Edit r_iAuto_ID="@r_iAuto_ID" m_objData2="@m_objDatabinding" OnClose="@Close_Edit"></F2012_3_Phieu_Nhap_Raw_Data_Edit>
+	<F2014_3_Phieu_Xuat_Raw_Data_Edit r_iAuto_ID="@r_iAuto_ID" OnClose="@Close_Edit"></F2014_3_Phieu_Xuat_Raw_Data_Edit>
 }
 
 @code {
 	public int i = 0;
-	public List<CXNK_Nhap_Kho_Raw_Data> v_arrData = new();
-	TelerikGrid<CXNK_Nhap_Kho_Raw_Data> grdData = new();
+	public List<CXNK_Xuat_Kho_Raw_Data> v_arrData = new();
+	TelerikGrid<CXNK_Xuat_Kho_Raw_Data> grdData = new();
 
-	public CXNK_Nhap_Kho_Raw_Data m_objDatabinding = new();
+	public CXNK_Xuat_Kho_Raw_Data m_objDatabinding = new();
 
 	[Parameter]
-	public List<CXNK_Nhap_Kho_Raw_Data> p_arrData { get; set; }
-
+	public List<CXNK_Xuat_Kho_Raw_Data> p_arrData { get; set; }
 	protected override void Init_Data()
 	{
 
@@ -70,23 +68,22 @@
 
 	protected override void Load_Data()
 	{
-		CXNK_Nhap_Kho_Raw_Data_Controller v_objCtrData = new();
+		CXNK_Xuat_Kho_Raw_Data_Controller v_objCtrData = new();
 
 		//Format lại grid đúng chuẩn, Đặt trước hàm load dữ liệu vì nó sẽ chạy nhanh hơn
 		Format_Grid(grdData);
 
-		//Truyền dữ liệu arrData từ Phieu_Nhap_Kho_Edit sang
 		v_arrData = p_arrData;
 	}
 
-	public void Delete_Item(CXNK_Nhap_Kho_Raw_Data item)
+	public void Delete_Item(CXNK_Xuat_Kho_Raw_Data item)
 	{
 		v_arrData.Remove(item);
 		StateHasChanged();
 		Load_Data_Init();
 	}
 
-	public void Open_Edit_ArrayList(CXNK_Nhap_Kho_Raw_Data item)
+	public void Open_Edit_ArrayList(CXNK_Xuat_Kho_Raw_Data item)
 	{
 		m_objDatabinding = item;
 		Open_Edit(-1);

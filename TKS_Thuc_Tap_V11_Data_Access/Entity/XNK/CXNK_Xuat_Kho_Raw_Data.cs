@@ -7,13 +7,13 @@ using TKS_Thuc_Tap_V11_Data_Access.Utility;
 
 namespace TKS_Thuc_Tap_V11_Data_Access.Entity.XNK
 {
-	public class CXNK_Xuat_Kho
+	public class CXNK_Xuat_Kho_Raw_Data
 	{
 		private long m_lngAuto_ID;
-		private long m_lngKho_ID;
-		private string m_strSo_Phieu_Xuat_Kho;
-		private DateTime? m_dtmNgay_Xuat_Kho;
-		private string m_strGhi_Chu;
+		private long m_lngXuat_Kho_ID;
+		private long m_lngSan_Pham_ID;
+		private int m_intSL_Xuat;
+		private double m_dblDon_Gia_Xuat;
 		private int m_intdeleted;
 		private DateTime? m_dtmCreated;
 		private string m_strCreated_By;
@@ -21,9 +21,9 @@ namespace TKS_Thuc_Tap_V11_Data_Access.Entity.XNK
 		private DateTime? m_dtmLast_Updated;
 		private string m_strLast_Updated_By;
 		private string m_strLast_Updated_By_Function;
-		private string m_strTen_Kho;
+		private string m_strTen_San_Pham;
 
-		public CXNK_Xuat_Kho()
+		public CXNK_Xuat_Kho_Raw_Data()
 		{
 			ResetData();
 		}
@@ -31,10 +31,10 @@ namespace TKS_Thuc_Tap_V11_Data_Access.Entity.XNK
 		public void ResetData()
 		{
 			m_lngAuto_ID = CConst.INT_VALUE_NULL;
-			m_lngKho_ID = CConst.INT_VALUE_NULL;
-			m_strSo_Phieu_Xuat_Kho = CConst.STR_VALUE_NULL;
-			m_dtmNgay_Xuat_Kho = CConst.DTM_VALUE_NULL;
-			m_strGhi_Chu = CConst.STR_VALUE_NULL;
+			m_lngXuat_Kho_ID = CConst.INT_VALUE_NULL;
+			m_lngSan_Pham_ID = CConst.INT_VALUE_NULL;
+			m_intSL_Xuat = CConst.INT_VALUE_NULL;
+			m_dblDon_Gia_Xuat = CConst.FLT_VALUE_NULL;
 			m_intdeleted = CConst.INT_VALUE_NULL;
 			m_dtmCreated = CConst.DTM_VALUE_NULL;
 			m_strCreated_By = CConst.STR_VALUE_NULL;
@@ -56,62 +56,63 @@ namespace TKS_Thuc_Tap_V11_Data_Access.Entity.XNK
 			}
 		}
 
-		public long Kho_ID
+		public long Xuat_Kho_ID
 		{
 			get
 			{
-				return m_lngKho_ID;
+				return m_lngXuat_Kho_ID;
 			}
 			set
 			{
-				m_lngKho_ID = value;
+				m_lngXuat_Kho_ID = value;
 			}
 		}
 
-		public string Ten_Kho
+		public long San_Pham_ID
 		{
 			get
 			{
-				return m_strTen_Kho;
+				return m_lngSan_Pham_ID;
 			}
 			set
 			{
-				m_strTen_Kho = value;
-			}
-		}
-		public string So_Phieu_Xuat_Kho
-		{
-			get
-			{
-				return m_strSo_Phieu_Xuat_Kho;
-			}
-			set
-			{
-				m_strSo_Phieu_Xuat_Kho = value.Trim();
+				m_lngSan_Pham_ID = value;
 			}
 		}
 
-		public DateTime? Ngay_Xuat_Kho
+		public string Ten_San_Pham
 		{
 			get
 			{
-				return m_dtmNgay_Xuat_Kho;
+				return m_strTen_San_Pham;
 			}
 			set
 			{
-				m_dtmNgay_Xuat_Kho = value;
+				m_strTen_San_Pham = value;
+			}
+
+		}
+		public int SL_Xuat
+		{
+			get
+			{
+				return m_intSL_Xuat;
+			}
+			set
+			{
+				m_intSL_Xuat = value;
 			}
 		}
 
-		public string Ghi_Chu
+		public double Don_Gia_Xuat
 		{
 			get
 			{
-				return m_strGhi_Chu;
+				return m_dblDon_Gia_Xuat;
 			}
 			set
 			{
-				m_strGhi_Chu = value.Trim();
+				m_dblDon_Gia_Xuat = value;
 			}
 		}
 
