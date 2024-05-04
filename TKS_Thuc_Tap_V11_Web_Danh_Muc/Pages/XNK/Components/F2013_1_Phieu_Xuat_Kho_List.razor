@@ -30,6 +30,12 @@
 									<button class="dropdown-item" type="button" @onclick="@(()=> Open_Edit((context as CXNK_Xuat_Kho).Auto_ID))"><i class="ri-edit-2-line align-bottom me-1"></i> &nbsp; @Get_Language_Data_Field("Hiệu chỉnh")</button>
 								</li>
 							}
+							@if (r_objChuc_Nang.Is_Have_Edit_Permission == true)
+							{
+								<li>
+									<button class="dropdown-item" type="button" @onclick="@(()=> Open_Edit_Default((context as CXNK_Xuat_Kho).Auto_ID))"><i class="ri-edit-2-line align-bottom me-1"></i> &nbsp; @Get_Language_Data_Field("Hiệu chỉnh chi tiết")</button>
+								</li>
+							}
 							@if (r_objChuc_Nang.Is_Have_Delete_Permission == true)
 							{
 								<li>
@@ -70,7 +76,14 @@
 	<F2013_3_Phieu_Xuat_Kho_Edit r_iAuto_ID="@r_iAuto_ID" OnClose="@Close_Edit"></F2013_3_Phieu_Xuat_Kho_Edit>
 }
 
+@if (r_bIs_Show_Edit_default == true)
+{
+	<F2014_33_Phieu_Xuat_Raw_Data_Edit r_iAuto_ID="@r_iAuto_ID" OnClose="@Close_Edit"></F2014_33_Phieu_Xuat_Raw_Data_Edit>
+}
+
+
 @code {
+	//Hiện tại còn thiếu  333, 333 là form sửa trong chi tiết (Khi hiệu chỉnh chi tiết phiếu xuất) để xóa, sửa các phần tử trong hiệu chỉnh chi tiết
 	public List<CXNK_Xuat_Kho> v_arrData = new();
 	TelerikGrid<CXNK_Xuat_Kho> grdData = new();
 

@@ -5,10 +5,6 @@
 		@((MarkupString)r_strError)
 
 		<TelerikGrid Data="@v_arrData" Height="calc(100vh - 170px)" Resizable="true" Reorderable="true" @ref="@grdData">
-			<GridExport>
-				<GridExcelExport FileName="Phieu_Nhap_Raw_Data_Export" AllPages="true" />
-				<GridCsvExport FileName="Phieu_Nhap_Raw_Data_Export" AllPages="true" />
-			</GridExport>
 			<GridColumns>
 				<GridCheckboxColumn SelectAll="true" CheckBoxOnlySelection="true" Width="30px"></GridCheckboxColumn>
 				<GridColumn Width="60px">

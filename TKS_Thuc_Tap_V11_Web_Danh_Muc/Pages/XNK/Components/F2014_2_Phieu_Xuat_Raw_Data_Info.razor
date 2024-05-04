@@ -30,12 +30,6 @@
 						<div class="tab-pane active show" id="thongtin" role="tabpanel">
 							<div class="row">
 								<div class="col-lg-6">
-									<div class="row mb-3">
-										<div class="col-lg-11">
-											<label class="form-label-info">@Get_Language_Data_Field("ID")</label><br />
-											<span class="form-label">@CUtility.Get_Label_Text(@m_objData.Auto_ID, true)</span>
-										</div>
-									</div>
 
 									<div class="row mb-3">
 										<div class="col-lg-11">
@@ -47,13 +41,13 @@
 									<div class="row mb-3">
 										<div class="col-lg-11">
 											<label class="form-label-info">@Get_Language_Data_Field("Sản phẩm")</label><br />
-											<span class="form-label">@CUtility.Get_Label_Text(@m_objData.San_Pham_ID, false)</span>
+											<span class="form-label">@CUtility.Get_Label_Text(@m_objData.Ten_San_Pham, false)</span>
 										</div>
 									</div>
 
 									<div class="row mb-3">
 										<div class="col-lg-11">
-											<label class="form-label-info">@Get_Language_Data_Field("SL_Xuat")</label><br />
+											<label class="form-label-info">@Get_Language_Data_Field("Số lượng xuất")</label><br />
 											<span class="form-label">@CUtility.Get_Label_Text(@m_objData.SL_Xuat, false)</span>
 										</div>
 									</div>
@@ -136,6 +130,5 @@
 
 		m_objData = v_objCtrData.FQ_734_XKRD_sp_sel_Get_By_ID(r_iAuto_ID);
 
-		m_arrRAH = v_objCtrRAH.FCommon_Sys_sp_sel_List_Log_Record_Action_History(r_iAuto_ID);
 	}
 }

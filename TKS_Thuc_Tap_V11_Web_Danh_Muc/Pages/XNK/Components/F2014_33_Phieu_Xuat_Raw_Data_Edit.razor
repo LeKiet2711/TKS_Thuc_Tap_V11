@@ -1,0 +1,59 @@
+﻿@inherits FBase_Edit;
+
+<div class="modal fade show" tabindex="-1" role="dialog" aria-hidden="true" style="display: block; padding-left: 0px; background-color: rgba(10, 10, 10, .8);">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header bg-light">
+				@if (r_iAuto_ID != 0)
+				{
+					<h5 class="modal-title">@Get_Language_Data_Field("Hiệu chỉnh chi tiết")</h5>
+				}
+				else
+				{
+					<h5 class="modal-title">@Get_Language_Data_Field("Thêm mới")</h5>
+				}
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" @onclick="@(()=> Modal_Cancel())">
+				</button>
+			</div>
+
+			@((MarkupString)r_strError)
+
+			<F2014_11_Phieu_Xuat_Raw_Data_List v_auto_id="r_iAuto_ID"></F2014_11_Phieu_Xuat_Raw_Data_List>
+
+		</div>
+	</div>
+</div>
+
+@code {
+	private CXNK_Xuat_Kho_Raw_Data m_objData = new();
+
+	protected override void Init_Data()
+	{
+
+	}
+
+	protected override void Add_Data()
+	{
+		CXNK_Xuat_Kho_Raw_Data_Controller v_objCtrData = new();
+		m_objData.Last_Updated_By = r_strActive_User_Name;
+		m_objData.Last_Updated_By_Function = r_strActive_Function_Code;
+
+		m_objData.Auto_ID = r_iAuto_ID = v_objCtrData.FQ_734_XKRD_sp_ins_Insert(m_objData);
+
+	}
+
+	protected override void Update_Data()
+	{
+		CXNK_Xuat_Kho_Raw_Data_Controller v_objCtrData = new();
+		m_objData.Last_Updated_By = r_strActive_User_Name;
+		m_objData.Last_Updated_By_Function = r_strActive_Function_Code;
+
+		v_objCtrData.FQ_734_XKRD_sp_upd_Update(m_objData);
+
+		// Đoạn code lưu key cho việc tracking log CRUD, vui lòng đừng xóa
+		CXNK_Xuat_Kho_Raw_Data v_objClone = new();
+		CUtility.Clone_Entity(m_objData, v_objClone);
+		r_objDes = v_objClone;
+		// End tracking
+	}
+}

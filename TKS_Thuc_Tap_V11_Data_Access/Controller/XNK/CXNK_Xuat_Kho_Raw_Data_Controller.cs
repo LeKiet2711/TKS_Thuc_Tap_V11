@@ -13,7 +13,7 @@ namespace TKS_Thuc_Tap_V11_Data_Access.Controller.XNK
 {
 	public class CXNK_Xuat_Kho_Raw_Data_Controller
 	{
-		public List<CXNK_Xuat_Kho_Raw_Data> FQ_734_XKRD_sp_sel_List_By_Created(DateTime? p_dtmFrom, DateTime? p_dtmTo)
+		public List<CXNK_Xuat_Kho_Raw_Data> FQ_734_XKRD_sp_sel_List_By_Created(long Autoid, DateTime? p_dtmFrom, DateTime? p_dtmTo)
 		{
 			List<CXNK_Xuat_Kho_Raw_Data> v_arrRes = new List<CXNK_Xuat_Kho_Raw_Data>();
 			DataTable v_dt = new DataTable();
@@ -23,7 +23,7 @@ namespace TKS_Thuc_Tap_V11_Data_Access.Controller.XNK
 				p_dtmFrom = CUtility_Date.Convert_To_Dau_Ngay(p_dtmFrom);
 				p_dtmTo = CUtility_Date.Convert_To_Cuoi_Ngay(p_dtmTo);
 
-				CSqlHelper.FillDataTable(CConfig.TKS_Thuc_Tap_V11_Conn_String, v_dt, "FQ_734_XKRD_sp_sel_List_By_Created", p_dtmFrom, p_dtmTo);
+				CSqlHelper.FillDataTable(CConfig.TKS_Thuc_Tap_V11_Conn_String, v_dt, "FQ_734_XKRD_sp_sel_List_By_Created", Autoid, p_dtmFrom, p_dtmTo);
 
 				foreach (DataRow v_row in v_dt.Rows)
 				{
