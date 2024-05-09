@@ -19,11 +19,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="Reports\SampleReport.trdp" />
+    <None Remove="Reports\ReportPhieuNhap.trdp" />
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="Reports\SampleReport.trdp">
+    <Content Include="Reports\ReportPhieuNhap.trdp">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
