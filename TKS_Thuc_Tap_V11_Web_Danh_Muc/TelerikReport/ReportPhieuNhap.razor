@@ -1,4 +1,4 @@
-﻿@page "/reportphieunhap/{Nhap_Kho_ID:int}"
+﻿@page "/reportphieunhap/{Nhap_Kho_ID}"
 
 <PageTitle>Report Viewer</PageTitle>
 
@@ -36,7 +36,7 @@
     public double Scale { get; set; } = 1.0;
 
     [Parameter]
-    public int Nhap_Kho_ID { get; set; }
+    public string Nhap_Kho_ID { get; set; }
 
 
     public ReportSourceOptions ReportSource { get; set; } = new ReportSourceOptions("SampleReport.trdp", new Dictionary<string, object>
@@ -46,7 +46,17 @@
 
     protected override async Task OnInitializedAsync()
     {
+        CXNK_Nhap_Kho_Controller v_objCtrData = new();
+        CXNK_Nhap_Kho v_objData = v_objCtrData.FQ_718_NK_sp_sel_Get_By_ID(Convert.ToInt32(Nhap_Kho_ID));
+        CNumber cNum = new();
+        CXNK_Nhap_Kho_Raw_Data_Controller v_objCtrRawData = new();
+        double v_iNum = v_objCtrRawData.CalculateTotalAmount(Convert.ToInt32(Nhap_Kho_ID));
+
+
         ReportSource.Parameters.Add("Nhap_Kho_ID", Nhap_Kho_ID);
-        
+        ReportSource.Parameters.Add("Ten_Kho", v_objData.Ten_Kho);
+        ReportSource.Parameters.Add("Ten_NCC", v_objData.Ten_NCC);  
+        ReportSource.Parameters.Add("So_Phieu_Nhap_Kho", v_objData.So_Phieu_Nhap_Kho);
+        ReportSource.Parameters.Add("TongTienBangChu", cNum.ReadInt(v_iNum.ToString(), "VND"));
     }
 }

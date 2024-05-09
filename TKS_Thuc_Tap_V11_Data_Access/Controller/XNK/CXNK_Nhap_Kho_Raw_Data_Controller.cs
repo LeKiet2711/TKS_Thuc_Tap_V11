@@ -154,5 +154,19 @@ namespace TKS_Thuc_Tap_V11_Data_Access.Controller.XNK
 			}
 		}
 
-	}
+        public double CalculateTotalAmount(long id)
+        {
+            double totalAmount = 0;
+            List<CXNK_Nhap_Kho_Raw_Data> data = FQ_719_NKRD_sp_sel_List_By_Created(id, DateTime.Now.AddYears(-30), DateTime.Now.AddDays(1));
+
+            foreach (CXNK_Nhap_Kho_Raw_Data item in data)
+            {
+				double rowTotalAmount = Convert.ToDouble(item.SL_Nhap * item.Don_Gia_Nhap);
+                totalAmount += rowTotalAmount;
+            }
+
+            return totalAmount;
+        }
+
+    }
 }

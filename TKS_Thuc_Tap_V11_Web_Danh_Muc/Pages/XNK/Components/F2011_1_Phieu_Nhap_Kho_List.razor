@@ -43,7 +43,7 @@
 								</li>
 							}
 								<li>
-									<a class="dropdown-item" href="reportphieunhap/@((context as CXNK_Nhap_Kho).Auto_ID)"><i class="fas fa-print">In báo cáo</i></a>
+								<a class="dropdown-item" href="reportphieunhap/@((context as CXNK_Nhap_Kho).Auto_ID)"><i class="ri-printer-fill">&nbsp&nbsp&nbsp; @Get_Language_Data_Field("In báo cáo")</i></a>
 								</li>
 						</ul>
 
@@ -60,6 +60,7 @@
 					<GridColumn Field="Ten_Kho" Title="Kho" Width="100px"></GridColumn>
 					<GridColumn Field="Ngay_Nhap_Kho" Title="Ngày Nhập Kho" Width="120px"></GridColumn>
 					<GridColumn Field="Ghi_Chu" Title="Ghi Chú" Width="200px"></GridColumn>
+					<GridColumn Field="" Title=""><FooterTemplate Context="Footer"></FooterTemplate></GridColumn>
 				}
 			</GridColumns>
 		</TelerikGrid>

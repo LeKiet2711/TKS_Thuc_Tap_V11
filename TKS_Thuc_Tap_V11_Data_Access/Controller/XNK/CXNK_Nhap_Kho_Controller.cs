@@ -73,6 +73,8 @@ namespace TKS_Thuc_Tap_V11_Data_Access.Controller.XNK
             return v_objRes;
         }
 
+
+
         public long FQ_718_NK_sp_ins_Insert(CXNK_Nhap_Kho p_objData)
         {
             long v_iRes = CConst.INT_VALUE_NULL;
@@ -153,5 +155,8 @@ namespace TKS_Thuc_Tap_V11_Data_Access.Controller.XNK
                 throw;
             }
         }
+
+        
+
     }
 }
