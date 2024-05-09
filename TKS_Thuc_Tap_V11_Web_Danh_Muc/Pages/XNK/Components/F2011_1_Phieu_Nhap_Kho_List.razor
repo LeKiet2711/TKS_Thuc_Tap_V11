@@ -42,6 +42,9 @@
 									<button class="dropdown-item" type="button" @onclick="@(()=> Delete_Data((context as CXNK_Nhap_Kho).Auto_ID))"><i class="ri-delete-bin-line align-bottom me-1"></i> &nbsp; @Get_Language_Data_Field("Xóa")</button>
 								</li>
 							}
+								<li>
+									<a class="dropdown-item" href="reportphieunhap/@((context as CXNK_Nhap_Kho).Auto_ID)"><i class="fas fa-print">In báo cáo</i></a>
+								</li>
 						</ul>
 
 					</Template>

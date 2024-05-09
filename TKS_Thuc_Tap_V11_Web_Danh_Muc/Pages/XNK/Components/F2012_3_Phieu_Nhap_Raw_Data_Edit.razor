@@ -33,16 +33,29 @@
 				<div class="modal-body">
 					<div class="row">
 						<div class="col-lg-12">
-							<div class="row mb-1">
-								<div class="col-lg-4 col-form-label">
-									<label class="form-label">@Get_Language_Data_Field("Sản phẩm"):</label>
-								</div>
-								<div class="col-lg-8">
-									<FControl_San_Pham_Combo @bind-BindingValue="m_objData.San_Pham_ID"></FControl_San_Pham_Combo>
-								</div>
+							@if(r_bUpdate==false){
+								<div class="row mb-1">
+									<div class="col-lg-4 col-form-label">
+										<label class="form-label">@Get_Language_Data_Field("Sản phẩm"):</label>
+									</div>
+									<div class="col-lg-8">
+										<FControl_San_Pham_Combo @bind-BindingValue="m_objData.San_Pham_ID"></FControl_San_Pham_Combo>
+									</div>
 								
-							</div>
+								</div>
+							}
+							else
+							{
+								<div class="row mb-1">
+									<div class="col-lg-4 col-form-label">
+										<label class="form-label">@Get_Language_Data_Field("Sản phẩm"):</label>
+									</div>
+									<div class="col-lg-8">
+										<input @bind="@m_objData.Ten_San_Pham" class="form-control" readonly></input>
+									</div>
 
+								</div>
+							}
 							<div class="row mb-1">
 								<div class="col-lg-4 col-form-label">
 									<label class="form-label">@Get_Language_Data_Field("Số lượng nhập"):</label>
@@ -91,7 +104,7 @@
 	public EventCallback<CXNK_Nhap_Kho_Raw_Data> OnSaveCTPN { get; set; }
 	//Tạo một object Data2 để nhận dữ liệu từ List sau đó mới đẩy vào cho objData
 	[Parameter]
-	public CXNK_Nhap_Kho_Raw_Data m_objData2{ get; set; }
+	public CXNK_Nhap_Kho_Raw_Data m_objDataEdit{ get; set; }
 
 	protected override void Init_Data()
 	{
@@ -103,7 +116,7 @@
 		CXNK_Nhap_Kho_Raw_Data_Controller v_objCtrData = new();
 		m_objData = v_objCtrData.FQ_719_NKRD_sp_sel_Get_By_ID(r_iAuto_ID);
 		//Gán object của phần tử tương ứng được chọn từ List cho objData để bind lên text
-		m_objData = m_objData2;
+		m_objData = m_objDataEdit;
 
 		//Dành cho việc tạo mới một Chi tiết phiếu nhập
 		if (m_objData == null)
@@ -180,6 +193,7 @@
 		if (m_objData.San_Pham_ID == 0)
 		{
 			checkSanPham = true;
+			m_objData.San_Pham_ID = 1;
 		}
 		else if (m_objData.SL_Nhap == 0)
 		{

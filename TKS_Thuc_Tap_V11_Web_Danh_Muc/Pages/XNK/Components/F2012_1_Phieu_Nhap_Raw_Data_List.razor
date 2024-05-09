@@ -39,7 +39,6 @@
 					<GridColumn Field="Ten_San_Pham" Title="Sản Phẩm" Width="100px"></GridColumn>
 					<GridColumn Field="SL_Nhap" Title="Số lượng nhập" Width="100px"></GridColumn>
 					<GridColumn Field="Don_Gia_Nhap" Title="Đơn giá nhập" Width="100px"></GridColumn>
-					<GridColumn Field="" Title=""><FooterTemplate Context="Footer"></FooterTemplate></GridColumn>
 				}
 			</GridColumns>
 
@@ -50,7 +49,7 @@
 
 @if (r_bIs_Show_Edit == true)
 {
-	<F2012_3_Phieu_Nhap_Raw_Data_Edit r_iAuto_ID="@r_iAuto_ID" m_objData2="@m_objDatabinding" OnClose="@Close_Edit"></F2012_3_Phieu_Nhap_Raw_Data_Edit>
+	<F2012_3_Phieu_Nhap_Raw_Data_Edit r_iAuto_ID="@r_iAuto_ID" m_objDataEdit="@m_objDatabinding" OnClose="@Close_Edit"></F2012_3_Phieu_Nhap_Raw_Data_Edit>
 }
 
 @code {
