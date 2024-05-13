@@ -1,0 +1,55 @@
+﻿@inherits FBase;
+
+@Layout_Default_Filter(grdData, "")
+<div style="padding-top: 10px;"></div>
+
+<div class="row">
+	<div class="col-lg-12">
+		@((MarkupString)r_strError)
+
+		<TelerikGrid Data="@v_arrData" Height="calc(100vh - 170px)" Resizable="true" Reorderable="true" @ref="@grdData">
+			<GridExport>
+				<GridExcelExport FileName="Bao_Cao_Chi_Tiet_Hang_Xuat_Export" AllPages="true" />
+				<GridCsvExport FileName="Bao_Cao_Chi_Tiet_Hang_Xuat_Export" AllPages="true" />
+			</GridExport>
+			<GridColumns>
+				<GridCheckboxColumn SelectAll="true" CheckBoxOnlySelection="true" Width="30px"></GridCheckboxColumn>
+				
+				@if (CCache_Grid_UI_Global.List_Data_By_Code("2016", "grdData").Count > 0)
+				{
+					<FCommon_General_Col_Grid m_strFCode="2016" m_strTen_Grid="grdData"></FCommon_General_Col_Grid>
+				}
+				else
+				{
+					<GridColumn Field="Ngay_Xuat" Title="Ngày Nhập" Width="100px"></GridColumn>
+					<GridColumn Field="So_Phieu" Title="Số Phiếu Nhập" Width="100px"></GridColumn>
+					<GridColumn Field="Ma_SP" Title="Mã Sản Phẩm" Width="100px"></GridColumn>
+					<GridColumn Field="Ten_SP" Title="Tên Sản Phẩm" Width="100px"></GridColumn>
+					<GridColumn Field="SL" Title="Số Lượng Nhập" Width="100px"></GridColumn>
+					<GridColumn Field="Don_Gia" Title="Đơn Giá Nhập" Width="100px"></GridColumn>
+					<GridColumn Field="Tri_Gia" Title="Trị Giá" Width="100px"></GridColumn>
+				}
+			</GridColumns>
+		</TelerikGrid>
+	</div>
+</div>
+
+@code {
+	public List<CXNK_Xuat_Kho_Raw_Data> v_arrData = new();
+	TelerikGrid<CXNK_Xuat_Kho_Raw_Data> grdData = new();
+
+	protected override void Init_Data()
+	{
+
+	}
+
+	protected override void Load_Data()
+	{
+		CXNK_Xuat_Kho_Raw_Data_Controller v_objCtrData = new();
+
+		//Format lại grid đúng chuẩn, Đặt trước hàm load dữ liệu vì nó sẽ chạy nhanh hơn
+		Format_Grid(grdData);
+
+		v_arrData = v_objCtrData.F_743_ReportChiTietPhieuXuat_sp_sel_List_By_Created(r_objFilter.Date_From, r_objFilter.Date_To);
+	}
+}

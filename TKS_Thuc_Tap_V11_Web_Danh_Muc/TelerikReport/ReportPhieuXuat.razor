@@ -1,0 +1,84 @@
+﻿@page "/reportphieuxuat/{Xuat_Kho_ID}"
+
+<PageTitle>Report Viewer</PageTitle>
+
+<ReportViewer ServiceUrl="/api/reports"
+              @bind-ReportSource="@ReportSource"
+              @bind-ScaleMode="@ScaleMode"
+              @bind-ViewMode="@ViewMode"
+              @bind-ParametersAreaVisible="@ParametersAreaVisible"
+              @bind-DocumentMapVisible="@DocumentMapVisible"
+              @bind-Scale="@Scale"
+              PageMode="@PageMode.ContinuousScroll"
+              PrintMode="@PrintMode.AutoSelect"
+              KeepClientAlive="true"
+              EnableSendEmail="true"
+              ServiceType="@ReportViewerServiceType.REST"
+              Height="900px"
+              Width="100%">
+    <ReportViewerSettings>
+        <SendEmailDialogSettings
+            From="from@example.com"
+            To="to@example.com"
+            Cc="cc@example.com"
+            Subject="Report sent"
+            Format="CSV"
+            Body="Attached report. <br/> <br/> Best regards, </br> ABC">
+        </SendEmailDialogSettings>
+    </ReportViewerSettings>
+</ReportViewer>
+
+@code {
+    public ScaleMode ScaleMode { get; set; } = ScaleMode.Specific;
+    public ViewMode ViewMode { get; set; } = ViewMode.Interactive;
+    public bool ParametersAreaVisible { get; set; }
+    public bool DocumentMapVisible { get; set; }
+    public double Scale { get; set; } = 1.0;
+
+    [Parameter]
+    public string Xuat_Kho_ID{ get; set; }
+
+    public ReportSourceOptions ReportSource { get; set; } = new ReportSourceOptions("ReportPhieuXuat.trdp", new Dictionary<string, object>
+    {
+        // Add parameters if applicable
+    });
+
+    protected override async Task OnInitializedAsync()
+    {
+        CXNK_Xuat_Kho_Controller v_objCtrData = new();
+        CXNK_Xuat_Kho v_objData = v_objCtrData.FQ_728_XK_sp_sel_Get_By_ID(Convert.ToInt32(Xuat_Kho_ID));
+        CNumber cNum = new();
+        CXNK_Xuat_Kho_Raw_Data_Controller v_objCtrRawData = new();
+        int v_iNum = v_objCtrRawData.CalculateTotalAmount(Convert.ToInt32(Xuat_Kho_ID));
+
+        ReportSource.Parameters.Add("Tong_So_Luong_Xuat", v_iNum);
+        ReportSource.Parameters.Add("Tong_So_Luong_Xuat_Bang_Chu", chuyenSoThanhChu(v_iNum));
+        ReportSource.Parameters.Add("Xuat_Kho_ID", Xuat_Kho_ID);
+        ReportSource.Parameters.Add("Ten_Kho", v_objData.Ten_Kho);
+
+    }
+
+    static string chuyenSoThanhChu(int number)
+    {
+        string[] ones = { "", "một", "hai", "ba", "bốn", "năm", "sáu", "bảy", "tám", "chín" };
+        string[] teens = { "mười", "mười một", "mười hai", "mười ba", "mười bốn", "mười lăm", "mười sáu", "mười bảy", "mười tám", "mười chín" };
+        string[] tens = { "", "mười", "hai mươi", "ba mươi", "bốn mươi", "năm mươi", "sáu mươi", "bảy mươi", "tám mươi", "chín mươi" };
+
+        if (number < 10)
+        {
+            return ones[number];
+        }
+        else if (number < 20)
+        {
+            return teens[number - 10];
+        }
+        else if (number < 100)
+        {
+            return tens[number / 10] + " " + ones[number % 10];
+        }
+        else
+        {
+            return "Out of range";
+        }
+    }
+}

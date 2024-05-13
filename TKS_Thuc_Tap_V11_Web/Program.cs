@@ -22,6 +22,8 @@ using TKS_Thuc_Tap_V11_Web;
 
 
 
+
+
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 //builder.Services.AddSignalR();
@@ -135,6 +137,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+app.UseAntiforgery();
 app.UseAntiforgery();
 app.UseAntiforgery();
 app.UseAntiforgery();

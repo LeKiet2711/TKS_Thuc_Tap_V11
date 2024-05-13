@@ -23,6 +23,15 @@ namespace TKS_Thuc_Tap_V11_Data_Access.Entity.XNK
 		private string m_strLast_Updated_By_Function;
 		private string m_strTen_San_Pham;
 
+
+		public long AutoID { get; set; }
+		public DateTime Ngay_Xuat { get; set; }
+		public string So_Phieu { get; set; }
+		public string Ma_SP { get; set; }
+		public string Ten_SP { get; set; }
+		public int SL { get; set; }
+		public double Don_Gia { get; set; }
+		public double Tri_Gia { get; set; }
 		public CXNK_Xuat_Kho_Raw_Data()
 		{
 			ResetData();

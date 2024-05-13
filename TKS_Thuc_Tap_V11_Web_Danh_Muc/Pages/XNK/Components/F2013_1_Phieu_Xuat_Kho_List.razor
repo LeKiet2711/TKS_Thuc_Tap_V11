@@ -42,6 +42,9 @@
 									<button class="dropdown-item" type="button" @onclick="@(()=> Delete_Data((context as CXNK_Xuat_Kho).Auto_ID))"><i class="ri-delete-bin-line align-bottom me-1"></i> &nbsp; @Get_Language_Data_Field("Xóa")</button>
 								</li>
 							}
+							<li>
+								<a class="dropdown-item" href="reportphieuxuat/@((context as CXNK_Xuat_Kho).Auto_ID)"><i class="ri-printer-fill">&nbsp&nbsp&nbsp; @Get_Language_Data_Field("In báo cáo")</i></a>
+							</li>
 						</ul>
 					</Template>
 				</GridColumn>
@@ -55,6 +58,7 @@
 					<GridColumn Field="Ten_Kho" Title="Kho" Width="100px"></GridColumn>
 					<GridColumn Field="Ngay_Xuat_Kho" Title="Ngày Xuất Kho" Width="120px"></GridColumn>
 					<GridColumn Field="Ghi_Chu" Title="Ghi Chú" Width="200px"></GridColumn>
+					<GridColumn Field="" Title=""><FooterTemplate Context="Footer"></FooterTemplate></GridColumn>
 				}
 			</GridColumns>
 		</TelerikGrid>

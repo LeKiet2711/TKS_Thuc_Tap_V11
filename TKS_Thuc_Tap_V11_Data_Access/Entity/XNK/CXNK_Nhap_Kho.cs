@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.Pkcs;
 using System.Text;
 using System.Threading.Tasks;
 using TKS_Thuc_Tap_V11_Data_Access.Utility;
@@ -25,8 +26,9 @@ namespace TKS_Thuc_Tap_V11_Data_Access.Entity.XNK
 
         private string m_strTen_Kho;
         private string m_strTen_NCC;
+		private int m_iSo_Luong;
 
-        public CXNK_Nhap_Kho()
+		public CXNK_Nhap_Kho()
         {
             ResetData();
         }
@@ -95,6 +97,7 @@ namespace TKS_Thuc_Tap_V11_Data_Access.Entity.XNK
                 m_strTen_NCC = value;
             }
         }
+
 
         public long NCC_ID
         {

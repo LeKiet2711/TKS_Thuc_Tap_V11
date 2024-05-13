@@ -20,10 +20,14 @@
 
   <ItemGroup>
     <None Remove="Reports\ReportPhieuNhap.trdp" />
+    <None Remove="Reports\ReportPhieuXuat.trdp" />
   </ItemGroup>
 
   <ItemGroup>
     <Content Include="Reports\ReportPhieuNhap.trdp">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\ReportPhieuXuat.trdp">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
