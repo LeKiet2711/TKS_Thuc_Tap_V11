@@ -86,12 +86,20 @@
 	public bool checkDonGia = false;
 	public int auto = 0;
 	public F2014_1_Phieu_Xuat_Raw_Data_List v_objloadListXKRD;
+	//Tạo route để phân luồng 2 loại thêm bảng tạm (Trên Array) và thêm vào database
+	[Parameter]
+	public int route { get; set; }
 
 	[Parameter]
 	public EventCallback<CXNK_Xuat_Kho_Raw_Data> OnSaveCTPX { get; set; }
-	//Tạo một object Data2 để nhận dữ liệu từ List sau đó mới đẩy vào cho objData
+
+	//Tạo một object DataEdit để nhận dữ liệu từ List sau đó mới đẩy vào cho objData
 	[Parameter]
 	public CXNK_Xuat_Kho_Raw_Data m_objDataEdit { get; set; }
+
+	//Event call back onDataAdded dùng để di chuyển về hàm HandleDataAdded tại 33_Edit để load lại v_objloadListdataXKRD (load lại List để hiển thị phần tử mới)
+	[Parameter]
+	public EventCallback<CXNK_Xuat_Kho_Raw_Data> OnDataAdded { get; set; }
 
 	protected override void Init_Data()
 	{
@@ -133,65 +141,99 @@
 
 	protected override void Add_Data()
 	{
-		checkSanPham = false;
-		checkSoLuong = false;
-		checkDonGia = false;
-		if (m_objData.San_Pham_ID == 0)
+		if (route == 1)
 		{
-			checkSanPham = true;
-		}
-		else if (m_objData.SL_Xuat == 0)
-		{
-			checkSoLuong = true;
-		}
-		else if (m_objData.Don_Gia_Xuat == 0)
-		{
-			checkDonGia = true;
+			checkSanPham = false;
+			checkSoLuong = false;
+			checkDonGia = false;
+			if (m_objData.San_Pham_ID == 0)
+			{
+				checkSanPham = true;
+			}
+			else if (m_objData.SL_Xuat == 0)
+			{
+				checkSoLuong = true;
+			}
+			else if (m_objData.Don_Gia_Xuat == 0)
+			{
+				checkDonGia = true;
+			}
+			else
+			{
+				CXNK_Xuat_Kho_Raw_Data v_objectXuatKho = new CXNK_Xuat_Kho_Raw_Data();
+				v_objectXuatKho.Auto_ID = auto + 1;
+				v_objectXuatKho.San_Pham_ID = m_objData.San_Pham_ID;
+				v_objectXuatKho.Ten_San_Pham = CCache_San_Pham.Get_Data_By_ID(m_objData.San_Pham_ID).Ten_San_Pham;
+				v_objectXuatKho.SL_Xuat = m_objData.SL_Xuat;
+				v_objectXuatKho.Don_Gia_Xuat = m_objData.Don_Gia_Xuat;
+
+				// Gọi event callback để truyền thông tin về form chính
+				OnSaveCTPX.InvokeAsync(v_objectXuatKho);
+				StateHasChanged();
+				Load_Data_Init();
+				Modal_Cancel();
+
+				CXNK_Xuat_Kho_Raw_Data v_objClone = new();
+				CUtility.Clone_Entity(m_objData, v_objClone);
+				r_objDes = v_objClone;
+			}
 		}
 		else
 		{
-			CXNK_Xuat_Kho_Raw_Data v_objectXuatKho = new CXNK_Xuat_Kho_Raw_Data();
-			v_objectXuatKho.Auto_ID = auto + 1;
-			v_objectXuatKho.San_Pham_ID = m_objData.San_Pham_ID;
-			v_objectXuatKho.Ten_San_Pham = CCache_San_Pham.Get_Data_By_ID(m_objData.San_Pham_ID).Ten_San_Pham;
-			v_objectXuatKho.SL_Xuat = m_objData.SL_Xuat;
-			v_objectXuatKho.Don_Gia_Xuat = m_objData.Don_Gia_Xuat;
+			CXNK_Xuat_Kho_Raw_Data_Controller v_objCtrData = new();
+			m_objData.Last_Updated_By = r_strActive_User_Name;
+			m_objData.Last_Updated_By_Function = r_strActive_Function_Code;
+			m_objData.Xuat_Kho_ID = r_iAuto_ID;
+			m_objData.Auto_ID = r_iAuto_ID = v_objCtrData.FQ_734_XKRD_sp_ins_Insert(m_objData);
 
-			// Gọi event callback để truyền thông tin về form chính
-			OnSaveCTPX.InvokeAsync(v_objectXuatKho);
+			r_strAdd_Key = m_objData.AutoID.ToString();
+			OnDataAdded.InvokeAsync(m_objData);
 			StateHasChanged();
 			Load_Data_Init();
 			Modal_Cancel();
-
-			CXNK_Xuat_Kho_Raw_Data v_objClone = new();
-			CUtility.Clone_Entity(m_objData, v_objClone);
-			r_objDes = v_objClone;
 		}
 	}
 
 	protected override void Update_Data()
 	{
-		r_iAuto_ID = 0;
-		checkSanPham = false;
-		checkSoLuong = false;
-		checkDonGia = false;
-		if (m_objData.San_Pham_ID == 0)
+		if (route == 1)
 		{
-			checkSanPham = true;
-		}
-		else if (m_objData.SL_Xuat == 0)
-		{
-			checkSoLuong = true;
-		}
-		else if (m_objData.Don_Gia_Xuat == 0)
-		{
-			checkDonGia = true;
+			r_iAuto_ID = 0;
+			checkSanPham = false;
+			checkSoLuong = false;
+			checkDonGia = false;
+			if (m_objData.San_Pham_ID == 0)
+			{
+				checkSanPham = true;
+			}
+			else if (m_objData.SL_Xuat == 0)
+			{
+				checkSoLuong = true;
+			}
+			else if (m_objData.Don_Gia_Xuat == 0)
+			{
+				checkDonGia = true;
+			}
+			else
+			{
+				CXNK_Xuat_Kho_Raw_Data v_objClone = new();
+				CUtility.Clone_Entity(m_objData, v_objClone);
+				r_objDes = v_objClone;
+			}
 		}
 		else
 		{
+			CXNK_Xuat_Kho_Raw_Data_Controller v_objCtrData = new();
+			m_objData.Last_Updated_By = r_strActive_User_Name;
+			m_objData.Last_Updated_By_Function = r_strActive_Function_Code;
+
+			v_objCtrData.FQ_734_XKRD_sp_upd_Update(m_objData);
+
+			// Đoạn code lưu key cho việc tracking log CRUD, vui lòng đừng xóa
 			CXNK_Xuat_Kho_Raw_Data v_objClone = new();
 			CUtility.Clone_Entity(m_objData, v_objClone);
 			r_objDes = v_objClone;
+			// End tracking
 		}
 	}
 }
