@@ -95,14 +95,13 @@
 
 @if (r_bIs_Show_Edit == true)
 {	
-	<F2012_3_Phieu_Nhap_Raw_Data_Edit r_iAuto_ID="@r_iAuto_ID" OnClose="@Close_Edit" OnSaveCTPN="Save_CTPN"></F2012_3_Phieu_Nhap_Raw_Data_Edit>
+	<F2012_3_Phieu_Nhap_Raw_Data_Edit route="1" OnClose="@Close_Edit" OnSaveCTPN="Save_CTPN"></F2012_3_Phieu_Nhap_Raw_Data_Edit>
 }
 
 
 @code {
 	private CXNK_Nhap_Kho m_objData = new();
 	//Tạo 1 chi tiết phiếu nhập và 1 list chi tiết phiếu nhập để lưu lại sao đó xử lý từng item.Ten_SP,...
-
 	public List<CXNK_Nhap_Kho_Raw_Data> v_arrData = new();
 	TelerikGrid<CXNK_Nhap_Kho_Raw_Data> grdData = new();
 	public F2012_1_Phieu_Nhap_Raw_Data_List v_objloadListNKRD;
@@ -120,6 +119,7 @@
 
 	protected override void Load_Data()
 	{
+		r_iAuto_ID = 1;
 		CXNK_Nhap_Kho_Controller v_objCtrData = new();
 		m_objData = v_objCtrData.FQ_718_NK_sp_sel_Get_By_ID(r_iAuto_ID);
 

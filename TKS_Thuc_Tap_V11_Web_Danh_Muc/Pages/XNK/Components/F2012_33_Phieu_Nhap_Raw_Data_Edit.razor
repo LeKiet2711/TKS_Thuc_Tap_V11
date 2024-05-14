@@ -3,6 +3,8 @@
 <div class="modal fade show" tabindex="-1" role="dialog" aria-hidden="true" style="display: block; padding-left: 0px; background-color: rgba(10, 10, 10, .8);">
 	<div class="modal-dialog modal-lg">
 		<div class="modal-content">
+			
+
 			<div class="modal-header bg-light">
 				@if (r_iAuto_ID != 0)
 				{
@@ -16,48 +18,41 @@
 				</button>
 			</div>
 
+			<div class="modal-footer">
+				<button type="button" class="btn rounded-pill btn-primary waves-effect waves-light" @onclick="@(()=> Open_Edit(0))">
+					<i class="ri-add-circle-fill align-bottom me-1"></i>
+					@Get_Language_Data_Field("Thêm chi tiết")
+				</button>
+			</div>
 			@((MarkupString)r_strError)
 			
-			<F2012_11_Phieu_Nhap_Raw_Data_List v_auto_id="r_iAuto_ID"></F2012_11_Phieu_Nhap_Raw_Data_List>
+			<F2012_11_Phieu_Nhap_Raw_Data_List v_auto_id="r_iAuto_ID" @ref="v_objloadListdataNKRD"></F2012_11_Phieu_Nhap_Raw_Data_List>
 
 		</div>
 	</div>
 </div>
 
+@if (r_bIs_Show_Edit == true)
+{
+	<F2012_3_Phieu_Nhap_Raw_Data_Edit r_iAuto_ID="@r_iAuto_ID" route="0" OnClose="@Close_Edit" OnDataAdded="@HandleDataAdded"></F2012_3_Phieu_Nhap_Raw_Data_Edit>
+}
+
 @code {
 	private CXNK_Nhap_Kho_Raw_Data m_objData = new();
+	public F2012_11_Phieu_Nhap_Raw_Data_List v_objloadListdataNKRD;
+
+	[Parameter]
+	public EventCallback<CXNK_Nhap_Kho_Raw_Data> OnDataAdded { get; set; }
 
 	protected override void Init_Data()
 	{
 
 	}
 
-
-	protected override void Add_Data()
+	private void HandleDataAdded(CXNK_Nhap_Kho_Raw_Data newData)
 	{
-		CXNK_Nhap_Kho_Raw_Data_Controller v_objCtrData = new();
-		m_objData.Last_Updated_By = r_strActive_User_Name;
-		m_objData.Last_Updated_By_Function = r_strActive_Function_Code;
-
-		m_objData.Auto_ID = r_iAuto_ID = v_objCtrData.FQ_719_NKRD_sp_ins_Insert(m_objData);
-
-		// Đoạn code lưu key cho việc tracking log CRUD, vui lòng đừng xóa
-		//r_strAdd_Key = m_objData.SL_Nhap;
-		// End tracking
+		v_objloadListdataNKRD.Load_Data_Init();
+		StateHasChanged(); // Render lại giao diện
 	}
 
-	protected override void Update_Data()
-	{
-		CXNK_Nhap_Kho_Raw_Data_Controller v_objCtrData = new();
-		m_objData.Last_Updated_By = r_strActive_User_Name;
-		m_objData.Last_Updated_By_Function = r_strActive_Function_Code;
-
-		v_objCtrData.FQ_719_NKRD_sp_upd_Update(m_objData);
-
-		// Đoạn code lưu key cho việc tracking log CRUD, vui lòng đừng xóa
-		CXNK_Nhap_Kho_Raw_Data v_objClone = new();
-		CUtility.Clone_Entity(m_objData, v_objClone);
-		r_objDes = v_objClone;
-		// End tracking
-	}
 }

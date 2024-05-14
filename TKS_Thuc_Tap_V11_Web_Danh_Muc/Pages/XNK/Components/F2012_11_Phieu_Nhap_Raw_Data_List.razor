@@ -93,9 +93,11 @@
 		// Đoạn code lưu key cho việc tracking log CRUD, vui lòng đừng xóa
 		CXNK_Nhap_Kho_Raw_Data v_objData = v_objCtrData.FQ_719_NKRD_sp_sel_Get_By_ID(p_iAuto_ID);
 		if (v_objData != null)
-			//r_strDelete_Key = v_objData.Created_By_Function;
+			r_strDelete_Key = v_objData.Auto_ID.ToString();
 		// End tracking
 
 		v_objCtrData.FQ_719_NKRD_sp_del_Delete_By_ID(p_iAuto_ID, r_strActive_User_Name, r_strActive_Function_Code);
 	}
+
+
 }
