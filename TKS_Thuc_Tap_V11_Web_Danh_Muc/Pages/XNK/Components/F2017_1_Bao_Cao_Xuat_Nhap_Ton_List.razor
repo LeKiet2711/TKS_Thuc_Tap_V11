@@ -1,0 +1,53 @@
+﻿@inherits FBase;
+
+@Layout_Default_Filter(grdData, "")
+<div style="padding-top: 10px;"></div>
+
+<div class="row">
+	<div class="col-lg-12">
+		@((MarkupString)r_strError)
+
+		<TelerikGrid Data="@v_arrData" Height="calc(100vh - 170px)" Resizable="true" Reorderable="true" @ref="@grdData">
+			<GridColumns>
+				<GridCheckboxColumn SelectAll="true" CheckBoxOnlySelection="true" Width="30px"></GridCheckboxColumn>
+
+				@if (CCache_Grid_UI_Global.List_Data_By_Code("2017", "grdData").Count > 0)
+				{
+					<FCommon_General_Col_Grid m_strFCode="2017" m_strTen_Grid="grdData"></FCommon_General_Col_Grid>
+				}
+				else
+				{
+					<GridColumn Field="Ma_SP" Title="Mã Sản Phẩm" Width="100px"></GridColumn>
+					<GridColumn Field="Ten_SP" Title="Tên Sản Phẩm" Width="100px"></GridColumn>
+					<GridColumn Field="SLDauKy" Title="Số Lượng Đầu Kỳ" Width="100px"></GridColumn>
+					<GridColumn Field="SLNhap" Title="Số Lượng Nhập" Width="100px"></GridColumn>
+					<GridColumn Field="SLXuat" Title="Số Lượng Xuất" Width="100px"></GridColumn>
+					<GridColumn Field="SLCuoiKy" Title="Số Lượng Cuối Kỳ" Width="100px"></GridColumn>
+					<GridColumn Field="" Title=""><FooterTemplate Context="Footer"></FooterTemplate></GridColumn>
+				}
+			</GridColumns>
+		</TelerikGrid>
+	</div>
+</div>
+
+@code {
+	public List<CXNK_Xuat_Nhap_Ton> v_arrData = new();
+	TelerikGrid<CXNK_Xuat_Nhap_Ton> grdData = new();
+
+	protected override void Init_Data()
+	{
+
+	}
+
+	protected override void Load_Data()
+	{
+		CXNK_Xuat_Nhap_Ton_Controller v_objCtrData = new();
+
+		//Format lại grid đúng chuẩn, Đặt trước hàm load dữ liệu vì nó sẽ chạy nhanh hơn
+		Format_Grid(grdData);
+
+		v_arrData = v_objCtrData.F_744_ReportXuatNhapTon_sp_sel_List_By_Created(r_objFilter.Date_From, r_objFilter.Date_To);
+	}
+
+	
+}

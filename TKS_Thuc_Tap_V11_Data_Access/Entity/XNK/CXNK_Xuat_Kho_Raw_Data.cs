@@ -32,6 +32,7 @@ namespace TKS_Thuc_Tap_V11_Data_Access.Entity.XNK
 		public int SL { get; set; }
 		public double Don_Gia { get; set; }
 		public double Tri_Gia { get; set; }
+
 		public CXNK_Xuat_Kho_Raw_Data()
 		{
 			ResetData();

@@ -77,6 +77,8 @@ namespace TKS_Thuc_Tap_V11_Data_Access.Controller.XNK
 			return v_arrRes;
 		}
 
+		
+
 		public CXNK_Xuat_Kho_Raw_Data FQ_734_XKRD_sp_sel_Get_By_ID(long p_iID)
 		{
 			CXNK_Xuat_Kho_Raw_Data v_objRes = null;
