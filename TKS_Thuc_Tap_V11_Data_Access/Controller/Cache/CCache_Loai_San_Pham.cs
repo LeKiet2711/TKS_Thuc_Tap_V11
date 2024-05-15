@@ -83,7 +83,14 @@ namespace TKS_Thuc_Tap_V11_Data_Access.Controller.Cache
 			return null;
 		}
 
-        public static List<CDM_Loai_San_Pham> List_Data()
+		public static long Compare_Data_From_Excel(string p_strLSP)
+		{
+			var v_strID = Arr_Data.FirstOrDefault(lsp => lsp.Ten_LSP.Equals(p_strLSP, StringComparison.OrdinalIgnoreCase));
+
+			return v_strID?.Auto_ID ?? -1;
+		}
+
+		public static List<CDM_Loai_San_Pham> List_Data()
         {
             return Arr_Data.OrderBy(it => it.Ten_LSP).ToList();
         }

@@ -22,9 +22,10 @@ namespace TKS_Thuc_Tap_V11_Data_Access.Controller.Cache
             Dic_Data_Code.Clear();
 
             CDM_San_Pham_Controller v_objCtrData = new CDM_San_Pham_Controller();
-            List<CDM_San_Pham> v_arrTemp_Data = v_objCtrData.FQ_165_SP_sp_sel_List_For_Cache();
+			List<CDM_San_Pham> v_arrTemp_Data = v_objCtrData.FQ_165_SP_sp_sel_List_For_Cache();
 
-            foreach (CDM_San_Pham v_objData in v_arrTemp_Data)
+
+			foreach (CDM_San_Pham v_objData in v_arrTemp_Data)
                 Add_Data(v_objData);
         }
 
@@ -83,7 +84,7 @@ namespace TKS_Thuc_Tap_V11_Data_Access.Controller.Cache
             return null;
         }
 
-        public static List<CDM_San_Pham> List_Data()
+		public static List<CDM_San_Pham> List_Data()
         {
             return Arr_Data.OrderBy(t => t.Ten_San_Pham).ToList();
         }

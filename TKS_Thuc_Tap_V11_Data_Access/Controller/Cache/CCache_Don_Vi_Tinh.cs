@@ -83,6 +83,12 @@ namespace TKS_Thuc_Tap_V11_Data_Access.Controller.Cache
 			return null;
 		}
 
+		public static long Compare_Data_From_Excel(string p_strDVT)
+		{
+			var v_strID = Arr_Data.FirstOrDefault(lsp => lsp.Ten_Don_Vi_Tinh.Equals(p_strDVT, StringComparison.OrdinalIgnoreCase));
+
+			return v_strID?.Auto_ID ?? -1;
+		}
 		public static List<CDM_Don_Vi_Tinh> List_Data()
 		{
 			return Arr_Data.OrderBy(it => it.Ten_Don_Vi_Tinh).ToList();
