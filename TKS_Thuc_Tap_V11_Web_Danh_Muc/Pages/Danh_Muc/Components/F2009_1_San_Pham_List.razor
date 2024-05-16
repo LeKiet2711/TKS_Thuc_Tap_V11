@@ -140,6 +140,9 @@
 
 			int v_iCount = 1;
 
+
+
+
 			foreach (DataRow v_row in v_dt.Rows)
 			{
 				v_iCount++;
@@ -159,13 +162,16 @@
 					CDM_San_Pham v_objData = new CDM_San_Pham();
 					v_objData.Ma_San_Pham = CUtility.Convert_To_String(v_row[0]);
 					v_objData.Ten_San_Pham = CUtility.Convert_To_String(v_row[1]);
-
-					foreach (CDM_San_Pham item in v_arrData)
+					if (CCache_Loai_San_Pham.Compare_Data_From_Excel(CUtility.Convert_To_String(v_row[2])) !=-1)
 					{
 						v_objData.Loai_San_Pham_ID = CCache_Loai_San_Pham.Compare_Data_From_Excel(CUtility.Convert_To_String(v_row[2]));
-						v_objData.Don_Vi_Tinh_ID = CCache_Don_Vi_Tinh.Compare_Data_From_Excel(CUtility.Convert_To_String(v_row[3]));
-
 					}
+					if (CCache_Don_Vi_Tinh.Compare_Data_From_Excel(CUtility.Convert_To_String(v_row[3])) != -1)
+					{
+						v_objData.Don_Vi_Tinh_ID = CCache_Don_Vi_Tinh.Compare_Data_From_Excel(CUtility.Convert_To_String(v_row[3]));
+					}
+
+
 					v_objData.Ghi_Chu = CUtility.Convert_To_String(v_row[4]);
 					v_objData.Last_Updated_By = r_strActive_User_Name;
 					v_objData.Last_Updated_By_Function = r_strActive_Function_Code;

@@ -83,6 +83,13 @@ namespace TKS_Thuc_Tap_V11_Data_Access.Controller.Cache
 			return null;
 		}
 
+		public static long Compare_Data_From_Excel(string p_strKho)
+		{
+			var v_strID = Arr_Data.FirstOrDefault(kho => kho.Ten_Kho.Equals(p_strKho, StringComparison.OrdinalIgnoreCase));
+
+			return v_strID?.Auto_ID ?? -1;
+		}
+
 		public static List<CDM_Kho> List_Data()
 		{
 			return Arr_Data.OrderBy(it => it.Ten_Kho).ToList();

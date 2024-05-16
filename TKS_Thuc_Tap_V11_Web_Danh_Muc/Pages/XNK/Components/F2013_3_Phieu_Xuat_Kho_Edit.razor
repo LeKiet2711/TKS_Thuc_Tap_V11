@@ -28,7 +28,6 @@
 								</div>
 								<div class="col-lg-8">
 									<input @ref="txtFocus" @bind="@m_objData.So_Phieu_Xuat_Kho" class="form-control">
-
 								</div>
 							</div>
 
@@ -47,7 +46,6 @@
 								</div>
 								<div class="col-lg-8">
 									<TelerikDatePicker @bind-Value="@m_objData.Ngay_Xuat_Kho" Format="@CConfig.Date_Format_String"></TelerikDatePicker>
-
 								</div>
 							</div>
 
@@ -86,7 +84,7 @@
 
 @if (r_bIs_Show_Edit == true)
 {
-	<F2014_3_Phieu_Xuat_Raw_Data_Edit r_iAuto_ID="@r_iAuto_ID" OnClose="@Close_Edit" OnSaveCTPX="Save_CTPX"></F2014_3_Phieu_Xuat_Raw_Data_Edit>
+	<F2014_3_Phieu_Xuat_Raw_Data_Edit route=1 r_iAuto_ID="@r_iAuto_ID" OnClose="@Close_Edit" OnSaveCTPX="Save_CTPX"></F2014_3_Phieu_Xuat_Raw_Data_Edit>
 }
 
 @code {
