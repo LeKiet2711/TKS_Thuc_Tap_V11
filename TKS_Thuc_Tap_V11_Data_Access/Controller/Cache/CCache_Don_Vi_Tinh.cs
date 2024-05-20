@@ -85,7 +85,7 @@ namespace TKS_Thuc_Tap_V11_Data_Access.Controller.Cache
 
 		public static long Compare_Data_From_Excel(string p_strDVT)
 		{
-			var v_strID = Arr_Data.FirstOrDefault(lsp => lsp.Ten_Don_Vi_Tinh.Equals(p_strDVT, StringComparison.OrdinalIgnoreCase));
+			var v_strID = Arr_Data.FirstOrDefault(dvt => dvt.Ten_Don_Vi_Tinh.Equals(p_strDVT, StringComparison.OrdinalIgnoreCase));
 
 			return v_strID?.Auto_ID ?? -1;
 		}

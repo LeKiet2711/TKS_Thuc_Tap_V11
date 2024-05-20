@@ -37,7 +37,7 @@ namespace TKS_Thuc_Tap_V11_Data_Access.Controller.Cache
             Dic_Data_ID.Add(p_objData.Auto_ID, p_objData);
             Arr_Data.Add(p_objData);
 
-            string v_strKey_Code = CUtility.Tao_Key(p_objData.Ma_San_Pham);
+            string v_strKey_Code = CUtility.Tao_Key(p_objData.Ma_San_Pham).TrimEnd();
             if (Dic_Data_Code.ContainsKey(v_strKey_Code) == false)
                 Dic_Data_Code.Add(v_strKey_Code, p_objData);
         }
@@ -86,7 +86,7 @@ namespace TKS_Thuc_Tap_V11_Data_Access.Controller.Cache
 
 		public static long Compare_Data_From_Excel(string p_strSP)
 		{
-			var v_strID = Arr_Data.FirstOrDefault(sp => sp.Ten_San_Pham.Equals(p_strSP, StringComparison.OrdinalIgnoreCase));
+			var v_strID = Arr_Data.FirstOrDefault(sp => sp.Ma_San_Pham.Equals(p_strSP, StringComparison.OrdinalIgnoreCase));
 
 			return v_strID?.Auto_ID ?? -1;
 		}
