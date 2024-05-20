@@ -188,7 +188,20 @@ namespace TKS_Thuc_Tap_V11_Data_Access.Controller.XNK
 			}
 		}
 
-        public int CalculateTotalAmount(long id)
+		public void F_746_XKRD_sp_del_Delete_List_By_ID(long p_iAuto_ID, string p_strLast_Updated_By, string p_strLast_Updated_By_Function)
+		{
+			try
+			{
+				CSqlHelper.ExecuteNonquery(CConfig.TKS_Thuc_Tap_V11_Conn_String, "F_746_XKRD_sp_del_Delete_List_By_ID", p_iAuto_ID, p_strLast_Updated_By, p_strLast_Updated_By_Function);
+			}
+
+			catch (Exception)
+			{
+				throw;
+			}
+		}
+
+		public int CalculateTotalAmount(long id)
         {
             int totalAmount = 0;
             List<CXNK_Xuat_Kho_Raw_Data> data = FQ_734_XKRD_sp_sel_List_By_Created(id, DateTime.Now.AddYears(-30), DateTime.Now.AddDays(1));

@@ -119,13 +119,16 @@
 	protected override void Delete_Data_Entry(long p_iAuto_ID)
 	{
 		CXNK_Nhap_Kho_Controller v_objCtrData = new();
+		CXNK_Nhap_Kho_Raw_Data_Controller v_objCtrDataRD = new();
 
 		// Đoạn code lưu key cho việc tracking log CRUD, vui lòng đừng xóa
 		CXNK_Nhap_Kho v_objData = v_objCtrData.FQ_718_NK_sp_sel_Get_By_ID(p_iAuto_ID);
 		if (v_objData != null)
 			r_strDelete_Key = v_objData.So_Phieu_Nhap_Kho;
 		// End tracking
-
+		
+		//Store Update tất cả chi tiết phiếu nhập deleted = 1 có mã nhập kho bằng mã nhập kho đang xóa
+		v_objCtrDataRD.F_745_NKRD_sp_del_Delete_List_By_ID(p_iAuto_ID, r_strActive_User_Name, r_strActive_Function_Code);
 		v_objCtrData.FQ_718_NK_sp_del_Delete_By_ID(p_iAuto_ID, r_strActive_User_Name, r_strActive_Function_Code);
 	}
 
