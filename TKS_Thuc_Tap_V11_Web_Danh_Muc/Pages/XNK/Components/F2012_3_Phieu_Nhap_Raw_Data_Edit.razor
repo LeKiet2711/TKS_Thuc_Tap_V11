@@ -23,11 +23,11 @@
 			}
 			@if (checkSoLuong)
 			{
-				<p style="color:red;text-align:center">Vui lòng nhập số lượng !</p>
+				<p style="color:red;text-align:center">Vui lòng nhập số lượng chính xác!</p>
 			}
 			@if (checkDonGia)
 			{
-				<p style="color:red;text-align:center">Vui lòng nhập đơn giá !</p>
+				<p style="color:red;text-align:center">Vui lòng nhập đơn giá chính xác!</p>
 			}
 			<EditForm Model="@m_objData">
 				<div class="modal-body">
@@ -158,15 +158,16 @@
 			checkSanPham = false;
 			checkSoLuong = false;
 			checkDonGia = false;
+			//r_strAdd_Key = ".";
 			if (m_objData.San_Pham_ID == 0)
 			{
 				checkSanPham = true;
 			}
-			else if (m_objData.SL_Nhap == 0)
+			else if (m_objData.SL_Nhap <= 0)
 			{
 				checkSoLuong = true;
 			}
-			else if (m_objData.Don_Gia_Nhap == 0)
+			else if (m_objData.Don_Gia_Nhap <= 0)
 			{
 				checkDonGia = true;
 			}
@@ -178,12 +179,14 @@
 				v_objectNhapKho.Ten_San_Pham = CCache_San_Pham.Get_Data_By_ID(m_objData.San_Pham_ID).Ten_San_Pham;
 				v_objectNhapKho.SL_Nhap = m_objData.SL_Nhap;
 				v_objectNhapKho.Don_Gia_Nhap = m_objData.Don_Gia_Nhap;
-
+				v_objectNhapKho.Tri_Gia = m_objData.SL_Nhap * m_objData.Don_Gia_Nhap;
+																//r_strAdd_Key = ".";
 				// Gọi event callback để truyền thông tin về form chính
 				OnSaveCTPN.InvokeAsync(v_objectNhapKho);
 				StateHasChanged();
 				Load_Data_Init();
 				Modal_Cancel();
+				
 				CXNK_Nhap_Kho_Raw_Data v_objClone = new();
 				CUtility.Clone_Entity(m_objData, v_objClone);
 				r_objDes = v_objClone;
@@ -210,6 +213,7 @@
 
 	protected override void Update_Data()
 	{
+		//r_strAdd_Key = m_objData.Ma_SP;
 		if (route == 1)
 		{
 			r_iAuto_ID = 0;
@@ -221,11 +225,11 @@
 				checkSanPham = true;
 				m_objData.San_Pham_ID = 1;
 			}
-			else if (m_objData.SL_Nhap == 0)
+			else if (m_objData.SL_Nhap <= 0)
 			{
 				checkSoLuong = true;
 			}
-			else if (m_objData.Don_Gia_Nhap == 0)
+			else if (m_objData.Don_Gia_Nhap <= 0)
 			{
 				checkDonGia = true;
 			}
@@ -243,7 +247,7 @@
 			m_objData.Last_Updated_By_Function = r_strActive_Function_Code;
 
 			v_objCtrData.FQ_719_NKRD_sp_upd_Update(m_objData);
-
+			
 			// Đoạn code lưu key cho việc tracking log CRUD, vui lòng đừng xóa
 			CXNK_Nhap_Kho_Raw_Data v_objClone = new();
 			CUtility.Clone_Entity(m_objData, v_objClone);

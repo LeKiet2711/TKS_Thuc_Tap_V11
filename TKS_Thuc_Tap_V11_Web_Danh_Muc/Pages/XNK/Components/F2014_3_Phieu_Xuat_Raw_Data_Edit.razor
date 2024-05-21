@@ -17,7 +17,18 @@
 			</div>
 
 			@((MarkupString)r_strError)
-
+			@if (checkSanPham)
+			{
+				<p style="color:red;text-align:center">Vui lòng chọn sản phẩm !</p>
+			}
+			@if (checkSoLuong)
+			{
+				<p style="color:red;text-align:center">Vui lòng nhập số lượng chính xác!</p>
+			}
+			@if (checkDonGia)
+			{
+				<p style="color:red;text-align:center">Vui lòng nhập đơn giá chính xác!</p>
+			}
 			<EditForm Model="@m_objData">
 				<div class="modal-body">
 					<div class="row">
@@ -150,11 +161,11 @@
 			{
 				checkSanPham = true;
 			}
-			else if (m_objData.SL_Xuat == 0)
+			else if (m_objData.SL_Xuat <= 0)
 			{
 				checkSoLuong = true;
 			}
-			else if (m_objData.Don_Gia_Xuat == 0)
+			else if (m_objData.Don_Gia_Xuat <= 0)
 			{
 				checkDonGia = true;
 			}
@@ -166,13 +177,15 @@
 				v_objectXuatKho.Ten_San_Pham = CCache_San_Pham.Get_Data_By_ID(m_objData.San_Pham_ID).Ten_San_Pham;
 				v_objectXuatKho.SL_Xuat = m_objData.SL_Xuat;
 				v_objectXuatKho.Don_Gia_Xuat = m_objData.Don_Gia_Xuat;
+				v_objectXuatKho.Tri_Gia = m_objData.SL_Xuat * m_objData.Don_Gia_Xuat;
 
+				
 				// Gọi event callback để truyền thông tin về form chính
 				OnSaveCTPX.InvokeAsync(v_objectXuatKho);
 				StateHasChanged();
 				Load_Data_Init();
 				Modal_Cancel();
-
+				r_strAdd_Key = m_objData.Ma_SP;
 				CXNK_Xuat_Kho_Raw_Data v_objClone = new();
 				CUtility.Clone_Entity(m_objData, v_objClone);
 				r_objDes = v_objClone;
@@ -228,7 +241,7 @@
 			m_objData.Last_Updated_By_Function = r_strActive_Function_Code;
 
 			v_objCtrData.FQ_734_XKRD_sp_upd_Update(m_objData);
-
+			r_strAdd_Key = m_objData.Ma_SP;
 			// Đoạn code lưu key cho việc tracking log CRUD, vui lòng đừng xóa
 			CXNK_Xuat_Kho_Raw_Data v_objClone = new();
 			CUtility.Clone_Entity(m_objData, v_objClone);
