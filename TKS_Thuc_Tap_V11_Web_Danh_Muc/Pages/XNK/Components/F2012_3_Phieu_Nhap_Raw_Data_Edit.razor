@@ -17,18 +17,7 @@
 				</button>
 			</div>
 			@((MarkupString)r_strError)
-			@if (checkSanPham)
-			{
-				<p style="color:red;text-align:center">Vui lòng chọn sản phẩm !</p>
-			}
-			@if (checkSoLuong)
-			{
-				<p style="color:red;text-align:center">Vui lòng nhập số lượng chính xác!</p>
-			}
-			@if (checkDonGia)
-			{
-				<p style="color:red;text-align:center">Vui lòng nhập đơn giá chính xác!</p>
-			}
+			
 			<EditForm Model="@m_objData">
 				<div class="modal-body">
 					<div class="row">
@@ -94,10 +83,10 @@
 	private CXNK_Nhap_Kho_Raw_Data m_objData = new();
 	public List<CXNK_Nhap_Kho_Raw_Data> m_LstNhapKho = new List<CXNK_Nhap_Kho_Raw_Data>();
 	private bool isPopupVisible = false;
-	public bool checkSanPham=false;
-	public bool checkSoLuong = false;
-	public bool checkDonGia = false;
 	public int auto = 0;
+	public int m_iSL = 0;
+	public double m_iDG = 0;
+
 	//Tạo route để phân luồng 2 loại thêm bảng tạm (Trên Array) và thêm vào database
 	[Parameter]
 	public int route{ get; set; }
@@ -131,7 +120,8 @@
 		{
 			r_iAuto_ID = -1;
 			r_bUpdate = true;
-
+			m_iSL = m_objData.SL_Nhap;
+			m_iDG = m_objData.Don_Gia_Nhap;
 			// Đoạn code lưu key cho việc tracking log CRUD, vui lòng đừng xóa
 			CXNK_Nhap_Kho_Raw_Data v_objClone = new();
 			CUtility.Clone_Entity(m_objData, v_objClone);
@@ -155,24 +145,20 @@
 	protected override void Add_Data()
 	{
 		if (route==1) {
-			checkSanPham = false;
-			checkSoLuong = false;
-			checkDonGia = false;
-			//r_strAdd_Key = ".";
-			if (m_objData.San_Pham_ID == 0)
+			try
 			{
-				checkSanPham = true;
-			}
-			else if (m_objData.SL_Nhap <= 0)
-			{
-				checkSoLuong = true;
-			}
-			else if (m_objData.Don_Gia_Nhap <= 0)
-			{
-				checkDonGia = true;
-			}
-			else
-			{
+				if (m_objData.San_Pham_ID == 0)
+				{
+					throw new Exception("Vui lòng chọn sản phẩm !");
+				}
+				if (m_objData.SL_Nhap <= 0)
+				{
+					throw new Exception("Vui lòng nhập số lượng chính xác!");
+				}
+				if (m_objData.Don_Gia_Nhap <= 0)
+				{
+					throw new Exception("Vui lòng nhập đơn giá chính xác!");
+				}
 				CXNK_Nhap_Kho_Raw_Data v_objectNhapKho = new CXNK_Nhap_Kho_Raw_Data();
 				v_objectNhapKho.Auto_ID = auto + 1;
 				v_objectNhapKho.San_Pham_ID = m_objData.San_Pham_ID;
@@ -180,16 +166,18 @@
 				v_objectNhapKho.SL_Nhap = m_objData.SL_Nhap;
 				v_objectNhapKho.Don_Gia_Nhap = m_objData.Don_Gia_Nhap;
 				v_objectNhapKho.Tri_Gia = m_objData.SL_Nhap * m_objData.Don_Gia_Nhap;
-																//r_strAdd_Key = ".";
+
 				// Gọi event callback để truyền thông tin về form chính
 				OnSaveCTPN.InvokeAsync(v_objectNhapKho);
-				StateHasChanged();
 				Load_Data_Init();
-				Modal_Cancel();
-				
 				CXNK_Nhap_Kho_Raw_Data v_objClone = new();
 				CUtility.Clone_Entity(m_objData, v_objClone);
 				r_objDes = v_objClone;
+				Modal_Cancel();
+			}
+			catch (Exception ex)
+			{
+				throw ex;
 			}
 		}
 		else
@@ -199,60 +187,51 @@
 			m_objData.Last_Updated_By_Function = r_strActive_Function_Code;
 			m_objData.Nhap_Kho_ID = r_iAuto_ID;
 			m_objData.Auto_ID = r_iAuto_ID = v_objCtrData.FQ_719_NKRD_sp_ins_Insert(m_objData);
-
 			r_strAdd_Key = m_objData.AutoID.ToString();
 
 			//v_objloadListdataNKRD.Load_Data_Init();
-			
 			OnDataAdded.InvokeAsync(m_objData);
-			StateHasChanged();
 			Load_Data_Init();
 			Modal_Cancel();
+
 		}
 	}
 
 	protected override void Update_Data()
 	{
-		//r_strAdd_Key = m_objData.Ma_SP;
-		if (route == 1)
+		try
 		{
 			r_iAuto_ID = 0;
-			checkSanPham = false;
-			checkSoLuong = false;
-			checkDonGia = false;
 			if (m_objData.San_Pham_ID == 0)
 			{
-				checkSanPham = true;
-				m_objData.San_Pham_ID = 1;
+				throw new Exception("Vui lòng chọn sản phẩm !");
 			}
-			else if (m_objData.SL_Nhap <= 0)
+			if (m_objData.SL_Nhap <= 0)
 			{
-				checkSoLuong = true;
+				//Tạo một biến để giữ lại giá trị trước khi đổi thành số sai vd:6 sửa lại thành -6 hoặc 0 thì nó sẽ quay lại 6
+				m_objData.SL_Nhap = m_iSL;
+				throw new Exception("Vui lòng nhập số lượng chính xác!");
 			}
-			else if (m_objData.Don_Gia_Nhap <= 0)
+			if (m_objData.Don_Gia_Nhap <= 0)
 			{
-				checkDonGia = true;
+				m_objData.Don_Gia_Nhap = m_iDG;
+				throw new Exception("Vui lòng nhập đơn giá chính xác!");
 			}
-			else
-			{
-				CXNK_Nhap_Kho_Raw_Data v_objClone = new();
-				CUtility.Clone_Entity(m_objData, v_objClone);
-				r_objDes = v_objClone;
-			}
-		}
-		else
-		{
+			m_objData.Tri_Gia = m_objData.Don_Gia_Nhap * m_objData.SL_Nhap;
 			CXNK_Nhap_Kho_Raw_Data_Controller v_objCtrData = new();
 			m_objData.Last_Updated_By = r_strActive_User_Name;
 			m_objData.Last_Updated_By_Function = r_strActive_Function_Code;
-
 			v_objCtrData.FQ_719_NKRD_sp_upd_Update(m_objData);
-			
+
 			// Đoạn code lưu key cho việc tracking log CRUD, vui lòng đừng xóa
 			CXNK_Nhap_Kho_Raw_Data v_objClone = new();
 			CUtility.Clone_Entity(m_objData, v_objClone);
 			r_objDes = v_objClone;
+
+		}
+		catch (Exception ex)
+		{
+			throw ex;
 		}
 	}
-
 }
