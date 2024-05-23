@@ -23,39 +23,39 @@
 					<div class="row">
 						<div class="col-lg-12">
 							<div class="row mb-1">
-								<div class="col-lg-12">
+								<div class="col-lg-4 col-form-label">
 									<label class="form-label">@Get_Language_Data_Field("Mã sản phẩm"):</label>
 								</div>
-								<div class="col-lg-12">
+								<div class="col-lg-8">
 									<input @ref="txtFocus" @bind="@m_objData.Ma_San_Pham" class="form-control">
 
 								</div>
 							</div>
 
 							<div class="row mb-1">
-								<div class="col-lg-12">
+								<div class="col-lg-4 col-form-label">
 									<label class="form-label">@Get_Language_Data_Field("Tên sản phẩm"):</label>
 								</div>
-								<div class="col-lg-12">
+								<div class="col-lg-8">
 									<input @bind="@m_objData.Ten_San_Pham" class="form-control">
 
 								</div>
 							</div>
 							<div class="row mb-1">
-								<div class="col-lg-12">
+								<div class="col-lg-4 col-form-label">
 									<label class="form-label">@Get_Language_Data_Field("Loại sản phẩm"):</label>
 								</div>
-								<div class="col-lg-12">
+								<div class="col-lg-8">
 									<FControl_Loai_San_Pham_Combo @bind-BindingValue="m_objData.Loai_San_Pham_ID"></FControl_Loai_San_Pham_Combo>
 
 								</div>
 							</div>
 
 							<div class="row mb-1">
-								<div class="col-lg-12">
+								<div class="col-lg-4 col-form-label">
 									<label class="form-label">@Get_Language_Data_Field("Đơn vị tính"):</label>
 								</div>
-								<div class="col-lg-12">
+								<div class="col-lg-8">
 									<FControl_Don_Vi_Tinh_Combo @bind-BindingValue="m_objData.Don_Vi_Tinh_ID"></FControl_Don_Vi_Tinh_Combo>
 
 								</div>
@@ -63,10 +63,10 @@
 
 
 							<div class="row mb-1">
-								<div class="col-lg-12">
+								<div class="col-lg-4 col-form-label">
 									<label class="form-label">@Get_Language_Data_Field("Ghi chú"):</label>
 								</div>
-								<div class="col-lg-12">
+								<div class="col-lg-8">
 									<input @bind="@m_objData.Ghi_Chu" class="form-control">
 
 								</div>

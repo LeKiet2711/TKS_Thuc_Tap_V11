@@ -2,8 +2,10 @@
 
 <PageTitle>Report Viewer</PageTitle>
 
-<a class="nav-link btn btn-primary" style="margin-bottom:10px;width:100px;height:24px;font-size:14px;text-align:center;justify-content:center;vertical-align:middle;color:white;background:#5252eb" href="XNK/Phieu_Xuat_Kho">
-    <span class="oi oi-pencil" aria-hidden="true">Quay lại</span>
+<a href="XNK/Phieu_Xuat_Kho">
+    <button type="button" class="btn rounded-pill btn-primary waves-effect waves-light">
+        Quay lại
+    </button>
 </a>
 <ReportViewer ServiceUrl="/api/reports"
               @bind-ReportSource="@ReportSource"
