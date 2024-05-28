@@ -3,9 +3,9 @@
 <PageTitle>Report Viewer</PageTitle>
 
 <a href="XNK/Phieu_Nhap_Kho">
-<button type="button" class="btn rounded-pill btn-primary waves-effect waves-light">
-   Quay lại
-</button>
+    <button type="button" class="btn rounded-pill btn-primary waves-effect waves-light" style="margin-bottom:15px; width:120px">
+        Quay lại
+    </button>
 </a>
 <ReportViewer ServiceUrl="/api/reports"
               @bind-ReportSource="@ReportSource"
@@ -44,7 +44,7 @@
     public string Nhap_Kho_ID { get; set; }
 
 
-    public ReportSourceOptions ReportSource { get; set; } = new ReportSourceOptions("ReportPhieuNhap.trdp", new Dictionary<string, object>
+    public ReportSourceOptions ReportSource { get; set; } = new ReportSourceOptions("rpt2011_A_M1_Phieu_Nhap_Kho_default.trdp", new Dictionary<string, object>
     {
         // Add parameters if applicable
     });

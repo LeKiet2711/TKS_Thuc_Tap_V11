@@ -110,8 +110,12 @@
 	{
 		CXNK_Nhap_Kho_Raw_Data_Controller v_objCtrData = new();
 		m_objData = v_objCtrData.FQ_719_NKRD_sp_sel_Get_By_ID(r_iAuto_ID);
-		//Gán object của phần tử tương ứng được chọn từ List cho objData để bind lên text
-		m_objData = m_objDataEdit;
+		
+		//If ở đây để phân biệt giữa Edit tạm và Edit database (m_objDataEdit là bảng tạm nếu khi update chính, update database thì m_objDataEdit sẽ là null nên phải phân ra)
+		if (m_objDataEdit != null)
+		{
+			m_objData = m_objDataEdit;    //Gán object của phần tử tương ứng được chọn từ List cho objData để bind lên text
+		}
 
 		//Dành cho việc tạo mới một Chi tiết phiếu nhập
 		if (m_objData == null)

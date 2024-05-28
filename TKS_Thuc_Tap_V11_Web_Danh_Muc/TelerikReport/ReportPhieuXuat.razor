@@ -2,8 +2,8 @@
 
 <PageTitle>Report Viewer</PageTitle>
 
-<a href="XNK/Phieu_Xuat_Kho">
-    <button type="button" class="btn rounded-pill btn-primary waves-effect waves-light">
+<a href="XNK/Phieu_Xuat_Kho" >
+    <button type="button" class="btn rounded-pill btn-primary waves-effect waves-light" style="margin-bottom:15px; width:120px">
         Quay lại
     </button>
 </a>
@@ -43,7 +43,7 @@
     [Parameter]
     public string Xuat_Kho_ID{ get; set; }
 
-    public ReportSourceOptions ReportSource { get; set; } = new ReportSourceOptions("ReportPhieuXuat.trdp", new Dictionary<string, object>
+    public ReportSourceOptions ReportSource { get; set; } = new ReportSourceOptions("rpt2013_A_M1_Phieu_Xuat_Kho_Default.trdp", new Dictionary<string, object>
     {
         // Add parameters if applicable
     });
@@ -57,33 +57,8 @@
         int v_iNum = v_objCtrRawData.CalculateTotalAmount(Convert.ToInt32(Xuat_Kho_ID));
 
         ReportSource.Parameters.Add("Tong_So_Luong_Xuat", v_iNum);
-        ReportSource.Parameters.Add("Tong_So_Luong_Xuat_Bang_Chu", chuyenSoThanhChu(v_iNum));
+        ReportSource.Parameters.Add("Tong_So_Luong_Xuat_Bang_Chu", cNum.ReadInt(v_iNum.ToString(),""));
         ReportSource.Parameters.Add("Xuat_Kho_ID", Xuat_Kho_ID);
         ReportSource.Parameters.Add("Ten_Kho", v_objData.Ten_Kho);
-
-    }
-
-    static string chuyenSoThanhChu(int number)
-    {
-        string[] ones = { "", "một", "hai", "ba", "bốn", "năm", "sáu", "bảy", "tám", "chín" };
-        string[] teens = { "mười", "mười một", "mười hai", "mười ba", "mười bốn", "mười lăm", "mười sáu", "mười bảy", "mười tám", "mười chín" };
-        string[] tens = { "", "mười", "hai mươi", "ba mươi", "bốn mươi", "năm mươi", "sáu mươi", "bảy mươi", "tám mươi", "chín mươi" };
-
-        if (number < 10)
-        {
-            return ones[number];
-        }
-        else if (number < 20)
-        {
-            return teens[number - 10];
-        }
-        else if (number < 100)
-        {
-            return tens[number / 10] + " " + ones[number % 10];
-        }
-        else
-        {
-            return "Out of range";
-        }
     }
 }

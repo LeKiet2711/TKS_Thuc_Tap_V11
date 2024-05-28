@@ -19,15 +19,15 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="Reports\ReportPhieuNhap.trdp" />
-    <None Remove="Reports\ReportPhieuXuat.trdp" />
+    <None Remove="Reports\rpt2011_A_M1_Phieu_Nhap_Kho_default.trdp" />
+    <None Remove="Reports\rpt2013_A_M1_Phieu_Xuat_Kho_Default.trdp" />
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="Reports\ReportPhieuNhap.trdp">
+    <Content Include="Reports\rpt2011_A_M1_Phieu_Nhap_Kho_Default.trdp">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Reports\ReportPhieuXuat.trdp">
+    <Content Include="Reports\rpt2013_A_M1_Phieu_Xuat_Kho_Default.trdp">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
