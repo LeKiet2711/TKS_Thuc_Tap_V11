@@ -86,7 +86,7 @@
 
 @if (r_bIs_Show_Edit_default == true)
 {
-	<F2014_33_Phieu_Xuat_Raw_Data_Edit r_iAuto_ID="@r_iAuto_ID" OnClose="@Close_Edit"></F2014_33_Phieu_Xuat_Raw_Data_Edit>
+	<F2013_33_Phieu_Xuat_Kho_Edit r_iAuto_ID="@r_iAuto_ID" OnClose="@Close_Edit"></F2013_33_Phieu_Xuat_Kho_Edit>
 }
 @if (r_bIs_Show_Message_Info == true)
 {
@@ -173,11 +173,14 @@
                             v_objData.Kho_ID = CCache_Kho.Get_Data_By_Code(CUtility.Convert_To_String(v_row[4])).Auto_ID;
                         }
                         string v_strNgay_Xuat_Kho = CUtility.Convert_To_String(v_row[5]);
-                        if (v_strNgay_Xuat_Kho != "")
+                        if (v_strNgay_Xuat_Kho == "")
+                        {
+                            v_objData.Ngay_Xuat_Kho = DateTime.Now.Date;
+                        }
+                        else
                         {
                             DateTime? tempDate = CUtility.Convert_To_DateTime(v_strNgay_Xuat_Kho);
                             v_objData.Ngay_Xuat_Kho = tempDate?.Date;
-
                         }
                         v_objData.Ghi_Chu = CUtility.Convert_To_String(v_row[6]);
                         v_objData.Last_Updated_By = r_strActive_User_Name;

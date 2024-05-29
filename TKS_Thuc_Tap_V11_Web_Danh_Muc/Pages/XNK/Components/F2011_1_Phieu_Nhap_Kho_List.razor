@@ -89,7 +89,7 @@
 
 @if (r_bIs_Show_Edit_default == true)
 {
-	<F2012_33_Phieu_Nhap_Raw_Data_Edit r_iAuto_ID="@r_iAuto_ID" OnClose="@Close_Edit"></F2012_33_Phieu_Nhap_Raw_Data_Edit>
+	<F2011_33_Phieu_Nhap_Kho_Edit r_iAuto_ID="@r_iAuto_ID" OnClose="@Close_Edit"></F2011_33_Phieu_Nhap_Kho_Edit>
 }
 
 @if (r_bIs_Show_Message_Info == true)
@@ -98,39 +98,39 @@
 }
 
 @code {
-	public List<CXNK_Nhap_Kho> v_arrData = new();
-	TelerikGrid<CXNK_Nhap_Kho> grdData = new();
+    public List<CXNK_Nhap_Kho> v_arrData = new();
+    TelerikGrid<CXNK_Nhap_Kho> grdData = new();
 
-	protected override void Init_Data()
-	{
+    protected override void Init_Data()
+    {
 
-	}
+    }
 
-	protected override void Load_Data()
-	{
-		CXNK_Nhap_Kho_Controller v_objCtrData = new();
+    protected override void Load_Data()
+    {
+        CXNK_Nhap_Kho_Controller v_objCtrData = new();
 
-		//Format lại grid đúng chuẩn, Đặt trước hàm load dữ liệu vì nó sẽ chạy nhanh hơn
-		Format_Grid(grdData);
+        //Format lại grid đúng chuẩn, Đặt trước hàm load dữ liệu vì nó sẽ chạy nhanh hơn
+        Format_Grid(grdData);
 
-		v_arrData = v_objCtrData.FQ_718_NK_sp_sel_List_By_Created(r_objFilter.Date_From, r_objFilter.Date_To);
-	}
+        v_arrData = v_objCtrData.FQ_718_NK_sp_sel_List_By_Created(r_objFilter.Date_From, r_objFilter.Date_To);
+    }
 
-	protected override void Delete_Data_Entry(long p_iAuto_ID)
-	{
-		CXNK_Nhap_Kho_Controller v_objCtrData = new();
-		CXNK_Nhap_Kho_Raw_Data_Controller v_objCtrDataRD = new();
+    protected override void Delete_Data_Entry(long p_iAuto_ID)
+    {
+        CXNK_Nhap_Kho_Controller v_objCtrData = new();
+        CXNK_Nhap_Kho_Raw_Data_Controller v_objCtrDataRD = new();
 
-		// Đoạn code lưu key cho việc tracking log CRUD, vui lòng đừng xóa
-		CXNK_Nhap_Kho v_objData = v_objCtrData.FQ_718_NK_sp_sel_Get_By_ID(p_iAuto_ID);
-		if (v_objData != null)
-			r_strDelete_Key = v_objData.So_Phieu_Nhap_Kho;
-		// End tracking
+        // Đoạn code lưu key cho việc tracking log CRUD, vui lòng đừng xóa
+        CXNK_Nhap_Kho v_objData = v_objCtrData.FQ_718_NK_sp_sel_Get_By_ID(p_iAuto_ID);
+        if (v_objData != null)
+            r_strDelete_Key = v_objData.So_Phieu_Nhap_Kho;
+        // End tracking
 
-		//Store Update tất cả chi tiết phiếu nhập deleted = 1 có mã nhập kho bằng mã nhập kho đang xóa
-		v_objCtrDataRD.F_745_NKRD_sp_del_Delete_List_By_ID(p_iAuto_ID, r_strActive_User_Name, r_strActive_Function_Code);
-		v_objCtrData.FQ_718_NK_sp_del_Delete_By_ID(p_iAuto_ID, r_strActive_User_Name, r_strActive_Function_Code);
-	}
+        //Store Update tất cả chi tiết phiếu nhập deleted = 1 có mã nhập kho bằng mã nhập kho đang xóa
+        v_objCtrDataRD.F_745_NKRD_sp_del_Delete_List_By_ID(p_iAuto_ID, r_strActive_User_Name, r_strActive_Function_Code);
+        v_objCtrData.FQ_718_NK_sp_del_Delete_By_ID(p_iAuto_ID, r_strActive_User_Name, r_strActive_Function_Code);
+    }
 
     protected override void Import_Excel_Entry(CExcel_Controller v_objCtrlExcel, ref int p_iCount_Success, ref int p_iCount_Error)
     {
@@ -181,7 +181,11 @@
                         }
 
                         string v_strNgay_Nhap_Kho = CUtility.Convert_To_String(v_row[6]);
-                        if (v_strNgay_Nhap_Kho != "")
+                        if (v_strNgay_Nhap_Kho == "")
+                        {
+                            v_objData.Ngay_Nhap_Kho = DateTime.Now.Date;
+                        }
+                        else
                         {
                             DateTime? tempDate = CUtility.Convert_To_DateTime(v_strNgay_Nhap_Kho);
                             v_objData.Ngay_Nhap_Kho = tempDate?.Date;
