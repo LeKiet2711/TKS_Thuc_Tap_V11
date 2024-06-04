@@ -99,6 +99,9 @@
 	public int m_iSL = 0;
 	public double m_iDG = 0;
 
+	[Parameter]
+	public long m_iAutoID_PhieuXuat { get; set; }
+
 	public F2014_1_Phieu_Xuat_Raw_Data_List v_objloadListXKRD;
 	//Tạo route để phân luồng 2 loại thêm bảng tạm (Trên Array) và thêm vào database
 	[Parameter]
@@ -203,10 +206,10 @@
 			CXNK_Xuat_Kho_Raw_Data_Controller v_objCtrData = new();
 			m_objData.Last_Updated_By = r_strActive_User_Name;
 			m_objData.Last_Updated_By_Function = r_strActive_Function_Code;
-			m_objData.Xuat_Kho_ID = r_iAuto_ID;
-			m_objData.Auto_ID = r_iAuto_ID = v_objCtrData.FQ_734_XKRD_sp_ins_Insert(m_objData);
-
+			m_objData.Xuat_Kho_ID = m_iAutoID_PhieuXuat;
+			m_objData.Auto_ID = m_iAutoID_PhieuXuat = v_objCtrData.FQ_734_XKRD_sp_ins_Insert(m_objData);
 			r_strAdd_Key = m_objData.AutoID.ToString();
+
 			OnDataAdded.InvokeAsync(m_objData);
 			StateHasChanged();
 			Load_Data_Init();

@@ -42,7 +42,6 @@
 									<div class="col-lg-8">
 										<input @bind="@m_objData.Ten_San_Pham" class="form-control" readonly></input>
 									</div>
-
 								</div>
 							}
 							<div class="row mb-1">
@@ -62,7 +61,6 @@
 								<div class="col-lg-8">
 									<input type="number" @bind="@m_objData.Don_Gia_Nhap" class="form-control">
 								</div>
-
 							</div>
 
 						</div>
@@ -86,6 +84,9 @@
 	public int auto = 0;
 	public int m_iSL = 0;
 	public double m_iDG = 0;
+
+	[Parameter]
+	public long m_iAutoID_PhieuNhap{ get; set; }
 
 	//Tạo route để phân luồng 2 loại thêm bảng tạm (Trên Array) và thêm vào database
 	[Parameter]
@@ -189,8 +190,8 @@
 			CXNK_Nhap_Kho_Raw_Data_Controller v_objCtrData = new();
 			m_objData.Last_Updated_By = r_strActive_User_Name;
 			m_objData.Last_Updated_By_Function = r_strActive_Function_Code;
-			m_objData.Nhap_Kho_ID = r_iAuto_ID;
-			m_objData.Auto_ID = r_iAuto_ID = v_objCtrData.FQ_719_NKRD_sp_ins_Insert(m_objData);
+			m_objData.Nhap_Kho_ID = m_iAutoID_PhieuNhap;
+			m_objData.Auto_ID = m_iAutoID_PhieuNhap = v_objCtrData.FQ_719_NKRD_sp_ins_Insert(m_objData);
 			r_strAdd_Key = m_objData.AutoID.ToString();
 
 			//v_objloadListdataNKRD.Load_Data_Init();
