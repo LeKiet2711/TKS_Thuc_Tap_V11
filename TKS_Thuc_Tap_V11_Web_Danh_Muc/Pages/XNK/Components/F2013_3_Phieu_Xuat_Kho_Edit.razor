@@ -93,7 +93,7 @@
 
 	public List<CXNK_Xuat_Kho_Raw_Data> v_arrData = new();
 	TelerikGrid<CXNK_Xuat_Kho_Raw_Data> grdData = new();
-	public F2014_1_Phieu_Xuat_Raw_Data_List v_objloadListXKRD;
+	public F2014_1_Phieu_Xuat_Raw_Data_List v_objloadListXKRD;  //Biến dùng để load lại bảng list (bảng hiển thị) mỗi khi thêm, xóa sửa một chi tiết phiếu nhập
 
 	[Parameter]
 	public EventCallback<List<CXNK_Xuat_Kho_Raw_Data>> OnSaveCTPX { get; set; }

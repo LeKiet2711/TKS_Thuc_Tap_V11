@@ -225,13 +225,13 @@
 			{
 				throw new Exception("Vui lòng chọn sản phẩm !");
 			}
-			else if (m_objData.SL_Xuat <= 0)
+			if (m_objData.SL_Xuat <= 0)
 			{
 				//Tạo một biến để giữ lại giá trị trước khi đổi thành số sai vd:6 sửa lại thành -6 hoặc 0 thì nó sẽ quay lại 6
 				m_objData.SL_Xuat = m_iSL;
 				throw new Exception("Vui lòng nhập số lượng chính xác!");
 			}
-			else if (m_objData.Don_Gia_Xuat <= 0)
+			if (m_objData.Don_Gia_Xuat <= 0)
 			{
 				m_objData.Don_Gia_Xuat = m_iDG;
 				throw new Exception("Vui lòng nhập đơn giá chính xác!");
@@ -240,7 +240,12 @@
 			CXNK_Xuat_Kho_Raw_Data_Controller v_objCtrData = new();
 			m_objData.Last_Updated_By = r_strActive_User_Name;
 			m_objData.Last_Updated_By_Function = r_strActive_Function_Code;
-			v_objCtrData.FQ_734_XKRD_sp_upd_Update(m_objData);
+
+			//Khi update trên Array thì không cần phải chạy store (m_objDataEdit rỗng khi edit trên database)
+			if (m_objDataEdit == null)
+			{
+				v_objCtrData.FQ_734_XKRD_sp_upd_Update(m_objData);
+			}
 			r_strAdd_Key = m_objData.Ma_SP;
 
 			// Đoạn code lưu key cho việc tracking log CRUD, vui lòng đừng xóa

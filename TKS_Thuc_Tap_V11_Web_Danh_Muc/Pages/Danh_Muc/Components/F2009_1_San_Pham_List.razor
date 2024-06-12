@@ -150,14 +150,7 @@
 					CDM_San_Pham v_objData = new CDM_San_Pham();
 					v_objData.Ma_San_Pham = CUtility.Convert_To_String(v_row[0]);
 					v_objData.Ten_San_Pham = CUtility.Convert_To_String(v_row[1]);
-					// if (CCache_Loai_San_Pham.Compare_Data_From_Excel(CUtility.Convert_To_String(v_row[2])) !=-1)
-					// {
-					// 	v_objData.Loai_San_Pham_ID = CCache_Loai_San_Pham.Compare_Data_From_Excel(CUtility.Convert_To_String(v_row[2]));
-					// }
-					// if (CCache_Don_Vi_Tinh.Compare_Data_From_Excel(CUtility.Convert_To_String(v_row[3])) != -1)
-					// {
-					// 	v_objData.Don_Vi_Tinh_ID = CCache_Don_Vi_Tinh.Compare_Data_From_Excel(CUtility.Convert_To_String(v_row[3]));
-					// }
+
 					if (CCache_Loai_San_Pham.Get_Data_By_Code(CUtility.Convert_To_String(v_row[2])) != null)
 					{
 						v_objData.Loai_San_Pham_ID = CCache_Loai_San_Pham.Get_Data_By_Code(CUtility.Convert_To_String(v_row[2])).Auto_ID;
@@ -174,9 +167,7 @@
 					v_objData.Auto_ID = v_objCtrData.FQ_165_SP_sp_ins_Insert(v_conn, v_trans, v_objData);
 					p_iCount_Success++;
 					v_trans.Commit();
-
 					CCache_San_Pham.Add_Data(v_objData);
-
 					CCommon_Controller.FCommon_Insert_Action_History(v_objData.Auto_ID, Get_Language_Data_Field("Import Excel - Thêm Mới"), "Web", r_strActive_User_Name, r_strActive_Function_Code, r_objChuc_Nang.Ten_Chuc_Nang, "Key: " + v_objData.Ma_San_Pham);
 				}
 

@@ -79,7 +79,7 @@
 @code {
 
 	private CXNK_Nhap_Kho_Raw_Data m_objData = new();
-	public List<CXNK_Nhap_Kho_Raw_Data> m_LstNhapKho = new List<CXNK_Nhap_Kho_Raw_Data>();
+	public List<CXNK_Nhap_Kho_Raw_Data> m_arrNhapKho = new List<CXNK_Nhap_Kho_Raw_Data>();
 	private bool isPopupVisible = false;
 	public int auto = 0;
 	public int m_iSL = 0;
@@ -111,7 +111,7 @@
 	{
 		CXNK_Nhap_Kho_Raw_Data_Controller v_objCtrData = new();
 		m_objData = v_objCtrData.FQ_719_NKRD_sp_sel_Get_By_ID(r_iAuto_ID);
-		
+
 		//If ở đây để phân biệt giữa Edit tạm và Edit database (m_objDataEdit là bảng tạm nếu khi update chính, update database thì m_objDataEdit sẽ là null nên phải phân ra)
 		if (m_objDataEdit != null)
 		{
@@ -143,7 +143,7 @@
 		v_objectNhapKho.San_Pham_ID = m_objData.San_Pham_ID;
 		v_objectNhapKho.SL_Nhap = m_objData.SL_Nhap;
 		v_objectNhapKho.Don_Gia_Nhap = m_objData.Don_Gia_Nhap;
-		m_LstNhapKho.Add(v_objectNhapKho);
+		m_arrNhapKho.Add(v_objectNhapKho);
 
 	}
 
@@ -226,8 +226,12 @@
 			CXNK_Nhap_Kho_Raw_Data_Controller v_objCtrData = new();
 			m_objData.Last_Updated_By = r_strActive_User_Name;
 			m_objData.Last_Updated_By_Function = r_strActive_Function_Code;
-			v_objCtrData.FQ_719_NKRD_sp_upd_Update(m_objData);
 
+			//Khi update trên Array thì không cần phải chạy store (m_objDataEdit rỗng khi edit trên database)
+			if (m_objDataEdit == null)
+			{
+				v_objCtrData.FQ_719_NKRD_sp_upd_Update(m_objData);
+			}
 			// Đoạn code lưu key cho việc tracking log CRUD, vui lòng đừng xóa
 			CXNK_Nhap_Kho_Raw_Data v_objClone = new();
 			CUtility.Clone_Entity(m_objData, v_objClone);

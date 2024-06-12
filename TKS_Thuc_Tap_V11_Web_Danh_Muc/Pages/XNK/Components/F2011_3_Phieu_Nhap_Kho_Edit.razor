@@ -100,13 +100,8 @@
 	//Tạo 1 chi tiết phiếu nhập và 1 list chi tiết phiếu nhập để lưu lại sao đó xử lý từng item.Ten_SP,...
 	public List<CXNK_Nhap_Kho_Raw_Data> v_arrData = new();
 	TelerikGrid<CXNK_Nhap_Kho_Raw_Data> grdData = new();
-	public F2012_1_Phieu_Nhap_Raw_Data_List v_objloadListNKRD;
 
-	[Parameter]
-	public EventCallback<List<CXNK_Nhap_Kho_Raw_Data>> OnSaveCTPN { get; set; }
-
-
-	public bool check;
+	public F2012_1_Phieu_Nhap_Raw_Data_List v_objloadListNKRD; //Biến dùng để load lại bảng list (bảng hiển thị) mỗi khi thêm, xóa sửa một chi tiết phiếu nhập
 
 	protected override void Init_Data()
 	{

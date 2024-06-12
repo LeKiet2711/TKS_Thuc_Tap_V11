@@ -4,93 +4,93 @@
 <div style="padding-top: 10px;"></div>
 
 <div class="row">
-	<div class="col-lg-12">
-		@((MarkupString)r_strError)
+    <div class="col-lg-12">
+        @((MarkupString)r_strError)
 
-		<TelerikGrid Data="@v_arrData" Height="calc(100vh - 170px)" Resizable="true" Reorderable="true" @ref="@grdData">
-			<GridExport>
-				<GridExcelExport FileName="Phieu_Xuat_Kho_Export" AllPages="true" />
-				<GridCsvExport FileName="Phieu_Xuat_Kho_Export" AllPages="true" />
-			</GridExport>
-			<GridColumns>
-				<GridCheckboxColumn SelectAll="true" CheckBoxOnlySelection="true" Width="30px"></GridCheckboxColumn>
-				<GridColumn Width="60px">
-					<Template>
-						<button class="btn btn-link" @onclick="@(()=> Open_Info((context as CXNK_Xuat_Kho).Auto_ID))">
-							<i class="mdi mdi-eye" style="color: purple;"></i>
-						</button>
-						&nbsp;
-						<button class="btn btn-link" data-bs-toggle="dropdown" aria-expanded="false">
-							<i class="mdi mdi-cog-outline" style="color: purple;"></i>
-						</button>
-						<ul class="dropdown-menu">
-							@if (r_objChuc_Nang.Is_Have_Edit_Permission == true)
-							{
-								<li>
-									<button class="dropdown-item" type="button" @onclick="@(()=> Open_Edit((context as CXNK_Xuat_Kho).Auto_ID))"><i class="ri-edit-2-line align-bottom me-1"></i> &nbsp; @Get_Language_Data_Field("Hiệu chỉnh")</button>
-								</li>
-							}
-							@if (r_objChuc_Nang.Is_Have_Edit_Permission == true)
-							{
-								<li>
-									<button class="dropdown-item" type="button" @onclick="@(()=> Open_Edit_Default((context as CXNK_Xuat_Kho).Auto_ID))"><i class="ri-edit-2-line align-bottom me-1"></i> &nbsp; @Get_Language_Data_Field("Hiệu chỉnh chi tiết")</button>
-								</li>
-							}
-							@if (r_objChuc_Nang.Is_Have_Delete_Permission == true)
-							{
-								<li>
-									<button class="dropdown-item" type="button" @onclick="@(()=> Delete_Data((context as CXNK_Xuat_Kho).Auto_ID))"><i class="ri-delete-bin-line align-bottom me-1"></i> &nbsp; @Get_Language_Data_Field("Xóa")</button>
-								</li>
-							}
-							<li>
-								<a class="dropdown-item" href="reportphieuxuat/@((context as CXNK_Xuat_Kho).Auto_ID)"><i class="ri-printer-fill">&nbsp&nbsp&nbsp; @Get_Language_Data_Field("In báo cáo")</i></a>
-							</li>
-						</ul>
-					</Template>
-				</GridColumn>
-				@if (CCache_Grid_UI_Global.List_Data_By_Code("2013", "grdData").Count > 0)
-				{
-					<FCommon_General_Col_Grid m_strFCode="2013" m_strTen_Grid="grdData"></FCommon_General_Col_Grid>
-				}
-				else
-				{
-					<GridColumn Field="So_Phieu_Xuat_Kho" Title="Số Phiếu Xuất Kho" Width="100px"></GridColumn>
-					<GridColumn Field="Ten_Kho" Title="Kho" Width="100px"></GridColumn>
-					<GridColumn Field="Ngay_Xuat_Kho" Title="Ngày Xuất Kho" Width="120px"></GridColumn>
-					<GridColumn Field="Ghi_Chu" Title="Ghi Chú" Width="200px"></GridColumn>
-					<GridColumn Field="" Title=""><FooterTemplate Context="Footer"></FooterTemplate></GridColumn>
-				}
-			</GridColumns>
-		</TelerikGrid>
-	</div>
+        <TelerikGrid Data="@v_arrData" Height="calc(100vh - 170px)" Resizable="true" Reorderable="true" @ref="@grdData">
+            <GridExport>
+                <GridExcelExport FileName="Phieu_Xuat_Kho_Export" AllPages="true" />
+                <GridCsvExport FileName="Phieu_Xuat_Kho_Export" AllPages="true" />
+            </GridExport>
+            <GridColumns>
+                <GridCheckboxColumn SelectAll="true" CheckBoxOnlySelection="true" Width="30px"></GridCheckboxColumn>
+                <GridColumn Width="60px">
+                    <Template>
+                        <button class="btn btn-link" @onclick="@(()=> Open_Info((context as CXNK_Xuat_Kho).Auto_ID))">
+                            <i class="mdi mdi-eye" style="color: purple;"></i>
+                        </button>
+                        &nbsp;
+                        <button class="btn btn-link" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="mdi mdi-cog-outline" style="color: purple;"></i>
+                        </button>
+                        <ul class="dropdown-menu">
+                            @if (r_objChuc_Nang.Is_Have_Edit_Permission == true)
+                            {
+                                <li>
+                                    <button class="dropdown-item" type="button" @onclick="@(()=> Open_Edit((context as CXNK_Xuat_Kho).Auto_ID))"><i class="ri-edit-2-line align-bottom me-1"></i> &nbsp; @Get_Language_Data_Field("Hiệu chỉnh")</button>
+                                </li>
+                            }
+                            @if (r_objChuc_Nang.Is_Have_Edit_Permission == true)
+                            {
+                                <li>
+                                    <button class="dropdown-item" type="button" @onclick="@(()=> Open_Edit_Default((context as CXNK_Xuat_Kho).Auto_ID))"><i class="ri-edit-2-line align-bottom me-1"></i> &nbsp; @Get_Language_Data_Field("Hiệu chỉnh chi tiết")</button>
+                                </li>
+                            }
+                            @if (r_objChuc_Nang.Is_Have_Delete_Permission == true)
+                            {
+                                <li>
+                                    <button class="dropdown-item" type="button" @onclick="@(()=> Delete_Data((context as CXNK_Xuat_Kho).Auto_ID))"><i class="ri-delete-bin-line align-bottom me-1"></i> &nbsp; @Get_Language_Data_Field("Xóa")</button>
+                                </li>
+                            }
+                            <li>
+                                <a class="dropdown-item" href="reportphieuxuat/@((context as CXNK_Xuat_Kho).Auto_ID)"><i class="ri-printer-fill">&nbsp&nbsp&nbsp; @Get_Language_Data_Field("In báo cáo")</i></a>
+                            </li>
+                        </ul>
+                    </Template>
+                </GridColumn>
+                @if (CCache_Grid_UI_Global.List_Data_By_Code("2013", "grdData").Count > 0)
+                {
+                    <FCommon_General_Col_Grid m_strFCode="2013" m_strTen_Grid="grdData"></FCommon_General_Col_Grid>
+                }
+                else
+                {
+                    <GridColumn Field="So_Phieu_Xuat_Kho" Title="Số Phiếu Xuất Kho" Width="100px"></GridColumn>
+                    <GridColumn Field="Ten_Kho" Title="Kho" Width="100px"></GridColumn>
+                    <GridColumn Field="Ngay_Xuat_Kho" Title="Ngày Xuất Kho" Width="120px"></GridColumn>
+                    <GridColumn Field="Ghi_Chu" Title="Ghi Chú" Width="200px"></GridColumn>
+                    <GridColumn Field="" Title=""><FooterTemplate Context="Footer"></FooterTemplate></GridColumn>
+                }
+            </GridColumns>
+        </TelerikGrid>
+    </div>
 </div>
 
 @if (r_bIs_Show_Import_Excel == true)
 {
-	<FCommon_Import_Excel r_objImport_Excel="@r_objImport_Excel" OnClose="@Close_Import_Excel"></FCommon_Import_Excel>
+    <FCommon_Import_Excel r_objImport_Excel="@r_objImport_Excel" OnClose="@Close_Import_Excel"></FCommon_Import_Excel>
 }
 @if (r_bIs_Show_Info == true)
 {
-	<F2013_2_Phieu_Xuat_Kho_Info r_iAuto_ID="@r_iAuto_ID" OnClose="@Close_Info"></F2013_2_Phieu_Xuat_Kho_Info>
+    <F2013_2_Phieu_Xuat_Kho_Info r_iAuto_ID="@r_iAuto_ID" OnClose="@Close_Info"></F2013_2_Phieu_Xuat_Kho_Info>
 }
 
 @if (r_bIs_Show_Help_Guide == true)
 {
-	<FCommon_Help_Guide m_strFCode="@r_strActive_Function_Code" OnClose="@Close_Helpguide"></FCommon_Help_Guide>
+    <FCommon_Help_Guide m_strFCode="@r_strActive_Function_Code" OnClose="@Close_Helpguide"></FCommon_Help_Guide>
 }
 
 @if (r_bIs_Show_Edit == true)
 {
-	<F2013_3_Phieu_Xuat_Kho_Edit r_iAuto_ID="@r_iAuto_ID" OnClose="@Close_Edit"></F2013_3_Phieu_Xuat_Kho_Edit>
+    <F2013_3_Phieu_Xuat_Kho_Edit r_iAuto_ID="@r_iAuto_ID" OnClose="@Close_Edit"></F2013_3_Phieu_Xuat_Kho_Edit>
 }
 
 @if (r_bIs_Show_Edit_default == true)
 {
-	<F2013_33_Phieu_Xuat_Kho_Edit r_iAuto_ID="@r_iAuto_ID" OnClose="@Close_Edit"></F2013_33_Phieu_Xuat_Kho_Edit>
+    <F2013_33_Phieu_Xuat_Kho_Edit r_iAuto_ID="@r_iAuto_ID" OnClose="@Close_Edit"></F2013_33_Phieu_Xuat_Kho_Edit>
 }
 @if (r_bIs_Show_Message_Info == true)
 {
-	<FCommon_Message_Info r_strMessage_Header="@r_strMessage_Header" r_strMessage_Info="@r_strMessage_Info" OnClose="@Close_Message_Info"></FCommon_Message_Info>
+    <FCommon_Message_Info r_strMessage_Header="@r_strMessage_Header" r_strMessage_Info="@r_strMessage_Info" OnClose="@Close_Message_Info"></FCommon_Message_Info>
 }
 
 
@@ -145,14 +145,12 @@
         {
             DataTable v_dt = v_objCtrlExcel.List_Range_Value_To_End(0, "A2", "I");
             int v_iCount = 1;
-            bool v_bHasError = false; // Biến để theo dõi lỗi
 
             // Loại bỏ các dòng trống
             for (int v_i = v_dt.Rows.Count - 1; v_i >= 0; v_i--)
                 if (v_dt.Rows[v_i][0].ToString().Trim() == "" && v_dt.Rows[v_i][1].ToString().Trim() == "")
                     v_dt.Rows.RemoveAt(v_i);
 
-            // Kiểm tra lỗi trước khi chèn dữ liệu
             foreach (DataRow v_row in v_dt.Rows)
             {
                 v_iCount++;
@@ -207,48 +205,34 @@
                 catch (Exception ex)
                 {
                     v_sbError.AppendLine(Get_Language_Data_Field("Dòng") + " " + v_iCount.ToString() + " " + Get_Language_Data_Field("có lỗi") + ": " + ex.Message + "<br/>");
-                    v_bHasError = true; // Đánh dấu là có lỗi
-                    break; // Thoát khỏi vòng lặp nếu có lỗi
                 }
             }
 
-            if (!v_bHasError)
+            // Nếu có bất kỳ lỗi nào, không thực hiện chèn dữ liệu
+            if (v_sbError.Length == 0)
             {
-                // Tạo kết nối và bắt đầu giao dịch
                 v_conn = CSqlHelper.CreateConnection(CConfig.TKS_Thuc_Tap_V11_Conn_String);
                 v_conn.Open();
                 v_trans = v_conn.BeginTransaction();
 
-                try
+                if (v_objData != null)
                 {
-                    // Chèn dữ liệu phiếu xuất kho
-                    if (v_objData != null)
-                    {
-                        v_objData.Auto_ID = v_objCtrData.FQ_728_XK_sp_ins_Insert(v_conn, v_trans, v_objData);
+                    v_objData.Auto_ID = v_objCtrData.FQ_728_XK_sp_ins_Insert(v_conn, v_trans, v_objData);
 
-                        // Cập nhật ID thực sự sau khi chèn
-                        foreach (var v_objDataRD in v_listXuatKhoRawData)
-                        {
-                            v_objDataRD.Xuat_Kho_ID = v_objData.Auto_ID;
-                        }
-                    }
-
-                    // Chèn dữ liệu chi tiết phiếu xuất kho
                     foreach (var v_objDataRD in v_listXuatKhoRawData)
                     {
-                        v_objDataRD.Auto_ID = v_objCtrDataRD.FQ_734_XKRD_sp_ins_Insert(v_conn, v_trans, v_objDataRD);
-                        p_iCount_Success++;
-                        CCommon_Controller.FCommon_Insert_Action_History(v_objDataRD.Auto_ID, Get_Language_Data_Field("Import Excel - Thêm Mới"), "Web", r_strActive_User_Name, r_strActive_Function_Code, r_objChuc_Nang.Ten_Chuc_Nang, "Key: " + v_objDataRD.San_Pham_ID);
+                        v_objDataRD.Xuat_Kho_ID = v_objData.Auto_ID;
                     }
+                }
 
-                    v_trans.Commit();
-                }
-                catch (Exception ex)
+                foreach (var v_objDataRD in v_listXuatKhoRawData)
                 {
-                    v_trans.Rollback();
-                    v_sbError.AppendLine(ex.Message);
-                    p_iCount_Success = 0;
+                    v_objDataRD.Auto_ID = v_objCtrDataRD.FQ_734_XKRD_sp_ins_Insert(v_conn, v_trans, v_objDataRD);
+                    p_iCount_Success++;
+                    CCommon_Controller.FCommon_Insert_Action_History(v_objDataRD.Auto_ID, Get_Language_Data_Field("Import Excel - Thêm Mới"), "Web", r_strActive_User_Name, r_strActive_Function_Code, r_objChuc_Nang.Ten_Chuc_Nang, "Key: " + v_objDataRD.San_Pham_ID);
                 }
+
+                v_trans.Commit();
             }
 
             p_iCount_Error = v_dt.Rows.Count - p_iCount_Success;
@@ -273,6 +257,7 @@
                 v_conn.Close();
         }
     }
+
 
 
 }

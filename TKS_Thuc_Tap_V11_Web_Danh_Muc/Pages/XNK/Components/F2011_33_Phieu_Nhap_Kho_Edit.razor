@@ -3,8 +3,6 @@
 <div class="modal fade show" tabindex="-1" role="dialog" aria-hidden="true" style="display: block; padding-left: 0px; background-color: rgba(10, 10, 10, .8);">
 	<div class="modal-dialog modal-lg">
 		<div class="modal-content">
-			
-
 			<div class="modal-header bg-light">
 				@if (r_iAuto_ID != 0)
 				{
@@ -40,9 +38,6 @@
 @code {
 	private CXNK_Nhap_Kho_Raw_Data m_objData = new();
 	public F2012_11_Phieu_Nhap_Raw_Data_List v_objloadListdataNKRD;
-
-	[Parameter]
-	public EventCallback<CXNK_Nhap_Kho_Raw_Data> OnDataAdded { get; set; }
 
 	protected override void Init_Data()
 	{
