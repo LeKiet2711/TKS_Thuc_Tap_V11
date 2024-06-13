@@ -1,37 +1,42 @@
-﻿@page "/reportphieunhap/{Nhap_Kho_ID}"
+﻿@inherits FBase_Edit;
 
 <PageTitle>Report Viewer</PageTitle>
 
-<a href="XNK/Phieu_Nhap_Kho">
-    <button type="button" class="btn rounded-pill btn-primary waves-effect waves-light" style="margin-bottom:15px; width:120px">
-        Quay lại
-    </button>
-</a>
-<ReportViewer ServiceUrl="/api/reports"
-              @bind-ReportSource="@ReportSource"
-              @bind-ScaleMode="@ScaleMode"
-              @bind-ViewMode="@ViewMode"
-              @bind-ParametersAreaVisible="@ParametersAreaVisible"
-              @bind-DocumentMapVisible="@DocumentMapVisible"
-              @bind-Scale="@Scale"
-              PageMode="@PageMode.ContinuousScroll"
-              PrintMode="@PrintMode.AutoSelect"
-              KeepClientAlive="true"
-              EnableSendEmail="true"
-              ServiceType="@ReportViewerServiceType.REST"
-              Height="900px"
-              Width="100%">
-    <ReportViewerSettings>
-        <SendEmailDialogSettings
-            From="from@example.com"
-            To="to@example.com"
-            Cc="cc@example.com"
-            Subject="Report sent"
-            Format="CSV"
-            Body="Attached report. <br/> <br/> Best regards, </br> ABC">
-        </SendEmailDialogSettings>
-    </ReportViewerSettings>
-</ReportViewer>
+<div class="modal fade show" tabindex="-1" role="dialog" aria-hidden="true" style="display: block; padding-left: 0px; background-color: rgba(10, 10, 10, .8);">
+	<div class="modal-dialog modal-xl">
+		<div class="modal-content">
+            <div class="modal-header bg-light">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" @onclick="@(()=> Modal_Cancel())">
+                </button>
+            </div>
+            <ReportViewer ServiceUrl="/api/reports"
+                          @bind-ReportSource="@ReportSource"
+                          @bind-ScaleMode="@ScaleMode"
+                          @bind-ViewMode="@ViewMode"
+                          @bind-ParametersAreaVisible="@ParametersAreaVisible"
+                          @bind-DocumentMapVisible="@DocumentMapVisible"
+                          @bind-Scale="@Scale"
+                          PageMode="@PageMode.ContinuousScroll"
+                          PrintMode="@PrintMode.AutoSelect"
+                          KeepClientAlive="true"
+                          EnableSendEmail="true"
+                          ServiceType="@ReportViewerServiceType.REST"
+                          Height="900px"
+                          Width="100%">
+                <ReportViewerSettings>
+                    <SendEmailDialogSettings
+                        From="from@example.com"
+                        To="to@example.com"
+                        Cc="cc@example.com"
+                        Subject="Report sent"
+                        Format="CSV"
+                        Body="Attached report. <br/> <br/> Best regards, </br> ABC">
+                    </SendEmailDialogSettings>
+                </ReportViewerSettings>
+            </ReportViewer>
+        </div>
+    </div>
+</div>
 
 @code {
     public ScaleMode ScaleMode { get; set; } = ScaleMode.Specific;
@@ -41,7 +46,7 @@
     public double Scale { get; set; } = 1.0;
 
     [Parameter]
-    public string Nhap_Kho_ID { get; set; }
+    public long Nhap_Kho_ID { get; set; }
 
 
     public ReportSourceOptions ReportSource { get; set; } = new ReportSourceOptions("rpt2011_A_M1_Phieu_Nhap_Kho_default.trdp", new Dictionary<string, object>

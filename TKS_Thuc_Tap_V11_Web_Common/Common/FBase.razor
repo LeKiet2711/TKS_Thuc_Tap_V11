@@ -29,6 +29,7 @@
     protected bool r_bIs_Show_Info_Drill_Down = false;
     public bool r_bIs_Show_Edit = false;
     public bool r_bIs_Show_Edit_default = false;
+    public bool r_bIs_Show_Report = false;
     public bool r_bIs_Import_Excel_Edit = false;
     public bool r_bIs_Show_Filter = false;
     public bool r_bIs_Show_Help_Guide = false;
@@ -1614,11 +1615,20 @@
         StateHasChanged();
     }
 
+    protected void Open_Report(long p_iAuto_ID)
+    {
+        r_strError = "";
+        r_iAuto_ID = p_iAuto_ID;
+        r_bIs_Show_Report = true;
+        StateHasChanged();
+    }
+
     protected async Task Close_Edit(CEvent_Call_Back p_objEvent)
     {
         if (p_objEvent.Message_ID == (int)EModal_Result.Close_And_Reload_Data || p_objEvent.Message_ID == (int)EModal_Result.Close_Cancel)
             r_bIs_Show_Edit = false;
             r_bIs_Show_Edit_default = false;
+            r_bIs_Show_Report = false;
         if (p_objEvent.Message_ID == (int)EModal_Result.Close_And_Reload_Data)
         {
             await Task.Delay(1);

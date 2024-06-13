@@ -14,7 +14,7 @@
             </GridExport>
             <GridColumns>
                 <GridCheckboxColumn SelectAll="true" CheckBoxOnlySelection="true" Width="30px"></GridCheckboxColumn>
-                <GridColumn Width="60px">
+                <GridColumn Width="80px">
                     <Template>
                         <button class="btn btn-link" @onclick="@(()=> Open_Info((context as CXNK_Nhap_Kho).Auto_ID))">
                             <i class="mdi mdi-eye" style="color: purple;"></i>
@@ -42,10 +42,11 @@
                                     <button class="dropdown-item" type="button" @onclick="@(()=> Delete_Data((context as CXNK_Nhap_Kho).Auto_ID))"><i class="ri-delete-bin-line align-bottom me-1"></i> &nbsp; @Get_Language_Data_Field("Xóa")</button>
                                 </li>
                             }
-                            <li>
-                                <a class="dropdown-item" href="reportphieunhap/@((context as CXNK_Nhap_Kho).Auto_ID)"><i class="ri-printer-fill">&nbsp&nbsp&nbsp; @Get_Language_Data_Field("In báo cáo")</i></a>
-                            </li>
                         </ul>
+                        &nbsp;
+                        <button class="btn btn-link" @onclick="@(()=> Open_Report((context as CXNK_Nhap_Kho).Auto_ID))">
+                            <i class="ri-printer-fill" style="color: purple"></i>
+                        </button>
 
                     </Template>
                 </GridColumn>
@@ -90,6 +91,11 @@
 @if (r_bIs_Show_Edit_default == true)
 {
     <F2011_33_Phieu_Nhap_Kho_Edit r_iAuto_ID="@r_iAuto_ID" OnClose="@Close_Edit"></F2011_33_Phieu_Nhap_Kho_Edit>
+}
+
+@if (r_bIs_Show_Report == true)
+{
+    <TKS_Thuc_Tap_V11_Web_Danh_Muc.TelerikReport.ReportPhieuNhap Nhap_Kho_ID="@r_iAuto_ID" OnClose="@Close_Edit"></TKS_Thuc_Tap_V11_Web_Danh_Muc.TelerikReport.ReportPhieuNhap>
 }
 
 @if (r_bIs_Show_Message_Info == true)
@@ -147,7 +153,7 @@
         {
             DataTable v_dt = v_objCtrlExcel.List_Range_Value_To_End(0, "A2", "H");
             int v_iCount = 1;
-
+            
             // Loại bỏ các dòng trống
             for (int v_i = v_dt.Rows.Count - 1; v_i >= 0; v_i--)
                 if (v_dt.Rows[v_i][0].ToString().Trim() == "" && v_dt.Rows[v_i][1].ToString().Trim() == "")
@@ -156,7 +162,7 @@
             foreach (DataRow v_row in v_dt.Rows)
             {
                 v_iCount++;
-
+              
                 try
                 {
                     // Import Phiếu Nhập kho
@@ -215,25 +221,17 @@
                 }
             }
 
-            // Nếu có bất kỳ lỗi nào, không thực hiện chèn dữ liệu
+            //Nếu có lỗi thì sẽ không thực hiện chèn dữ liệu
             if (v_sbError.Length == 0)
             {
                 v_conn = CSqlHelper.CreateConnection(CConfig.TKS_Thuc_Tap_V11_Conn_String);
                 v_conn.Open();
                 v_trans = v_conn.BeginTransaction();
 
-                if (v_objData != null)
-                {
-                    v_objData.Auto_ID = v_objCtrData.FQ_718_NK_sp_ins_Insert(v_conn, v_trans, v_objData);
-
-                    foreach (var v_objDataRD in v_listNhapKhoRawData)
-                    {
-                        v_objDataRD.Nhap_Kho_ID = v_objData.Auto_ID;
-                    }
-                }
-
+                v_objData.Auto_ID = v_objCtrData.FQ_718_NK_sp_ins_Insert(v_conn, v_trans, v_objData);
                 foreach (var v_objDataRD in v_listNhapKhoRawData)
                 {
+                    v_objDataRD.Nhap_Kho_ID = v_objData.Auto_ID;
                     v_objDataRD.Auto_ID = v_objCtrDataRD.FQ_719_NKRD_sp_ins_Insert(v_conn, v_trans, v_objDataRD);
                     p_iCount_Success++;
                 }
@@ -263,10 +261,4 @@
                 v_conn.Close();
         }
     }
-
-
-
-
-
-
 }
