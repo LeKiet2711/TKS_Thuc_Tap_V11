@@ -44,7 +44,7 @@ namespace TKS_Thuc_Tap_V11_Data_Access.Controller.XNK
             return v_arrRes;
         }
 
-        public List<CXNK_Nhap_Kho_Raw_Data> F_742_ReportChiTietPhieuNhap_sp_sel_List_By_Created(DateTime? p_dtmFrom, DateTime? p_dtmTo)
+        public List<CXNK_Nhap_Kho_Raw_Data> F742_sp_sel_List_ReportChiTietPhieuNhap(DateTime? p_dtmFrom, DateTime? p_dtmTo)
         {
             List<CXNK_Nhap_Kho_Raw_Data> v_arrRes = new List<CXNK_Nhap_Kho_Raw_Data>();
             DataTable v_dt = new DataTable();
@@ -54,7 +54,7 @@ namespace TKS_Thuc_Tap_V11_Data_Access.Controller.XNK
                 p_dtmFrom = CUtility_Date.Convert_To_Dau_Ngay(p_dtmFrom);
                 p_dtmTo = CUtility_Date.Convert_To_Cuoi_Ngay(p_dtmTo);
 
-                CSqlHelper.FillDataTable(CConfig.TKS_Thuc_Tap_V11_Conn_String, v_dt, "F_742_ReportChiTietPhieuNhap_sp_sel_List_By_Created", p_dtmFrom, p_dtmTo);
+                CSqlHelper.FillDataTable(CConfig.TKS_Thuc_Tap_V11_Conn_String, v_dt, "F742_sp_sel_List_ReportChiTietPhieuNhap", p_dtmFrom, p_dtmTo);
 
                 foreach (DataRow v_row in v_dt.Rows)
                 {
@@ -186,11 +186,11 @@ namespace TKS_Thuc_Tap_V11_Data_Access.Controller.XNK
 			}
 		}
 
-		public void F_745_NKRD_sp_del_Delete_List_By_ID(long p_iAuto_ID, string p_strLast_Updated_By, string p_strLast_Updated_By_Function)
+		public void F745_sp_del_Delete_List_NKRD(long p_iAuto_ID, string p_strLast_Updated_By, string p_strLast_Updated_By_Function)
 		{
 			try
 			{
-				CSqlHelper.ExecuteNonquery(CConfig.TKS_Thuc_Tap_V11_Conn_String, "F_745_NKRD_sp_del_Delete_List_By_ID", p_iAuto_ID, p_strLast_Updated_By, p_strLast_Updated_By_Function);
+				CSqlHelper.ExecuteNonquery(CConfig.TKS_Thuc_Tap_V11_Conn_String, "F745_sp_del_Delete_List_NKRD", p_iAuto_ID, p_strLast_Updated_By, p_strLast_Updated_By_Function);
 			}
 
 			catch (Exception)

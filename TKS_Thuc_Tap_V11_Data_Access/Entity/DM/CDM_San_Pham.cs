@@ -14,9 +14,9 @@ namespace TKS_Thuc_Tap_V11_Data_Access.Entity.DM
         private long m_lngAuto_ID;
         private long m_lngLoai_San_Pham_ID;
         private long m_lngDon_Vi_Tinh_ID;
-        private string m_Ma_San_Pham;
-		private string m_Ten_San_Pham;
-		private string m_Ghi_Chu;
+        private string m_strMa_San_Pham;
+		private string m_strTen_San_Pham;
+		private string m_strGhi_Chu;
 		private int m_intdeleted;
         private DateTime? m_dtmCreated;
         private string m_strCreated_By;
@@ -39,9 +39,9 @@ namespace TKS_Thuc_Tap_V11_Data_Access.Entity.DM
             m_lngAuto_ID = CConst.INT_VALUE_NULL;
             m_lngLoai_San_Pham_ID = CConst.INT_VALUE_NULL;
             m_lngDon_Vi_Tinh_ID = CConst.INT_VALUE_NULL;
-            m_Ma_San_Pham = CConst.STR_VALUE_NULL;
-            m_Ten_San_Pham = CConst.STR_VALUE_NULL;
-            m_Ghi_Chu = CConst.STR_VALUE_NULL;
+            m_strMa_San_Pham = CConst.STR_VALUE_NULL;
+            m_strTen_San_Pham = CConst.STR_VALUE_NULL;
+            m_strGhi_Chu = CConst.STR_VALUE_NULL;
             m_intdeleted = CConst.INT_VALUE_NULL;
             m_dtmCreated = CConst.DTM_VALUE_NULL;
             m_strCreated_By = CConst.STR_VALUE_NULL;
@@ -74,25 +74,6 @@ namespace TKS_Thuc_Tap_V11_Data_Access.Entity.DM
                 m_lngLoai_San_Pham_ID = value;
             }
         }
-
-		//public string Ten_Loai_San_Pham
-		//{
-		//	get
-		//	{
-  //              if (m_lngLoai_San_Pham_ID == 0)
-  //              {
-  //                  return "";   
-  //              }else return CCache_Loai_San_Pham.Get_Data_By_ID(m_lngLoai_San_Pham_ID).Ten_LSP;
-		//	}
-		//	set
-		//	{
-  //              if (m_lngLoai_San_Pham_ID == 0)
-  //              {
-		//			m_lngLoai_San_Pham_ID = 0;
-
-  //              }else CCache_Loai_San_Pham.Get_Data_By_ID(m_lngLoai_San_Pham_ID).Ten_LSP = value;
-		//	}
-		//}
 
         public string Ten_LSP
         {
@@ -130,35 +111,15 @@ namespace TKS_Thuc_Tap_V11_Data_Access.Entity.DM
             }
         }
 
-		//public string Ten_Don_Vi_Tinh
-		//{
-		//	get
-		//	{
-  //              if (m_lngDon_Vi_Tinh_ID == 0)
-  //              {
-  //                  return "";
-  //              }else return CCache_Don_Vi_Tinh.Get_Data_By_ID(m_lngDon_Vi_Tinh_ID).Ten_Don_Vi_Tinh;
-		//	}
-		//	set
-		//	{
-		//		if (m_lngDon_Vi_Tinh_ID == 0)
-		//		{
-		//			m_lngDon_Vi_Tinh_ID = 0;
-
-		//		}
-		//		else CCache_Don_Vi_Tinh.Get_Data_By_ID(m_lngDon_Vi_Tinh_ID).Ten_Don_Vi_Tinh = value;
-		//	}
-		//}
-
 		public string Ma_San_Pham
 		{
 			get
 			{
-				return m_Ma_San_Pham;
+				return m_strMa_San_Pham;
 			}
             set
 			{
-				m_Ma_San_Pham = value;
+				m_strMa_San_Pham = value;
 			}
 		}
 
@@ -166,11 +127,11 @@ namespace TKS_Thuc_Tap_V11_Data_Access.Entity.DM
         {
             get
             {
-                return m_Ten_San_Pham;
+                return m_strTen_San_Pham;
             }
             set
             {
-                m_Ten_San_Pham = value;
+                m_strTen_San_Pham = value;
             }
         }
 
@@ -178,11 +139,11 @@ namespace TKS_Thuc_Tap_V11_Data_Access.Entity.DM
 		{
 			get
 			{
-				return m_Ghi_Chu;
+				return m_strGhi_Chu;
 			}
             set
 			{
-				m_Ghi_Chu = value;
+				m_strGhi_Chu = value;
 			}
 		}
 
