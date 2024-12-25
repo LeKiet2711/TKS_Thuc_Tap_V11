@@ -10,6 +10,12 @@
 				<GridCheckboxColumn SelectAll="true" CheckBoxOnlySelection="true" Width="30px"></GridCheckboxColumn>
 				<GridColumn Width="60px">
 					<Template>
+						@if (r_iAuto_ID != 0)
+						{
+							<button class="btn btn-link" @onclick="@(()=> Open_Info_Default((context as CXNK_Xuat_Kho_Raw_Data).Auto_ID))">
+								<i class="mdi mdi-eye" style="color: purple;"></i>
+							</button>
+						}
 						&nbsp;
 						&nbsp;
 						&nbsp;
@@ -48,16 +54,21 @@
 	</div>
 </div>
 
+@if (r_bIs_Show_Info == true)
+{
+	<F2014_2_Phieu_Xuat_Raw_Data_Info r_iAuto_ID="v_lngXKRD_ID" OnClose="@Close_Info"></F2014_2_Phieu_Xuat_Raw_Data_Info>
+}
+
 @if (r_bIs_Show_Edit == true)
 {
-	<F2014_3_Phieu_Xuat_Raw_Data_Edit r_iAuto_ID="@m_objDatabinding.Auto_ID" m_objDataEdit="@m_objDatabinding" OnClose="@Close_Edit"></F2014_3_Phieu_Xuat_Raw_Data_Edit>
+	<F2014_3_Phieu_Xuat_Raw_Data_Edit r_iAuto_ID="@v_lngXKRD_ID" m_objDataEdit="@m_objDatabinding" OnClose="@Close_Edit"></F2014_3_Phieu_Xuat_Raw_Data_Edit>
 }
 
 @code {
 	public int i = 0;
 	public List<CXNK_Xuat_Kho_Raw_Data> v_arrData = new();
 	TelerikGrid<CXNK_Xuat_Kho_Raw_Data> grdData = new();
-
+	public long v_lngXKRD_ID;
 	public CXNK_Xuat_Kho_Raw_Data m_objDatabinding = new();
 
 	[Parameter]
@@ -73,20 +84,56 @@
 
 		//Format lại grid đúng chuẩn, Đặt trước hàm load dữ liệu vì nó sẽ chạy nhanh hơn
 		Format_Grid(grdData);
-
-		v_arrData = p_arrData;
+		if (p_arrData.Count != 0)
+		{
+			v_arrData = p_arrData;
+		}
+		else
+		{
+			v_arrData = v_objCtrData.FQ_734_XKRD_sp_sel_List_By_Created(r_iAuto_ID, r_objFilter.Date_From, r_objFilter.Date_To);
+		}
 	}
 
 	public void Delete_Item(CXNK_Xuat_Kho_Raw_Data item)
 	{
-		v_arrData.Remove(item);
-		StateHasChanged();
-		Load_Data_Init();
+		if (p_arrData.Count != 0)
+		{
+			v_arrData.Remove(item);
+			StateHasChanged();
+			Load_Data_Init();
+		}
+		else
+		{
+			CXNK_Xuat_Kho_Raw_Data_Controller v_objCtrData = new();
+
+			// Đoạn code lưu key cho việc tracking log CRUD, vui lòng đừng xóa
+			CXNK_Xuat_Kho_Raw_Data v_objData = v_objCtrData.FQ_734_XKRD_sp_sel_Get_By_ID(item.Auto_ID);
+			if (v_objData != null)
+				r_strDelete_Key = v_objData.Auto_ID.ToString();
+			// End tracking
+			v_objCtrData.FQ_734_XKRD_sp_del_Delete_By_ID(item.Auto_ID, r_strActive_User_Name, r_strActive_Function_Code);
+			Load_Data_Init();
+		}
 	}
 
 	public void Open_Edit_ArrayList(CXNK_Xuat_Kho_Raw_Data item)
 	{
-		m_objDatabinding = item;
-		Open_Edit(-1);
+		if (p_arrData.Count != 0)
+		{
+			v_lngXKRD_ID = item.Auto_ID;
+			m_objDatabinding = item;
+			Open_Edit(item.Auto_ID);
+		}
+		else
+		{
+			v_lngXKRD_ID = item.Auto_ID;
+			Open_Edit(item.Auto_ID);
+		}
+	}
+
+	public void Open_Info_Default(long v_iID_Raw_Data)
+	{
+		v_lngXKRD_ID = v_iID_Raw_Data;
+		Open_Info(v_lngXKRD_ID);
 	}
 }

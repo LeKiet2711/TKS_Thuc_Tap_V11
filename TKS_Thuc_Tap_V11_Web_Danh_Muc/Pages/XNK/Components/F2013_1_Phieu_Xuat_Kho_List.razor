@@ -70,6 +70,7 @@
 {
     <FCommon_Import_Excel r_objImport_Excel="@r_objImport_Excel" OnClose="@Close_Import_Excel"></FCommon_Import_Excel>
 }
+
 @if (r_bIs_Show_Info == true)
 {
     <F2013_2_Phieu_Xuat_Kho_Info r_iAuto_ID="@r_iAuto_ID" OnClose="@Close_Info"></F2013_2_Phieu_Xuat_Kho_Info>
@@ -87,7 +88,7 @@
 
 @if (r_bIs_Show_Edit_default == true)
 {
-    <F2013_33_Phieu_Xuat_Kho_Edit r_iAuto_ID="@r_iAuto_ID" OnClose="@Close_Edit"></F2013_33_Phieu_Xuat_Kho_Edit>
+    <F2013_3_Phieu_Xuat_Kho_Edit r_iAuto_ID="@r_iAuto_ID" v_lngXuatKhoID="@r_iAuto_ID" OnClose="@Close_Edit"></F2013_3_Phieu_Xuat_Kho_Edit>
 }
 
 @if (r_bIs_Show_Report == true)
@@ -180,7 +181,7 @@
                 DateTime? tempDate = CUtility.Convert_To_DateTime(v_strNgay_Xuat_Kho);
                 v_objData.Ngay_Xuat_Kho = tempDate?.Date;
             }
-            
+
 
             // Chi tiết phiếu xuất
             foreach (DataRow v_row in v_dt.Rows)

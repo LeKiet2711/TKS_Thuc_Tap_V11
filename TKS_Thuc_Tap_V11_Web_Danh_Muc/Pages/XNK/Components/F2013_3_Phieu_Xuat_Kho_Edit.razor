@@ -4,9 +4,13 @@
 	<div class="modal-dialog modal-lg">
 		<div class="modal-content">
 			<div class="modal-header bg-light">
-				@if (r_iAuto_ID != 0)
+				@if (r_iAuto_ID != 0 && v_lngXuatKhoID==0)
 				{
 					<h5 class="modal-title">@Get_Language_Data_Field("Hiệu chỉnh")</h5>
+				}
+				else if (v_lngXuatKhoID != 0)
+				{
+					<h5 class="modal-title">@Get_Language_Data_Field("Hiệu chỉnh chi tiết")</h5>
 				}
 				else
 				{
@@ -17,9 +21,10 @@
 			</div>
 
 			@((MarkupString)r_strError)
-
-			<EditForm Model="@m_objData">
-				<div class="modal-body">
+			@if (v_lngXuatKhoID == 0)
+			{
+				<EditForm Model="@m_objData">
+					<div class="modal-body">
 					<div class="row">
 						<div class="col-lg-12">
 							<div class="row mb-1">
@@ -64,27 +69,30 @@
 
 				</div>
 			</EditForm>
-			@if (r_iAuto_ID == 0)
+			}
+			@if ((v_lngXuatKhoID != 0 && r_iAuto_ID == 0) || (v_lngXuatKhoID == 0 && r_iAuto_ID == 0) || (v_lngXuatKhoID != 0 && r_iAuto_ID != 0))
 			{
-				<div class="modal-footer" style="margin-top:-10px">
+				<div class="modal-footer" style="margin-top:10px">
 					<button type="button" class="btn rounded-pill btn-primary waves-effect waves-light" @onclick="@(()=> Open_Edit(0))">
-					<i class="ri-add-circle-fill align-bottom me-1"></i>
-					@Get_Language_Data_Field("Thêm chi tiết")
-				</button>
-			</div>
-
+						<i class="ri-add-circle-fill align-bottom me-1"></i>
+						@Get_Language_Data_Field("Thêm chi tiết")
+					</button>
+				</div>
 			<F2014_1_Phieu_Xuat_Raw_Data_List r_iAuto_ID="@r_iAuto_ID" @ref="v_objloadListXKRD" p_arrData="v_arrData"></F2014_1_Phieu_Xuat_Raw_Data_List>
 			}
-			<div class="modal-footer">
-				<button type="button" class="btn btn-primary" @onclick="@Save_Data">@Get_Language_Data_Field("Lưu Thay Đổi")</button>
-			</div>
+			@if (v_lngXuatKhoID == 0)
+			{
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary" @onclick="@Save_Data">@Get_Language_Data_Field("Lưu Thay Đổi")</button>
+				</div>
+			}
 		</div>
 	</div>
 </div>
 
 @if (r_bIs_Show_Edit == true)
 {
-	<F2014_3_Phieu_Xuat_Raw_Data_Edit route=1 r_iAuto_ID="@r_iAuto_ID" OnClose="@Close_Edit" OnSaveCTPX="Save_CTPX"></F2014_3_Phieu_Xuat_Raw_Data_Edit>
+	<F2014_3_Phieu_Xuat_Raw_Data_Edit m_iAutoID_PhieuXuat="r_iAuto_ID" OnClose="@Close_Edit" OnSaveCTPX="Save_CTPX"></F2014_3_Phieu_Xuat_Raw_Data_Edit>
 }
 
 @code {
@@ -98,6 +106,8 @@
 	[Parameter]
 	public EventCallback<List<CXNK_Xuat_Kho_Raw_Data>> OnSaveCTPX { get; set; }
 
+	[Parameter]
+	public long v_lngXuatKhoID { get; set; }
 
 	public bool check;
 
@@ -137,11 +147,14 @@
 		//Chạy vòng for thêm từng object chi tiết phiếu nhập vào database với Nhap_Kho_ID là mã Auto_ID của số phiếu nhập kho
 		foreach (CXNK_Xuat_Kho_Raw_Data item in v_arrData)
 		{
+			item.Last_Updated_By = r_strActive_User_Name;
+			item.Last_Updated_By_Function = r_strActive_Function_Code;
 			item.Xuat_Kho_ID = m_objData.Auto_ID;
 			item.Auto_ID = r_iAuto_ID = v_objCtrDataRD.FQ_734_XKRD_sp_ins_Insert(item);
 		}
 		// Đoạn code lưu key cho việc tracking log CRUD, vui lòng đừng xóa
 		r_strAdd_Key = m_objData.So_Phieu_Xuat_Kho;
+		v_objloadListXKRD.Load_Data_Init();
 		// End tracking
 	}
 
@@ -162,7 +175,10 @@
 
 	public async Task Save_CTPX(CXNK_Xuat_Kho_Raw_Data chiTietPhieuXuat)
 	{
-		v_arrData.Add(chiTietPhieuXuat);
+		if (chiTietPhieuXuat != null)
+		{
+			v_arrData.Add(chiTietPhieuXuat);
+		}
 		v_objloadListXKRD.Load_Data_Init();
 		//StateHasChanged();
 	}

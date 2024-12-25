@@ -90,7 +90,7 @@
 
 @if (r_bIs_Show_Edit_default == true)
 {
-    <F2011_33_Phieu_Nhap_Kho_Edit r_iAuto_ID="@r_iAuto_ID" OnClose="@Close_Edit"></F2011_33_Phieu_Nhap_Kho_Edit>
+    <F2011_3_Phieu_Nhap_Kho_Edit r_iAuto_ID="@r_iAuto_ID" v_lngNhapKhoID="@r_iAuto_ID" OnClose="@Close_Edit"></F2011_3_Phieu_Nhap_Kho_Edit>
 }
 
 @if (r_bIs_Show_Report == true)
@@ -136,7 +136,7 @@
         //Store Update tất cả chi tiết phiếu nhập set deleted = 1 với tất cả phiếu nhập có mã nhập kho bằng mã nhập kho đang xóa
         v_objCtrDataRD.F745_sp_del_Delete_List_NKRD(p_iAuto_ID, r_strActive_User_Name, r_strActive_Function_Code);
         v_objCtrData.FQ_718_NK_sp_del_Delete_By_ID(p_iAuto_ID, r_strActive_User_Name, r_strActive_Function_Code);
-    }
+    }   
 
     protected override void Import_Excel_Entry(CExcel_Controller v_objCtrlExcel, ref int p_iCount_Success, ref int p_iCount_Error)
     {
@@ -186,7 +186,7 @@
                 DateTime? tempDate = CUtility.Convert_To_DateTime(v_strNgay_Nhap_Kho);
                 v_objData.Ngay_Nhap_Kho = tempDate?.Date;
             }
-            
+
 
             // Chi tiết phiếu nhập
             foreach (DataRow v_row in v_dt.Rows)
@@ -241,16 +241,17 @@
                         v_objDataRD.Auto_ID = v_objCtrDataRD.FQ_719_NKRD_sp_ins_Insert(v_conn, v_trans, v_objDataRD);
                         p_iCount_Success++;
                     }
+
+                    v_trans.Commit();
                 }
-                v_trans.Commit();
+
+                p_iCount_Error = v_dt.Rows.Count - p_iCount_Success;
+                string v_strMessage = CCommonFunction.Set_Success_MessageBox(Get_Language_Data_Field("Thêm mới") + " " + p_iCount_Success.ToString() + " " + Get_Language_Data_Field("dòng thành công."));
+                if (v_sbError.ToString() != "")
+                    v_strMessage += CCommonFunction.Set_Error_MessageBox(v_sbError.ToString());
+
+                Open_Message_Info(Get_Language_Data_Field("Thông báo Import Excel"), v_strMessage);
             }
-
-            p_iCount_Error = v_dt.Rows.Count - p_iCount_Success;
-            string v_strMessage = CCommonFunction.Set_Success_MessageBox(Get_Language_Data_Field("Thêm mới") + " " + p_iCount_Success.ToString() + " " + Get_Language_Data_Field("dòng thành công."));
-            if (v_sbError.ToString() != "")
-                v_strMessage += CCommonFunction.Set_Error_MessageBox(v_sbError.ToString());
-
-            Open_Message_Info(Get_Language_Data_Field("Thông báo Import Excel"), v_strMessage);
         }
         catch (Exception ex)
         {
@@ -267,4 +268,4 @@
                 v_conn.Close();
         }
     }
-}
+}}

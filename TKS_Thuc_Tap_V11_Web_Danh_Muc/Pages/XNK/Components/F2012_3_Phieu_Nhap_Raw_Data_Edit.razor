@@ -88,6 +88,7 @@
 	[Parameter]
 	public long m_iAutoID_PhieuNhap{ get; set; }
 
+	public F2012_1_Phieu_Nhap_Raw_Data_List v_objloadListNKRD;
 	//Tạo route để phân luồng 2 loại thêm bảng tạm (Trên Array) và thêm vào database
 	[Parameter]
 	public int route{ get; set; }
@@ -111,9 +112,8 @@
 	{
 		CXNK_Nhap_Kho_Raw_Data_Controller v_objCtrData = new();
 		m_objData = v_objCtrData.FQ_719_NKRD_sp_sel_Get_By_ID(r_iAuto_ID);
-
 		//If ở đây để phân biệt giữa Edit tạm và Edit database (m_objDataEdit là bảng tạm nếu khi update chính, update database thì m_objDataEdit sẽ là null nên phải phân ra)
-		if (m_objDataEdit != null)
+		if (m_objDataEdit != null && m_objData == null)
 		{
 			m_objData = m_objDataEdit;    //Gán object của phần tử tương ứng được chọn từ List cho objData để bind lên text
 		}
@@ -123,7 +123,6 @@
 			m_objData = new CXNK_Nhap_Kho_Raw_Data();
 		else
 		{
-			r_iAuto_ID = -1;
 			r_bUpdate = true;
 			m_iSL = m_objData.SL_Nhap;
 			m_iDG = m_objData.Don_Gia_Nhap;
@@ -149,7 +148,8 @@
 
 	protected override void Add_Data()
 	{
-		if (route==1) {
+		if (m_iAutoID_PhieuNhap == 0)
+		{
 			try
 			{
 				if (m_objData.San_Pham_ID == 0)
@@ -194,8 +194,7 @@
 			m_objData.Auto_ID = m_iAutoID_PhieuNhap = v_objCtrData.FQ_719_NKRD_sp_ins_Insert(m_objData);
 			r_strAdd_Key = m_objData.AutoID.ToString();
 
-			//v_objloadListdataNKRD.Load_Data_Init();
-			OnDataAdded.InvokeAsync(m_objData);
+			OnSaveCTPN.InvokeAsync();
 			Load_Data_Init();
 			Modal_Cancel();
 
@@ -230,7 +229,7 @@
 			//Khi update trên Array thì không cần phải chạy store (m_objDataEdit rỗng khi edit trên database)
 			if (m_objDataEdit == null)
 			{
-				v_objCtrData.FQ_719_NKRD_sp_upd_Update(m_objData);
+			v_objCtrData.FQ_719_NKRD_sp_upd_Update(m_objData);
 			}
 			// Đoạn code lưu key cho việc tracking log CRUD, vui lòng đừng xóa
 			CXNK_Nhap_Kho_Raw_Data v_objClone = new();

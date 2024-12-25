@@ -17,18 +17,7 @@
 			</div>
 
 			@((MarkupString)r_strError)
-			@if (checkSanPham)
-			{
-				<p style="color:red;text-align:center">Vui lòng chọn sản phẩm !</p>
-			}
-			@if (checkSoLuong)
-			{
-				<p style="color:red;text-align:center">Vui lòng nhập số lượng chính xác!</p>
-			}
-			@if (checkDonGia)
-			{
-				<p style="color:red;text-align:center">Vui lòng nhập đơn giá chính xác!</p>
-			}
+
 			<EditForm Model="@m_objData">
 				<div class="modal-body">
 					<div class="row">
@@ -128,7 +117,7 @@
 		CXNK_Xuat_Kho_Raw_Data_Controller v_objCtrData = new();
 		m_objData = v_objCtrData.FQ_734_XKRD_sp_sel_Get_By_ID(r_iAuto_ID);
 		//If ở đây để phân biệt giữa Edit tạm và Edit database (m_objDataEdit là bảng tạm nếu khi update chính, update database thì m_objDataEdit sẽ là null nên phải phân ra)
-		if (m_objDataEdit != null)
+		if (m_objDataEdit != null && m_objData == null)
 		{
 			m_objData = m_objDataEdit;    //Gán object của phần tử tương ứng được chọn từ List cho objData để bind lên text
 		}
@@ -162,7 +151,7 @@
 
 	protected override void Add_Data()
 	{
-		if (route == 1)
+		if (m_iAutoID_PhieuXuat == 0)
 		{
 			try
 			{
@@ -210,8 +199,7 @@
 			m_objData.Auto_ID = m_iAutoID_PhieuXuat = v_objCtrData.FQ_734_XKRD_sp_ins_Insert(m_objData);
 			r_strAdd_Key = m_objData.AutoID.ToString();
 
-			OnDataAdded.InvokeAsync(m_objData);
-			StateHasChanged();
+			OnSaveCTPX.InvokeAsync();
 			Load_Data_Init();
 			Modal_Cancel();
 		}
@@ -244,7 +232,7 @@
 			//Khi update trên Array thì không cần phải chạy store (m_objDataEdit rỗng khi edit trên database)
 			if (m_objDataEdit == null)
 			{
-				v_objCtrData.FQ_734_XKRD_sp_upd_Update(m_objData);
+			v_objCtrData.FQ_734_XKRD_sp_upd_Update(m_objData);
 			}
 			r_strAdd_Key = m_objData.Ma_SP;
 
